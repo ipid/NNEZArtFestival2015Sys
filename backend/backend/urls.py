@@ -18,6 +18,7 @@ from django.contrib import admin
 import ticket.views
 import shop.views
 import config.views
+import captcha.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -25,4 +26,6 @@ urlpatterns = [
     url(r'^api/config/ifShowRequirementTextbox$', config.views.ifShowRequirementTextbox),
     url(r'^api/config/getHomepageButtonType$', config.views.getHomepageButtonType),
     url(r'^api/shop/insertApplication$', shop.views.insertApplication),
+    url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
+    url(r'^api/captcha/verify?code=(\w)', captcha.views.verifyCAPTCHA),
 ]
