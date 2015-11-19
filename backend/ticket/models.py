@@ -12,3 +12,4 @@ class TicketApplication(models.Model):
     schoolID = models.CharField(max_length = 6)
     societyID = models.CharField(max_length = 18)
     requirement = models.PositiveIntegerField(default = 1)
+
