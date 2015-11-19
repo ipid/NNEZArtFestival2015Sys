@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from models import ShopApplication
+# from django.shortcuts import render
+from django.http import HttpResponse
+from shop.models import ShopApplication
 
 # Create your views here.
 
