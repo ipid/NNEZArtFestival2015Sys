@@ -7,7 +7,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 def getCAPTCHA(request):
     a, b = randint(0, 99), randint(0, 99)
-    request.session['code'] = str(a*b)
+    request.session["code"] = str(a*b)
 
     image = Image.new("RGB", (100,25), "black")
     myFont = ImageFont.truetype("captcha/strangeFont.ttf", 20)
@@ -19,4 +19,4 @@ def getCAPTCHA(request):
     return response
 
 def verifyCAPTCHA(request, code):
-    pass
+    return HttpResponse("1" if request.session.has_key("code") and request.session["code"] == code else "0")
