@@ -27,5 +27,5 @@ urlpatterns = [
     url(r'^api/config/getHomepageButtonType$', config.views.getHomepageButtonType),
     url(r'^api/shop/insertApplication$', shop.views.insertApplication),
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
-    url(r'^api/captcha/verify?code=(\w)', captcha.views.verifyCAPTCHA),
+    url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
 ]

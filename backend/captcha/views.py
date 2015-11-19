@@ -12,11 +12,11 @@ def getCAPTCHA(request):
     image = Image.new("RGB", (100,25), "black")
     myFont = ImageFont.truetype("captcha/strangeFont.ttf", 20)
     draw = ImageDraw.Draw(image)
-    draw.text((0, 0), "%s x %s = ?" % (a, b), font = myFont)
+    draw.text((5, 0), "%s x %s = ?" % (a, b), font = myFont)
 
     response = HttpResponse(content_type = "image/png")
     image.save(response, "PNG")
     return response
 
-def verifyCAPTCHA(request, code):
-    return HttpResponse("1" if request.session.has_key("code") and request.session["code"] == code else "0")
+def verifyCAPTCHA(request):
+    return HttpResponse("1" if request.session.has_key("code") and request.GET.get("code", "") == request.session["code"] else "0")
