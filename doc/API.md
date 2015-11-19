@@ -1,7 +1,5 @@
 **提交门票申请:**
 
-URL:
-
     api/ticket/insertApplication
     
 参数:
@@ -19,8 +17,6 @@ URL:
     succes/failure(失败)/error(内部错误)/illegal(非法输入)
 
 **提交店铺申请:**
-
-URL:
 
     api/shop/insertApplication
     
@@ -51,8 +47,6 @@ URL:
 
 **是否显示需要票的数量文本框:**
 
-URL
-
     api/config/ifShowRequirementTextbox
     
 返回值
@@ -61,11 +55,22 @@ URL
 
 **首页显示按钮类型:**
 
-URL
-
     api/config/getHomepageButtonType
 
 返回值
 
     ticket 或 info
 
+**获取验证码:**
+
+    api/captcha/get
+    
+返回验证码图片
+
+**验证验证码:**
+
+    api/captcha/verify?code=[code]
+    
+返回值
+
+    1(正确) 或 0(错误)
