@@ -19,4 +19,4 @@ def getCAPTCHA(request):
     return response
 
 def verifyCAPTCHA(request):
-    return HttpResponse("1" if request.session.has_key("code") and request.GET.get("code", "") == request.session["code"] else "0")
+    return HttpResponse("1" if "code" in request.session and request.GET.get("code", "") == request.session["code"] else "0")
