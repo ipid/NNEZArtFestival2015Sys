@@ -12,6 +12,7 @@ URL:
     学号:schoolID(最大长度6)
     身份证号:ID(需前端验证, 当然后端也会再次验证啦)
     申请的票的数量:requirement (默认值1)
+    验证码:captcha
     
 返回值:
 
@@ -42,10 +43,11 @@ URL:
     是否贩卖食物:food(1或0)
     是否贩卖非食物:nonFood(1或0)
     密钥:privilegeKey(8位, 默认00000000)
+    验证码:captcha
 
 返回值:
 
-    succes/failure(失败)/error(内部错误)/illegal(非法输入)
+    success/failure(失败)/error(内部错误)/illegal(非法输入)
 
 **是否显示需要票的数量文本框:**
 
