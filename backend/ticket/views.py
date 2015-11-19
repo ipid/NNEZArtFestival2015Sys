@@ -1,6 +1,6 @@
 # from django.shortcuts import render
 from django.http import HttpResponse
-from backend.ticket.models import TicketApplication
+from models import TicketApplication
 
 # Create your views here.
 
