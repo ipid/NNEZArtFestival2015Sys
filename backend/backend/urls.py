@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 import ticket.views
+import shop.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/ticket/insertApplication$', ticket.views.insertApplication),
+    url(r'^api/shop/insertApplication$', shop.views.insertApplication),
 ]
