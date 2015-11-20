@@ -1,7 +1,7 @@
 **提交门票申请:**
 
     api/ticket/insertApplication
-    
+
 参数:
 
     姓名:name(最大长度4)
@@ -12,10 +12,30 @@
     申请的票的数量:requirement (默认值1)
     验证码:captcha
     
+**获得门票申请数量:**
+
+    api/ticket/queryApplicationNumber
+    
+返回值:
+    
+    数量
+    
+**检索门票申请:**
+
+    api/ticket/indexApplication
+    
+参数:
+
+    起始:from
+    终止:to
+    
+返回:
+    同下, ID为[from, to]的申请
+
 **精确查询门票申请:**
 
     api/ticket/queryApplication
-    
+
 返回值:
 
     {
@@ -35,6 +55,7 @@
 
 参数:
 
+    申请ID:applicationID
     姓名:name
     年级:grade
     班级:class
@@ -42,42 +63,27 @@
     身份证号:ID
     申请的票的数量:requirement
     若不需要则[置空], 缺少字段则返回错误
-    
-**搜索门票申请:**
-
-    api/ticket/searchApplication
-
-返回值:
-    
-    同上
-
-参数:
-
-    过滤用Python代码:filter
-    验证码:captcha
-    
-//听起来好不安全啊
 
 **删除门票申请:**
 
     api/ticket/deleteApplication
-    
+
 返回值:
 
     success/failure/error/illegal
-    
+
 参数:
 
     申请id:applicationID
-    
+
 **更改门票申请:**
 
     api/ticket/modifyApplication
-    
+
 返回值:
 
     success/failure/error/illegal
-    
+
 参数:
 
     和提交一样, 少一个验证码, 多一个applicationID
@@ -85,7 +91,7 @@
 **提交店铺申请:**
 
     api/shop/insertApplication
-    
+
 参数:
 
     申请人姓名:owner(最大长度4)
@@ -110,11 +116,96 @@
 返回值:
 
     success/failure(失败)/error(内部错误)/illegal(非法输入)
+    
+**获得店铺申请数量:**
+
+    api/shop/queryApplicationNumber
+    
+返回值:
+    
+    数量
+    
+**检索店铺申请:**
+
+    api/shop/indexApplication
+    
+参数:
+
+    起始:from
+    终止:to
+    
+返回:
+    同下, ID为[from, to]的申请
+
+**精确查询店铺申请:**
+
+    api/shop/queryApplication
+
+返回值:
+
+    {
+        "state":"[success/failure/error/illegal]",
+        "result":[
+            {
+                "applicationID":
+                "owner":
+                "ownerContact":
+                "shopName":
+                "ownerType":
+                "ownerGrade":
+                "ownerClass":
+                "electrcity":
+                "food":
+                "nonFood":
+                "privilegeKey":
+            }
+        ]
+    }
+
+参数:
+
+    申请ID:applicationID
+    姓名:owner
+    年级:grade
+    班级:ownerContact
+    店名:shopName
+    类型:ownerType
+    年级:ownerGrade
+    班级:ownerClass
+    用电:electricity
+    食物:food
+    非食物:nonFood
+    密钥:privilegeKey
+    若不需要则[置空], 缺少字段则返回错误
+
+**删除店铺申请:**
+
+    api/shop/deleteApplication
+
+返回值:
+
+    success/failure/error/illegal
+
+参数:
+
+    申请id:applicationID
+
+**更改店铺申请:**
+
+    api/shop/modifyApplication
+
+返回值:
+
+    success/failure/error/illegal
+
+参数:
+
+    和提交一样, 少一个验证码, 多一个applicationID
 
 **是否显示需要票的数量文本框:**
 
     api/config/ifShowRequirementTextbox
-    
+
 返回值
 
     1 或 0
@@ -130,13 +221,13 @@
 **获取验证码:**
 
     api/captcha/get
-    
+
 返回验证码图片
 
 **验证验证码:**
 
     api/captcha/verify?code=[code]
-    
+
 返回值
 
     1(正确) 或 0(错误)
@@ -144,19 +235,19 @@
 **管理界面登陆**
 
     api/admin/login
-    
+
 参数:
 
     密码:password
-    
+
 返回值:
 
     success/failure/error
-    
+
 **管理界面登出**
 
     api/admin/logout
-    
+
 返回值:
 
     success/failure/error
