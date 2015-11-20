@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.shortcuts import render
 import ticket.views
 import shop.views
 import config.views
 import captcha.views
 
 urlpatterns = [
+    url(r'^test.html$', lambda r: render(r, "test.html")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/ticket/insertApplication$', ticket.views.insertApplication),
     url(r'^api/config/ifShowRequirementTextbox$', config.views.ifShowRequirementTextbox),

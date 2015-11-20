@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <p>TIcket</p>
+        <form action="/api/ticket/insertApplication" method=POST>
+            姓名<input name="name" value=zhangsan><br/>
+            年级<input name="grade" value=2><br/>
+            班级<input name="class" value=2><br/>
+            学号<input name="schoolID" value=233333><br/>
+            身份证<input name="ID" value=66666666666><br/>
+            票数<input name="requirement" value=1><br/>
+            验证码<input name="captcha">
+            <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>Shop</p>
+        
+        <form action="/api/shop/insertApplication" method=POST>
+            姓名<input name="ownerName" value=name><br/>
+            联系方式<input name="ownerContact" value=ownerContact><br/>
+            店名<input name="shopName" value=shopName><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            需要电力<input name="electricity" value=1><br/>
+            卖食物<input name="food" value=1><br/>
+            卖非食物<input name="nonFood" value=1><br/>
+            密钥<input name="privilegeKey" value=00000000><br/>
+            验证码<input name="captcha">
+            <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
+    </body>
+</html>
