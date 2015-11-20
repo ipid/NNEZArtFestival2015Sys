@@ -33,32 +33,55 @@ def fliterCode(request):
     except:
         raise IOError(__ERROR)
 
-def extractInput(request):
-    name=fliterPost(request,"name")
-    grade=int(fliterPost(request,"grade"))
-    no=int(fliterPost(request,"class"))
-    schoolID=fliterPost(request,"schoolID")
-    societyID=fliterPost(request,"ID")
-    requirement=int(fliterPost(request,"requirement"))
+<<<<<<< Updated upstream
+=======
+def queryDB(**name="",**grade="",**no="",**schoolID="",**societyID="",**requirement=""):
+    return TicketApplication.objects.filter(
+    name__contains=name,
+    grade__contains=grade,
+    no__contains=no,
+    schoolID__cotains=schoolID,
+    societyID__contains=societyID,
+    requirement__contains=requirement
+    )
+>>>>>>> Stashed changes
 
-    if len(name)>4 or len(schoolID)>4 or requirement<=0 or not validateIDCode(societyID):
-        raise IOError(__ILLEGAL)
 
-    organization=Organization(grade=grade,no=no)
-    data=TicketApplication(name=name,organization=organization,schoolID=schoolID,societyID=societyID,requirement=requirement)
-    try:
-        organization.save()
-        data.save()
-    except:
-        raise IOError(__ERROR)
-
+def queryDB(d)
+    return TicketApplication.objects.fliter(d)
 
 def insertApplication(request):
     # Argument passed by POST (containing sensitive info)
     # Return success state in plain text ("success"/"illegal"/"failure"/"error")
     try:
-        extractInput(request)
+<<<<<<< Updated upstream
+=======
+        ID=fliterPost(request,"ID")
+        if not(validateIDCode(ID) or "code" in request.session fliterCode(request)==fliterPost(request,"captcha")):
+            raise IOError(__ILLEGAL)
+        TicketApplication.objects.create(
+        name=fliterPost(request,"name"),
+        grade=int(fliterPost(request,"grade")),
+        no=int(fliterPost(request,"class")),
+        schoolID=fliterPost(request,"schoolID"),
+        societyID=fliterPost(request,"ID"),
+        requirement=int(fliterPost(request,"requirement")),
+        )
+>>>>>>> Stashed changes
     except IOError,e:
         return HttpResponse(e)
     return HttpResponse(__SUCCESS)
+
+def queryApplication(request):
+    try:
+        data={
+        "name":fliterPost(request,"name")
+        "grade":int(fliterPost(request,"grade"))
+        "no":int(fliterPost(request,"class"))
+        "schoolID":fliterPost(request,"schoolID")
+        "societyID":fliterPost(request,"ID")
+        "requirement":int(fliterPost(request,"requirement"))
+        }
+    except:
+        pass
 
