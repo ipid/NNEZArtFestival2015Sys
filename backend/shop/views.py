@@ -21,6 +21,7 @@ def insertApplication(request):
     try:
         if not ("captcha" in request.POST and "code" in request.session and request.POST["captcha"] == request.session["code"]):
             return HttpResponse("illegal")
+        request.session["code"] = ""
 
         # Extract inputs
         owner = request.POST.get("owner", "")
