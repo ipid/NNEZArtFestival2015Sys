@@ -6,7 +6,7 @@ class Organization(models.Model):
     grade = models.PositiveIntegerField()
     no = models.PositiveIntegerField()
 
-class ShopApplication:
+class ShopApplication(models.Model):
     owner = models.CharField(max_length = 4)
     ownerContact = models.CharField(max_length = 64)
     shopName = models.CharField(max_length = 32)

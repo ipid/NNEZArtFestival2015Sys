@@ -12,9 +12,75 @@
     申请的票的数量:requirement (默认值1)
     验证码:captcha
     
+**精确查询门票申请:**
+
+    api/ticket/queryApplication
+    
 返回值:
 
-    succes/failure(失败)/error(内部错误)/illegal(非法输入)
+    {
+        "state":"[success/failure/error/illegal]",
+        "result":[
+            {
+                "applicationID":
+                "name":
+                "grade":
+                "class":
+                "schoolID":
+                "ID":
+                "requirement":
+            }
+        ]
+    }
+
+参数:
+
+    姓名:name
+    年级:grade
+    班级:class
+    学号:schoolID
+    身份证号:ID
+    申请的票的数量:requirement
+    若不需要则[置空], 缺少字段则返回错误
+    
+**搜索门票申请:**
+
+    api/ticket/searchApplication
+
+返回值:
+    
+    同上
+
+参数:
+
+    过滤用Python代码:filter
+    验证码:captcha
+    
+//听起来好不安全啊
+
+**删除门票申请:**
+
+    api/ticket/deleteApplication
+    
+返回值:
+
+    success/failure/error/illegal
+    
+参数:
+
+    申请id:applicationID
+    
+**更改门票申请:**
+
+    api/ticket/modifyApplication
+    
+返回值:
+
+    success/failure/error/illegal
+    
+参数:
+
+    和提交一样, 少一个验证码, 多一个applicationID
 
 **提交店铺申请:**
 
@@ -74,3 +140,23 @@
 返回值
 
     1(正确) 或 0(错误)
+
+**管理界面登陆**
+
+    api/admin/login
+    
+参数:
+
+    密码:password
+    
+返回值:
+
+    success/failure/error
+    
+**管理界面登出**
+
+    api/admin/logout
+    
+返回值:
+
+    success/failure/error
