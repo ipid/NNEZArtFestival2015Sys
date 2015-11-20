@@ -59,7 +59,10 @@ def insertApplication(request):
 
         # Save into DB
 
-        data = ShopApplication(owner = owner, ownerContact = ownerContact, shopName = shopName, ownerType = int(ownerType), ownerOrganization = Organization(grade = int(ownerGrade), no = int(ownerClass)), electricity = n2b(electricity), food = n2b(food), nonFood = n2b(nonFood), privilegeKey = privilegeKey)
+        org = Organization(grade = int(ownerGrade), no = int(ownerClass))
+        org.save()
+
+        data = ShopApplication(owner = owner, ownerContact = ownerContact, shopName = shopName, ownerType = int(ownerType), ownerOrganization = org , electricity = n2b(electricity), food = n2b(food), nonFood = n2b(nonFood), privilegeKey = privilegeKey)
 
         data.save()
 
