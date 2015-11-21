@@ -4,16 +4,52 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <p>TIcket</p>
+        <p>Ticket insertion</p>
         <form action="/api/ticket/insertApplication" method=POST>
             姓名<input name="name" value=zhangsan><br/>
             年级<input name="grade" value=2><br/>
-            班级<input name="class" value=2><br/>
+            班级<input name="no" value=2><br/>
             学号<input name="schoolID" value=233333><br/>
-            身份证<input name="ID" value=66666666666><br/>
+            身份证<input name="societyID" value=66666666666><br/>
             票数<input name="requirement" value=1><br/>
             验证码<input name="captcha">
             <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>Ticket modify</p>
+        <form action="/api/ticket/modifyApplication" method=POST>
+	    ApplicationID<input name="applicationID" value=2><br/>
+            姓名<input name="name" value=zhangsan><br/>
+            年级<input name="grade" value=2><br/>
+            班级<input name="no" value=2><br/>
+            学号<input name="schoolID" value=233333><br/>
+            身份证<input name="societyID" value=66666666666><br/>
+            票数<input name="requirement" value=1><br/>
+            <input name="submit" type=submit>
+        </form>
+
+	<p>Ticket querying<p>
+        <form action="/api/ticket/queryApplication" method=POST>
+            姓名<input name="name" value=zhangsan><br/>
+            年级<input name="grade" value=2><br/>
+            班级<input name="no" value=2><br/>
+            学号<input name="schoolID" value=233333><br/>
+            身份证<input name="societyID" value=66666666666><br/>
+            票数<input name="requirement" value=1><br/>
+            <input name="submit" type=submit>
+        </form>
+
+	<p>Ticket index<p>
+        <form action="/api/ticket/indexApplication" method=POST>
+            from<input name="from" value=0><br/>
+            to<input name="to" value=5><br/>
+            <input name="submit" type=submit>
+        </form>
+
+	<p>Ticket deleting<p>
+        <form action="/api/ticket/deleteApplication" method=POST>
+            pk<input name="applicationID" value=1><br/>
             <input name="submit" type=submit>
         </form>
 
