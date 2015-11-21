@@ -19,7 +19,7 @@ def fliterPost(request,name):
     try:
         return request.POST[name]
     except:
-        raise MyError(__ERROR)
+        raise MyError(__ERROR+"POST"+name)
 
 def fliterCode(request):
     try:
@@ -111,26 +111,27 @@ def deleteApplication(request):
         if not logined(request):
             raise MyError(__FAILURE)
         applicationID=fliterPost(request,"applicationID")
-        TicketApplication.objects.get(pk=applicationID).delete();
+        TicketApplication.objects.get(pk=applicationID).delete()
     except MyError,e:
-        return HttpResponse(e);
+        return HttpResponse(e)
     return HttpResponse(__SUCCESS)
 
 def modifyApplication(request):
     try:
-        if not logined():
+        if not logined(request):
             raise MyError(__FAILURE)
         #delete
         applicationID=fliterPost(request,"applicationID")
-        TicketApplication.objects.get(pk=applicationID).delete();
+        TicketApplication.objects.get(pk=applicationID).delete()
         #creat
         data=fetchData(request)
-        data["py"]=applicationID
-        validateData(request,data)
+        data["pk"]=applicationID
+        #validateData(request,data)
         TicketApplication.objects.create(**data)
-        return insertApplication(request)
     except MyError,e:
-        return HttpResponse(e);
+        return HttpResponse(e)
+    except:
+        return HttpResponse(__ERROR)
     return HttpResponse(__SUCCESS)
 
 def indexApplication(request):
