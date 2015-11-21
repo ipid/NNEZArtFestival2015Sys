@@ -1,13 +1,11 @@
 # from django.shortcuts import render
 from django.http import HttpResponse
+from django.forms.models import model_to_dict
 from shop.models import ShopApplication
 from datetime import datetime
 from json import dumps
 
 # Create your views here.
-
-class InvalidInput(Exception):
-    pass
 
 def n2b(x):
     if x == "1":
@@ -84,6 +82,16 @@ def logined(request):
 def validate(request):
     return antiCSRF(request) and logined(request)
 
+def applicationToDict(d):
+    d = model_to_dict(d)
+    d["applicationID"] = d["id"]
+    del(d["id"])
+    d["electricity"] = n2b(d["electricity"])
+    d["food"] = n2b(d["food"])
+    d["nonFood"] = n2b(d["nonFood"])
+    del(d["timestamp"])
+    return d
+
 def indexApplication(request):
     try:
         if not validate(request):
@@ -95,8 +103,10 @@ def indexApplication(request):
             return HttpResponse(dumps({"state": "illegal", "result": []}))
         except ValueError:
             return HttpResponse(dumps({"state": "illegal", "result": []}))
-        ans = ShopApplication.objects.filter(pk__gte = lb, pk__lte = ub)
-        return HttpResponse(dumps({"state": "success", "result": list(ans)}))
+        answer = ShopApplication.objects.filter(pk__gte = lb, pk__lte = ub)
+        answer = list(answer)
+        answer = map(applicationToDict, answer)
+        return HttpResponse(dumps({"state": "success", "result": answer}))
     except:
         return HttpResponse(dumps({"state": "error", "result": []}))
 
@@ -134,6 +144,8 @@ def queryApplication(request):
         # Validate the input
 
         try:
+            if "applicationID" in request.POST:
+                args["pk"] = request.POST["applicationID"]
             addArgs("owner")
             addArgs("ownerContact")
             addArgs("shopName")
@@ -144,11 +156,16 @@ def queryApplication(request):
             addArgs("food", n2b)
             addArgs("nonFood", n2b)
             addArgs("privilegeKey")
+        except InvalidInput:
+            raise InvalidInput
         except ValueError:
             raise InvalidInput
 
         answer = ShopApplication.objects.filter(**args)
-        return HttpResponse(dumps({"state": "success", "result": list(answer)}))
+        answer = list(answer)
+        answer = map(applicationToDict, answer)
+
+        return HttpResponse(dumps({"state": "success", "result": answer}))
 
     except:
         return HttpResponse(dumps({"state": "error","result": []}))
