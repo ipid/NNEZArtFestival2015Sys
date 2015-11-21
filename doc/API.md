@@ -5,10 +5,10 @@
 参数:
 
     姓名:name(最大长度4)
-    年级:grade(Int, 高一是10年级)
-    班级:class(Int)
+    年级:grade(最大长度1)
+    班级:no(最大长度2)
     学号:schoolID(最大长度6)
-    身份证号:ID(需前端验证, 当然后端也会再次验证啦)
+    身份证号:societyID(需前端验证, 当然后端也会再次验证啦)
     申请的票的数量:requirement (默认值1)
     验证码:captcha
     
@@ -45,9 +45,9 @@
                 "applicationID":
                 "name":
                 "grade":
-                "class":
+                "no":
                 "schoolID":
-                "ID":
+                "societyID":
                 "requirement":
             }
         ]
