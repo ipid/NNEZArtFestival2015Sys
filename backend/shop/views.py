@@ -25,7 +25,7 @@ def insertApplication(request):
     try:
         if not ("captcha" in request.POST and "code" in request.session and request.POST["captcha"] == request.session["code"]):
             return HttpResponse("illegal")
-        request.session["code"] = ""
+        del(request.session["code"])
 
         # Extract inputs
         owner = request.POST.get("owner", "")
@@ -195,7 +195,10 @@ def modifyApplication(request):
 
         # Extract inputs
         applicationID = request.POST.get("applicationID", "")
-        data = ShopApplication.objects.get(pk = applicationID)
+        try:
+            data = ShopApplication.objects.get(pk = applicationID)
+        except:
+            return HttpResponse("illegal")
 
         data.owner = request.POST.get("owner", "")
         data.ownerContact = request.POST.get("ownerContact", "")
