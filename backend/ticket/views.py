@@ -64,6 +64,8 @@ def validateData(request,data):
     if len(data["name"])>4 or len(data["schoolID"])>6 or data["requirement"]<1 or int(data["grade"])<1 or int(data["grade"])>3:
         raise MyError(__ILLEGAL)
 
+    request.session.pop("code")
+
 def objectToDict(obj):
     d=dict()
     for i in columns:
@@ -155,4 +157,5 @@ def queryApplicationNumber(request):
         return HttpResponse(TicketApplication.objects.count())
     except:
         return HttpResponse(-1)
+
 
