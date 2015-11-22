@@ -1,15 +1,14 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
-class Organization(models.Model):
-    grade = models.PositiveIntegerField()
-    no = models.PositiveIntegerField()
-
 class TicketApplication(models.Model):
+    grade = models.CharField(max_length=1,default="0")
+    no = models.CharField(max_length = 2,default="0")
     name = models.CharField(max_length = 4)
-    organization = models.ForeignKey(Organization)
     schoolID = models.CharField(max_length = 6)
     societyID = models.CharField(max_length = 18)
-    requirement = models.PositiveIntegerField(default = 1)
+    requirement = models.CharField(max_length=32)
+    timestamp = models.DateTimeField(default = datetime(1,1,1))
 
