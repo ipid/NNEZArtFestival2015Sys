@@ -10,7 +10,7 @@ __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-columns=["name","grade","no","schoolID","societyID","requirement"]
+columns=["name","grade","classNo","schoolID","societyID","requirement"]
 
 class MyError(Exception):
     pass
@@ -100,6 +100,8 @@ def queryApplication(request):
         if not logined(request):
             raise MyError(__FAILURE)
         data=fetchData(request)
+        if "applicationID" in request.POST and request.POST["applicationID"]:
+            data["pk"]=request.POST["applicationID"]
         result=(list)(TicketApplication.objects.filter(**data))
         for key,val in enumerate(result):
             result[key]=objectToDict(val)
