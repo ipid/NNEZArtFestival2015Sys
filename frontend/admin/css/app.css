@@ -6,7 +6,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-family: "Î¢ÈíÑÅºÚ";
+    font-family: "å¾®è½¯é›…é»‘";
 }
 
 divider {
@@ -17,6 +17,23 @@ divider {
 
 #loader {
     position: absolute;
+    background: rgba(0, 0, 0, 0.2);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#loader_body {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    text-align: center;
+    background: rgba(255,255,255,0.5);
+    border-radius: 5px;
+    padding: 1em;
+    margin-left: -3em;
+    width: 6em;
 }
 
 .toolbar {
@@ -45,9 +62,10 @@ divider {
     -webkit-box-shadow: #AAA 0 0 6px;
     -moz-box-shadow: #AAA 0 0 6px;
     box-shadow: #AAA 0 0 6px;
+    overflow-y: auto;
 }
 
-#nav_btn {
+.nav_btn {
     padding: 1em;
     cursor: pointer;
     background: #F0F0F0;
@@ -58,8 +76,14 @@ divider {
     transition: background .3s;
 }
 
-#nav_btn:hover {
-    background: #EFEFFF !important;
+.nav_btn:hover {
+    background: #CDCDFF !important;
+}
+
+.nav_label {
+    padding: 1em;
+    background: #F0F0F0;
+    opacity: .54;
 }
 
 #body {
@@ -79,6 +103,26 @@ divider {
     top: 0;
     bottom: 0;
     z-index: -2;
-    padding: 1em;
+    padding: 1.5em;
+}
+
+.view_page {
+    position: absolute;
+}
+
+.text_cap {
+    font-size: 1.2em;
+}
+
+.preview_count {
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+tbc {
+    display: table-cell;
+    border: 1px solid;
+    padding: 0.5em;
 }
 
