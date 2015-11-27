@@ -10,8 +10,6 @@ __FAILURE="failure"
 __SUCCESS="success"
 __ILLEGAL="illegal"
 
-__SALT="DID YOU KNOW THAT I'M A LONG LONG SLAT LOLOLOLOLOL" 
-
 class MyError(Exception):
     pass
 
@@ -27,24 +25,40 @@ def filterCode(request):
     except:
         raise MyError(__ERROR)
 
+def isLogined(request):
+    if not "logined" in request.session:
+        raise MyError(__ERROR)
+    return request.session["logined"]
+
+def setLogined(request):
+    try:
+        request.session["logined"]=True
+    except:
+        raise MyError(__ERROR)
+
 def validateData(request):
     if filterCode(request)!=filterPost(request,"captcha"):
         raise MyError(__ILLEGAL)
-    #password=md5.md5(filterPost(request,"password")).hexdigest()
     password=filterPost(request,"password")
-    #UsersInfo.objects.create(username="haha",password="12345")
-    #raise MyError("YEAH")
     if not UsersInfo.objects.filter(password=password).count():
         raise MyError(__FAILURE+password)
-
-def setLogined(request):
-    request.session["logined"]=True
+    return True
 
 def login(request):
     try:
-        validateData(request)
+        if validateData(request):
+            setLogined(request)
     except MyError,e:
         return HttpResponse(e)
-    setLogined(request)
     return HttpResponse(__SUCCESS)
-    
+
+def logout(request):
+    try:
+        if not isLogined(request):
+            del(request.session["logined"])
+        else:
+            raise MyError(__FAILURE)
+    except MyError,e:
+        return HttpResponse(e)
+    return HttpResponse(__SUCCESS)
+
