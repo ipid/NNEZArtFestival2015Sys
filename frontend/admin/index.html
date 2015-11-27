@@ -1,63 +1,69 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link href="css/app.css" rel="stylesheet" />
-		<meta charset="utf-8"/>
-		<title>南宁二中2015艺术节后台管理</title>
-	</head>
-	<body>
-	<script>
-		window.onerror = function() {
+    <head>
+        <link href="css/app.css" rel="stylesheet"/>
+        <meta charset="utf-8"/>
+        <title>南宁二中2015艺术节后台管理</title>
+    </head>
+    <body>
+    <script>
+        window.onerror = function () {
             console.log(arguments);
-			alert("出现错误！请尝试重新加载");
-		}
-	</script>
-		<div id="container" style="display: none;">
-			<div class="toolbar" id="header">
-				<div class="toolbar_text">南宁二中2015艺术节后台管理</div>
-				<div id="toolbar_tools" class="toolbar_text"></div>
-			</div>
-			<div id="body">
-				<div id="navigator">
-					<div class="nav_btn" id="nav_preview">概览</div>
-					<divider/>
+            alert("出现错误！请尝试重新加载");
+        }
+    </script>
+    <div id="container" style="display: none;">
+        <div class="toolbar" id="header">
+            <div class="toolbar_text">南宁二中2015艺术节后台管理</div>
+            <div id="toolbar_tools" class="toolbar_text"></div>
+        </div>
+        <div id="body">
+            <div id="navigator">
+                <div class="nav_btn" id="nav_preview">概览</div>
+                <divider/>
 
-					<div class="nav_label">门票</div>
-					<div class="nav_btn" id="nav_ticket_index">所有门票申请</div>
-					<div class="nav_btn" id="nav_ticket_filter">条件查询门票申请</div>
-					<divider/>
+                <div class="nav_label">门票</div>
+                <div class="nav_btn" id="nav_ticket_index">所有门票申请</div>
+                <div class="nav_btn" id="nav_ticket_filter">条件查询门票申请</div>
+                <divider/>
 
-					<div class="nav_label">店铺</div>
-					<div class="nav_btn" id="nav_store_index">所有店铺申请</div>
-					<div class="nav_btn" id="nav_store_filter">条件查询店铺申请</div>
-				</div>
-				<div id="main_view">
-					<div id="view_preview" class="view_page">
-						<div class="text_cap">当前门票申请数量</div>
-						<div class="preview_count" id="preview_ticket_count">0</div>
-						<div class="text_cap">当前店铺申请数量</div>
-						<div class="preview_count" id="preview_store_count">0</div>
-					</div>
-                    <div id="view_ticket_index" class="view_page">
-                        <div>
-							<tbc>ID</tbc>
-							<tbc>姓名</tbc>
-							<tbc>年级</tbc>
-							<tbc>班级</tbc>
-							<tbc>学号</tbc>
-							<tbc>身份证号</tbc>
-							<tbc>申请门票数量</tbc>
-						</div>
-                    </div>
-				</div>
-			</div>
-		</div>
+                <div class="nav_label">店铺</div>
+                <div class="nav_btn" id="nav_store_index">所有店铺申请</div>
+                <div class="nav_btn" id="nav_store_filter">条件查询店铺申请</div>
+            </div>
+            <div id="main_view">
+                <div id="view_preview" class="view_page">
+                    <div class="text_cap">当前门票申请数量</div>
+                    <div class="preview_count" id="preview_ticket_count">0</div>
+                    <div class="text_cap">当前店铺申请数量</div>
+                    <div class="preview_count" id="preview_store_count">0</div>
+                </div>
+                <div id="view_ticket_index" class="view_page">
+                    <table border="0" cellspacing="0" cellpadding="0" id="ticket_index_table">
+                        <tbody>
+                            <tr>
+                                <td nowrap="">ID</td>
+                                <td nowrap="">姓名</td>
+                                <td nowrap="">年级</td>
+                                <td nowrap="">班级</td>
+                                <td nowrap="">学号</td>
+                                <td nowrap="">身份证号</td>
+                                <td nowrap="">申请门票数量</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-		<div id="loader"><div id="loader_body">Loading...</div></div>
-	</body>
-	<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
-	<script src="js/loader.js"></script>
-	<script src="js/net.js"></script>
-	<script src="js/app.js"></script>
+    <div id="loader">
+        <div id="loader_body">Loading...</div>
+    </div>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <script src="js/loader.js"></script>
+    <script src="js/net.js"></script>
+    <script src="js/app.js"></script>
+    </body>
 </html>
 

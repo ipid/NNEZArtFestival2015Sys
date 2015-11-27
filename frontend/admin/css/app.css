@@ -103,11 +103,12 @@ divider {
     top: 0;
     bottom: 0;
     z-index: -2;
-    padding: 1.5em;
+    overflow: auto;
 }
 
 .view_page {
     position: absolute;
+    margin: 1.5em;
 }
 
 .text_cap {
@@ -123,6 +124,17 @@ divider {
 tbc {
     display: table-cell;
     border: 1px solid;
+    padding: 0.5em;
+}
+
+table {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+table td {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
     padding: 0.5em;
 }
 

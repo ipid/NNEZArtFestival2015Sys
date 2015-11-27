@@ -32,7 +32,6 @@ var Net = {
                 }
             },
             success: function(res) {
-                debugger;
                 var o = JSON.parse(res);
                 if(o.state != "success") {
                     failed(o.state);
