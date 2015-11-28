@@ -19,7 +19,7 @@ def fliterPost(request,name):
     try:
         return request.POST[name]
     except:
-        raise MyError(__ERROR+"POST"+name)
+        raise MyError(__ERROR)
 
 def fliterCode(request):
     try:
@@ -42,18 +42,17 @@ def validateIDCode(ID):
         sum = (sum + int(it)*weight) % 11  
     return sum==1  
 
-def validateAdmin(request):
-    pass
+def isAdmin(request):
+    return logined(request) and antiCSRF(request)
+
+def antiCSRF(request):
+    return True
+    return "HTTP_REFERER" in request.META and request.META["HTTP_REFERER"] == request.get_host()
 
 def logined(request):
-    return True
-    try:
-        return request.session["logined"]==True
-    except:
-        raise MyError(__FAILURE)
+    return "logined" in request.session and request.session["logined"]==True
 
 def validateData(request,data):
-
     if not(validateIDCode(data["societyID"]) and "code" in request.session and fliterCode(request)==fliterPost(request,"captcha")):
         raise MyError(__ILLEGAL)
 
@@ -80,13 +79,14 @@ def fetchData(request):
             if tmp:
                 data[i]=tmp
         return data
-    except SyntaxError,e:
-        raise MyError(__ILLEGAL)
+    except:
+        raise MyError(__ERROR)
 
 def insertApplication(request):
     try:
         data=fetchData(request)
         validateData(request,data)
+        data["timestamp"]=datetime.now()
     except MyError,e:
         return HttpResponse(e)
     try:
@@ -97,7 +97,7 @@ def insertApplication(request):
 
 def queryApplication(request):
     try:
-        if not logined(request):
+        if not isAdmin(request):
             raise MyError(__FAILURE)
         data=fetchData(request)
         if "applicationID" in request.POST and request.POST["applicationID"]:
@@ -107,12 +107,12 @@ def queryApplication(request):
             result[key]=objectToDict(val)
             result[key]["applicationID"]=val.pk
     except MyError,e:
-        return HttpResponse(dumps({"state":e,"result":[]}))
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def deleteApplication(request):
     try:
-        if not logined(request):
+        if not isAdmin(request):
             raise MyError(__FAILURE)
         applicationID=fliterPost(request,"applicationID")
         TicketApplication.objects.get(pk=applicationID).delete()
@@ -122,7 +122,7 @@ def deleteApplication(request):
 
 def modifyApplication(request):
     try:
-        if not logined(request):
+        if not isAdmin(request):
             raise MyError(__FAILURE)
         #delete
         applicationID=fliterPost(request,"applicationID")
@@ -140,7 +140,8 @@ def modifyApplication(request):
 
 def indexApplication(request):
     try:
-        if not logined(request):
+        if not isAdmin(request):
+#            raise MyError(__FAILURE+"<br>referer:"+request.META["HTTP_REFERER"]+"<br>get_host:"+request.get_host())
             raise MyError(__FAILURE)
         fromIndex=fliterPost(request,"from")
         toIndex=fliterPost(request,"to")
@@ -149,12 +150,12 @@ def indexApplication(request):
             result[key]=objectToDict(val)
             result[key]["applicationID"]=val.pk
     except MyError,e:
-        return HttpResponse(dumps({"state":e,"result":[]}))
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def queryApplicationNumber(request):
     try:
-        if not logined(request):
+        if not isAdmin(request):
             raise MyError(__FAILURE)
         return HttpResponse(TicketApplication.objects.count())
     except:
