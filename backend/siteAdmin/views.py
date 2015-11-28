@@ -54,7 +54,7 @@ def login(request):
 
 def logout(request):
     try:
-        if not isLogined(request):
+        if isLogined(request):
             del(request.session["logined"])
         else:
             raise MyError(__FAILURE)

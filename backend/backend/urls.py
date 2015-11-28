@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
     url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
     url(r'^api/admin/login$', siteAdmin.views.login),
+    url(r'^api/admin/logout$', siteAdmin.views.logout),
 ]
