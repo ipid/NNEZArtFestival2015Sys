@@ -11,6 +11,7 @@
         },
         hide: function() {
             loader.hide();
+            $("#navigator").removeClass("navigator_show");
         }
     }
 })();

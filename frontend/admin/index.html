@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link href="css/app.css" rel="stylesheet"/>
+        <link href="css/app.css" rel="stylesheet" media="screen and (min-width:500px)"/>
+        <link href="css/mobile.css" rel="stylesheet" media="screen and (max-width:500px)"/>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,user-scalable=no" />
         <title>南宁二中2015艺术节后台管理</title>
     </head>
     <body>
@@ -14,18 +16,19 @@
     </script>
     <div id="container" style="display: none;">
         <div class="toolbar" id="header">
-            <div class="toolbar_text">南宁二中2015艺术节后台管理</div>
-            <div id="toolbar_tools" class="toolbar_text"></div>
+            <div id="toolbar_nav_toggle" class="toolbar_item"></div>
+            <div id="toolbar_text" class="toolbar_item">艺术节后台</div>
+            <div id="toolbar_tools" class="toolbar_item"></div>
         </div>
         <div id="body">
             <div id="navigator">
                 <div class="nav_btn" id="nav_preview">概览</div>
-                <divider/>
+                <div class="divider"></div>
 
                 <div class="nav_label">门票</div>
                 <div class="nav_btn" id="nav_ticket_index">所有门票申请</div>
                 <div class="nav_btn" id="nav_ticket_filter">条件查询门票申请</div>
-                <divider/>
+                <div class="divider"></div>
 
                 <div class="nav_label">店铺</div>
                 <div class="nav_btn" id="nav_store_index">所有店铺申请</div>

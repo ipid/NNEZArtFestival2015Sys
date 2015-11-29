@@ -3,11 +3,18 @@
  */
 
 (function() {
+    var REQ_FAILED = "请求失败！";
+
     var loader_el = document.getElementById("loader");
     loader_el.style.display = "none";
 
     var container_el = document.getElementById("container");
     container_el.style.display = "";
+
+    var navigator = $("#navigator");
+    $("#toolbar_nav_toggle").click(function() {
+        navigator.toggleClass("navigator_show");
+    });
 
     var mainView = $("#main_view");
     //debugger;
@@ -36,11 +43,11 @@
         loadTicketIndex();
     }
     var curIndex = 0;
-    var ticketIndexTable = $("ticket_index_table");
+    var ticketIndexTable = document.getElementById("ticket_index_table");
     function loadTicketIndex() {
         Net.indexApplication(curIndex, 5, function(o) {
             if(o.state != "success") {
-                alert("请求失败");
+                alert("请求失败！");
                 Loader.hide();
                 return;
             }
@@ -48,8 +55,32 @@
             // Remove all records
             $("#ticket_index_table tr:not(:eq(0))").remove();
             // Add new records
-            var tr = document.createElement("tr");
-
+            var result = o.result;
+            for(var i=0; i<result.length; i++) {
+                var tr = document.createElement("tr");
+                var t_id = document.createElement("td");
+                t_id.innerText = result[i]["applicationID"];
+                tr.appendChild(t_id);
+                var t_name = document.createElement("td");
+                t_name.innerText = result[i]["name"];
+                tr.appendChild(t_name);
+                var t_grade = document.createElement("td");
+                t_grade.innerText = result[i]["grade"];
+                tr.appendChild(t_grade);
+                var t_class = document.createElement("td");
+                t_class.innerText = result[i]["classNo"];
+                tr.appendChild(t_class);
+                var t_schoolId = document.createElement("td");
+                t_schoolId.innerText = result[i]["schoolID"];
+                tr.appendChild(t_schoolId);
+                var t_societyID = document.createElement("td");
+                t_societyID.innerText = result[i]["societyID"];
+                tr.appendChild(t_societyID);
+                var t_requirement = document.createElement("td");
+                t_requirement.innerText = result[i]["requirement"];
+                tr.appendChild(t_requirement);
+                ticketIndexTable.appendChild(tr);
+            }
             Loader.hide();
         }, function() {
             alert("请求失败！");
