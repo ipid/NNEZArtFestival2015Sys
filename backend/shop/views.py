@@ -4,6 +4,7 @@ from django.forms.models import model_to_dict
 from shop.models import ShopApplication
 from datetime import datetime
 from json import dumps
+import re
 
 # Create your views here.
 
@@ -74,7 +75,7 @@ def insertApplication(request):
         return HttpResponse("error")
 
 def antiCSRF(request):
-    return "HTTP_REFERER" in request.META and request.META["HTTP_REFERER"] == request.get_host()
+    return "HTTP_REFERER" in request.META and re.compile("^http://%s/" % request.get_host()).match(request.META["HTTP_REFERER"])
 
 def logined(request):
     return "logined" in request.session and request.session["logined"] == True
