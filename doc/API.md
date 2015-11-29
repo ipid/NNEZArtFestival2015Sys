@@ -45,7 +45,7 @@
                 "applicationID":
                 "name":
                 "grade":
-                "no":
+                "classNo":
                 "schoolID":
                 "societyID":
                 "requirement":
@@ -58,9 +58,9 @@
     申请ID:applicationID
     姓名:name
     年级:grade
-    班级:class
+    班级:classNo
     学号:schoolID
-    身份证号:ID
+    身份证号:societyID
     申请的票的数量:requirement
     若不需要则[置空], 缺少字段则返回错误
 
