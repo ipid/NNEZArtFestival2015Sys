@@ -24,24 +24,24 @@ class GuestDataHandler:
 
     def __init__(self,columns,request):
         self.columns=columns
-        self.request=request
+        self.__request.g=request
 
-    def fliterPost(self,name):
+    def filterPost(self,name):
         try:
-            return self.request.POST[name]
+            return self.__request.g.POST[name]
         except:
             raise MyError(__ERROR)
 
-    def fliterCode(self):
+    def filterCode(self):
         try:
-            code=self.request.session["code"]
+            code=self.__request.g.session["code"]
             del(request.session["code"])
             return code
         except:
             raise MyError(__ERROR)
 
     def validateData(self):
-        if "code" in self.request.session and fliterCode()==fliterPost("captcha")):
+        if "code" in self.__request.g.session and fliterCode()==fliterPost("captcha")):
             raise MyError(__ILLEGAL)
         for i in columns:
             if not i in self.data or len(self.data[i])>columns[i]:
@@ -66,13 +66,13 @@ class GuestDataHandler:
 class AdminDataHandler(GuestDataHandler):
 
     def isAdmin(self):
-        return logined(self.request) and antiCSRF(self.request)
+        return logined(self.__request.g) and antiCSRF(self.request)
 
     def antiCSRF(self):
-        return "HTTP_REFERER" in self.request.META and re.compile("^http://%s/" % self.request.get_host()).match(self.request.META["HTTP_REFERER"])
+        return "HTTP_REFERER" in self.__request.g.META and re.compile("^http://%s/" % self.request.get_host()).match(self.request.META["HTTP_REFERER"])
 
     def logined(self):
-        return "logined" in self.request.session and self.request.session["logined"]==True
+        return "logined" in self.__request.g.session and self.request.session["logined"]==True
     
     def getData(self):
         if not isAdmin():
@@ -86,5 +86,18 @@ class DatabaseHandler:
         self.db=db
         self.columns=columns
     
-    def insert(
-        
+    def insert(self,data):
+        db.objects.creat(**data)
+    
+    def query(self,data):
+        db.objects.filter(**data)
+
+    def delete(self,pk):
+        db.objects.get(pk=pk).delete()
+    
+    def modify(self,data):
+        data["pk"]=data["applicationID"]
+        del(data["applicationID"])
+        delete(data["pk"])
+        insert(data)
+
