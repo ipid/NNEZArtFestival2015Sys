@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'shop',
     'captcha',
     'siteAdmin',
+    'advertisement',
 )
 
 MIDDLEWARE_CLASSES = (

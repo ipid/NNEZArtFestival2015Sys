@@ -11,18 +11,18 @@ __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-guestColumns={"owner":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000}
-adminColumns={"owner":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"ApplicationID":100}
+guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"isJoined":1}
+adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"ApplicationID":100,"isJoined":1}
 
 
 def insertApplication(request):
-    try:
-        data=GuestDataHandler(guestColumns,request).getData()
-        DatabaseHandler(AdvertisementApplication).insert(data)
-    except MyError,e:
-        return HttpResponse(e)
-    except:
-        return HttpResponse(__ERROR)
+    #try:
+    data=GuestDataHandler(guestColumns,request).getData()
+    DatabaseHandler(AdvertisementApplication).insert(data)
+    #except MyError,e:
+    #    return HttpResponse(e)
+    #except:
+    #    return HttpResponse(__ERROR)
     return HttpResponse(__SUCCESS)
 
 

@@ -13,8 +13,11 @@ class MyError(Exception):
 
 class GuestDataHandler:
 
+    __data=dict()
+    __columns=dict()
+
     def __init__(self,columns,request):
-        self.columns=columns
+        self.__columns=columns
         self.__request=request
 
     def filterPost(self,name):
@@ -32,29 +35,26 @@ class GuestDataHandler:
             raise MyError(__ERROR)
 
     def validateCode(self):
-        if "code" in self.__request.session and filterCode()==filterPost("captcha"):
+        if "code" in self.__request.session and self.filterCode()==self.filterPost("captcha"):
             return False
         else:
             return True
 
     def validateData(self):
-        for i in columns:
-            if not i in self.__data or len(self.__data[i])>columns[i]:
+        for i in self.__columns:
+            if not i in self.__data or len(self.__data[i])>self.__columns[i]:
                 return False
         return True
 
     def fetchData(self):
-        try:
-            for i in columns:
-                tmp=filterPost(i)
-                if tmp:
-                    self.__data[i]=tmp
-        except:
-            raise MyError(__ERROR)
+        for i in self.__columns:
+            tmp=self.filterPost(i)
+            if tmp:
+                self.__data[i]=tmp
 
     def getData(self):
-        fetchData()
-        if validateData() and validateCode():
+        self.fetchData()
+        if self.validateData() and self.validateCode():
             return self.__data
         else:
             raise MyError(__ILLEGAL)
@@ -63,7 +63,7 @@ class GuestDataHandler:
 class AdminDataHandler(GuestDataHandler):
 
     def isAdmin(self):
-        return logined(self.__request) and antiCSRF(self.__request)
+        return self.logined(self.__request) and self.antiCSRF(self.__request)
 
     def antiCSRF(self):
         return "HTTP_REFERER" in self.__request.META and re.compile("^http://%s/" % self.__request.get_host()).match(self.__request.META["HTTP_REFERER"])
@@ -72,8 +72,8 @@ class AdminDataHandler(GuestDataHandler):
         return "logined" in self.__request.session and self.__request.session["logined"]==True
 
     def validateData(self):
-        for i in columns:
-            if not len(self.__data[i])>columns[i]:
+        for i in self.__columns:
+            if not len(self.__data[i])>self.__columns[i]:
                 return False
         return True
     
@@ -81,7 +81,7 @@ class AdminDataHandler(GuestDataHandler):
         if not isAdmin():
             raise MyError(__FAILURE)
         fetchData()
-        if validateData():
+        if self.validateData():
             return self.__data
         else:
             raise MyErro(ILLEGAL)
@@ -97,7 +97,7 @@ class DatabaseHandler:
         __db.objects.creat(**data)
     
     def query(self,data):
-        return pkToApplicationID( list(self.__db.objects.filter(**data)) )
+        return self.pkToApplicationID( list(self.__db.objects.filter(**data)) )
 
     def delete(self,pk):
         __db.objects.get(pk=pk).delete()
@@ -105,15 +105,15 @@ class DatabaseHandler:
     def modify(self,data):
         data["pk"]=data["applicationID"]
         del(data["applicationID"])
-        delete(data["pk"])
-        insert(data)
+        self.delete(data["pk"])
+        self.insert(data)
     
     def index(self,start,length):
-        return pkToApplicationID( list(self.__db.objects.objects.all()[start:length]) )
+        return self.pkToApplicationID( list(self.__db.objects.objects.all()[start:length]) )
 
     def pkToApplicationID(self,data):
         for key,val in enumerate(data):
-            data[key]=objectToDict(val)
+            data[key]=self.objectToDict(val)
             data[key]["applicationID"]=val.pk
         return data
 
