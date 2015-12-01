@@ -67,3 +67,4 @@ def isAdmin(request):
         return HttpResponse(0)
 
 def dumpTable(request):
+	pass

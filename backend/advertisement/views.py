@@ -1,6 +1,6 @@
-#from django.shortcuts import render
+from myFunction.functions import *
 from django.http import HttpResponse
-from ticket.models import *
+from advertisement.models import *
 from django.utils.html import *
 from datetime import datetime
 from json import dumps
@@ -11,72 +11,13 @@ __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-columns={"name":4,"grade":1,"classNo":2,"schoolID":6,"societyID":18,"requirement":3}
-
-class MyError(Exception):
-    pass
-
-def fliterPost(request,name):
-    try:
-        return request.POST[name]
-    except:
-        raise MyError(__ERROR)
-
-def fliterCode(request):
-    try:
-        code=request.session["code"]
-        del(request.session["code"])
-        return code
-    except:
-        raise MyError(__ERROR)
-
-def validateIDCode(ID):  
-    l=list(ID)
-    if len(l)!=18:
-        return False
-    for i,it in enumerate(l):
-        if it=='x' or it=='X':
-            l[i]=10
-        else:
-            l[i]=int(it)
-    sum=0  
-    for i,it in enumerate(l):  
-        weight = 2**(17-i) % 11  
-        sum = (sum + int(it)*weight) % 11  
-    return sum==1  
-
-def isAdmin(request):
-    return logined(request) and antiCSRF(request)
-
-def antiCSRF(request):
-    return "HTTP_REFERER" in request.META and re.compile("^http://%s/" % request.get_host()).match(request.META["HTTP_REFERER"])
-
-def logined(request):
-    return "logined" in request.session and request.session["logined"]==True
-
-def validateData(request,data):
-    if not(validateIDCode(data["societyID"]) and "code" in request.session and fliterCode(request)==fliterPost(request,"captcha")):
-        raise MyError(__ILLEGAL)
-    for i in columns:
-        if not i in data or len(data[i])>columns[i]:
-            raise MyError(__ILLEGAL)
+columns={"owner":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000}
 
 def objectToDict(obj):
     d=dict()
     for i in columns:
         d[i]=getattr(obj,i)
     return d
-
-def fetchData(request):
-    try:
-        data=dict()
-        for i in columns:
-            tmp=fliterPost(request,i)
-            if tmp:
-                data[i]=tmp
-        return data
-    except:
-        raise MyError(__ERROR)
 
 def insertApplication(request):
     try:
@@ -154,4 +95,5 @@ def queryApplicationNumber(request):
         return HttpResponse(TicketApplication.objects.count())
     except:
         return HttpResponse(-1)
+
 
