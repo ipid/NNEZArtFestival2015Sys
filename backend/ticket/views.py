@@ -24,7 +24,9 @@ def fliterPost(request,name):
 
 def fliterCode(request):
     try:
-        return escape(request.session["code"])
+		code=request.session["code"]
+		del(request.session["code"])
+        return code
     except:
         raise MyError(__ERROR)
 
