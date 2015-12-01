@@ -98,7 +98,7 @@
 
 参数:
 
-    申请人姓名:owner(最大长度4)
+    申请人姓名:ownerName(最大长度4)
     申请人联系方式:ownerContact(最大长度64)
     商铺名:shopName(最大长度32)
     申请人类型:ownerType
@@ -168,18 +168,24 @@
 
 参数:
 
-    申请ID:pk
-    姓名:owner
-    年级:grade
-    班级:ownerContact
-    店名:shopName
-    类型:ownerType
-    年级:ownerGrade
-    班级:ownerClass
-    用电:electricity
-    食物:food
-    非食物:nonFood
-    密钥:privilegeKey
+    申请人姓名:ownerName(最大长度4)
+    申请人联系方式:ownerContact(最大长度64)
+    商铺名:shopName(最大长度32)
+    申请人类型:ownerType
+      0 == 凤岭高中部班级/国际班 (默认值)
+      1 == 教师
+      2 == 凤岭高中部社团/国际班社团
+      3 == 凤岭高中部个人/国际班个人
+      4 == 非学生个人
+      5 == 东盟中学
+      6 == 二中初中部/新民中学
+    申请人年级:ownerGrade(同上)
+    申请人班级:ownerClass(同上)
+    是否需要电力:electricity(1或0)
+    是否贩卖食物:food(1或0)
+    是否贩卖非食物:nonFood(1或0)
+    密钥:privilegeKey(8位, 默认00000000)
+    验证码:captcha
     若不需要则[置空], 缺少字段则返回错误
 
 **删除店铺申请:**
