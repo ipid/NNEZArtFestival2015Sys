@@ -25,7 +25,6 @@ def PrivilegeKeyGenerator():
 
 class ValidateDataTypeMixin:
     def validateDataType(self):
-        return True
         try:
             ownerClass=int(self.data["ownerClass"])
             ownerGrade=int(self.data["ownerGrade"])
@@ -36,8 +35,9 @@ class ValidateDataTypeMixin:
             privilegeKey=self.data["privilegeKey"]
         except:
             return False
-        if not ( len(privilegeKey)==8 ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
+        if not ( len(privilegeKey)==8 and ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
             return False
+        return True
 
 class ValidatePrivilegeKeyMixin:
     def validatePrivilegeKey(self):
@@ -118,3 +118,5 @@ def queryApplicationNumber(request):
         return HttpResponse(-1)
     return HttpResponse(DatabaseHandler(adminColumns,ShopApplication).getNumRecord())
 
+def dumpApplication(request):
+    pass
