@@ -32,7 +32,7 @@ class GuestDataHandler:
             raise MyError(__ERROR)
 
     def validateCode(self):
-        if "code" in self.__request.session and fliterCode()==fliterPost("captcha")):
+        if "code" in self.__request.session and filterCode()==filterPost("captcha"):
             return False
         else:
             return True
@@ -46,7 +46,7 @@ class GuestDataHandler:
     def fetchData(self):
         try:
             for i in columns:
-                tmp=fliterPost(i)
+                tmp=filterPost(i)
                 if tmp:
                     self.__data[i]=tmp
         except:
@@ -70,28 +70,34 @@ class AdminDataHandler(GuestDataHandler):
 
     def logined(self):
         return "logined" in self.__request.session and self.__request.session["logined"]==True
+
+    def validateData(self):
+        for i in columns:
+            if not len(self.__data[i])>columns[i]:
+                return False
+        return True
     
     def getData(self):
         if not isAdmin():
             raise MyError(__FAILURE)
         fetchData()
-        if validateData()
+        if validateData():
             return self.__data
-        else
+        else:
             raise MyErro(ILLEGAL)
 
 class DatabaseHandler:
 
-    def __init__(self,__columns,__db)
-        self.__db=__db
-        self.__columns=__columns
+    def __init__(self,columns,db):
+        self.__db=db
+        self.__columns=columns
     
     def insert(self,data):
         data["timestamp"]=datatime.now()
         __db.objects.creat(**data)
     
     def query(self,data):
-        return pkToApplicationID( (list)__db.objects.filter(**data) )
+        return pkToApplicationID( list(self.__db.objects.filter(**data)) )
 
     def delete(self,pk):
         __db.objects.get(pk=pk).delete()
@@ -103,9 +109,9 @@ class DatabaseHandler:
         insert(data)
     
     def index(self,start,length):
-        return pkToApplicationID( (list)__db.objects.objects.all()[start:length] )
+        return pkToApplicationID( list(self.__db.objects.objects.all()[start:length]) )
 
-    def pkToApplicationID(self,data)
+    def pkToApplicationID(self,data):
         for key,val in enumerate(data):
             data[key]=objectToDict(val)
             data[key]["applicationID"]=val.pk
@@ -116,4 +122,8 @@ class DatabaseHandler:
         for i in self,__columns:
             d[i]=getattr(obj,i)
         return d
+
+    def getNumRecord(self):
+        return db.objects.all().count()
+
 

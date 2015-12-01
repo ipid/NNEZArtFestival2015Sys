@@ -17,10 +17,8 @@ adminColumns={"owner":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUr
 
 def insertApplication(request):
     try:
-        gdh=GuestDataHandler(guestColumns,request)
-        data=gdh.getData()
-        dbh=DatabaseHandler(AdvertisementApplication)
-        dbh.insert(data)
+        data=GuestDataHandler(guestColumns,request).getData()
+        DatabaseHandler(AdvertisementApplication).insert(data)
     except MyError,e:
         return HttpResponse(e)
     except:
@@ -30,20 +28,16 @@ def insertApplication(request):
 
 def queryApplication(request):
     try:
-        adh=AdminDataHandler(adminColumns,request)
-        data=adh.getData()
-        dbh=DatabaseHandler(adminColumns,AdvertisementApplication)
-        result=dbh.query(data)
+        data=AdminDataHandler(adminColumns,request).getData()
+        result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
     except MyError,e:
         return HttpResponse(dumps({"state":e,"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def deleteApplication(request):
     try:
-        adh=AdminDataHandler({"applicationID",request)
-        applicationID=adh.getData()["applicationID"]
-        dbh=DatabaseHandler(adminColumns,AdvertisementApplication)
-        dbh.deleteApplication(applicationID)
+        AapplicationID=dminDataHandler({"applicationID"},request).getData()["applicationID"]
+        DatabaseHandler(adminColumns,AdvertisementApplication).deleteApplication(applicationID)
     except MyError,e:
         return HttpResponse(e)
     except:
@@ -62,16 +56,18 @@ def modifyApplication(request):
 
 def indexApplication(request):
     try:
-        data=AdminDataHandler(adminColumns,request).getData()
-        DatabaseHandler(adminColumns,AdvertisementApplication).index(data["from"],data["len"])
+        data=AdminDataHandler({"from":10,"len":10},request).getData()
+        result=DatabaseHandler(adminColumns,AdvertisementApplication).index(data["from"],data["len"])
     except MyError,e:
-        return HttpResponse(dumps({"state":str(e),"result":[]}))
+        return HttpResponse(dumps({"state":e,"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def queryApplicationNumber(request):
     try:
-        pass
+        data=AdminDataHandler({},request).getData()
     except:
         return HttpResponse(-1)
-
+    return HttpResponse(DatabaseHandler(adminColumns,AdvertisementApplication).getNumRecord())
 
