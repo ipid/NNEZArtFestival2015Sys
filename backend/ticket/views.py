@@ -4,6 +4,7 @@ from ticket.models import *
 from django.utils.html import *
 from datetime import datetime
 from json import dumps
+import re
 
 __ERROR="error"
 __ILLEGAL="illegal"
@@ -46,8 +47,7 @@ def isAdmin(request):
     return logined(request) and antiCSRF(request)
 
 def antiCSRF(request):
-    return True
-    return "HTTP_REFERER" in request.META and request.META["HTTP_REFERER"] == request.get_host()
+    return "HTTP_REFERER" in request.META and re.compile("^http://%s/" % request.get_host()).match(request.META["HTTP_REFERER"])
 
 def logined(request):
     return "logined" in request.session and request.session["logined"]==True
