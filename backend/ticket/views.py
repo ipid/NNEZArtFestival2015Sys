@@ -55,14 +55,11 @@ def logined(request):
 def validateData(request,data):
     if not(validateIDCode(data["societyID"]) and "code" in request.session and fliterCode(request)==fliterPost(request,"captcha")):
         raise MyError(__ILLEGAL)
-
     for i in columns:
         if not i in data:
             raise MyError(__ILLEGAL)
-
     if len(data["name"])>4 or len(data["schoolID"])>6 or data["requirement"]<1 or int(data["grade"])<1 or int(data["grade"])>3:
         raise MyError(__ILLEGAL)
-
     request.session.pop("code")
 
 def objectToDict(obj):
@@ -130,7 +127,6 @@ def modifyApplication(request):
         #creat
         data=fetchData(request)
         data["pk"]=applicationID
-        #validateData(request,data)
         TicketApplication.objects.create(**data)
     except MyError,e:
         return HttpResponse(e)
@@ -141,7 +137,6 @@ def modifyApplication(request):
 def indexApplication(request):
     try:
         if not isAdmin(request):
-#            raise MyError(__FAILURE+"<br>referer:"+request.META["HTTP_REFERER"]+"<br>get_host:"+request.get_host())
             raise MyError(__FAILURE)
         fromIndex=fliterPost(request,"from")
         toIndex=fliterPost(request,"to")
@@ -160,5 +155,4 @@ def queryApplicationNumber(request):
         return HttpResponse(TicketApplication.objects.count())
     except:
         return HttpResponse(-1)
-
 

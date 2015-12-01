@@ -1,4 +1,4 @@
-**提交门票申请:**
+﻿**提交门票申请:**
 
     api/ticket/insertApplication
 
@@ -254,3 +254,15 @@
 返回值:
 
     success/failure/error
+
+**验证是否登录**
+
+    api/admin/isAdmin
+
+参数:
+
+    无
+
+返回值:
+
+    1(已经登录)/0(没有登录)
