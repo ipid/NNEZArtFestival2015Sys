@@ -212,3 +212,12 @@ span {
     width: 1.3em;
     float: right;
 }
+
+.nav_btn_disabled {
+    text-decoration: line-through;
+}
+
+#ticket_index_prePage, #shop_index_prePage {
+    margin-right: 1em;
+}
+

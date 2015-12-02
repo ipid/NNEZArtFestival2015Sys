@@ -98,7 +98,7 @@
 
 参数:
 
-    申请人姓名:owner(最大长度4)
+    申请人姓名:ownerName(最大长度4)
     申请人联系方式:ownerContact(最大长度64)
     商铺名:shopName(最大长度32)
     申请人类型:ownerType
@@ -170,8 +170,7 @@
 
     申请ID:pk
     姓名:owner
-    年级:grade
-    班级:ownerContact
+    联系方式:ownerContact
     店名:shopName
     类型:ownerType
     年级:ownerGrade
