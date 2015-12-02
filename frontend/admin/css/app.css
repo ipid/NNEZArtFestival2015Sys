@@ -1,0 +1,210 @@
+html {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+}
+
+.divider {
+    height: 1px;
+    background: #AAA;
+    display: block;
+}
+
+#loader {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.2);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#loader_body {
+    position: absolute;
+    left: 50%;
+    top: 48%;
+    text-align: center;
+    background: rgba(255,255,255,0.5);
+    border-radius: 5px;
+    padding: 1em;
+    margin-left: -3em;
+    width: 6em;
+}
+
+.toolbar {
+    width: 100%;
+    background: #03A9F4;
+    -webkit-box-shadow: #AAA 0 0 12px;
+    -moz-box-shadow: #AAA 0 0 12px;
+    box-shadow: #AAA 0 0 12px;
+    z-index: 9999;
+}
+
+.toolbar_item {
+    margin: .7em;
+    font-size: 1.3em;
+    color: #EFEFEF;
+    display: inline-block;
+    line-height: 1.3em;
+}
+
+#navigator {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: #F0F0F0;
+    width: 250px;
+    -webkit-box-shadow: #AAA 0 0 6px;
+    -moz-box-shadow: #AAA 0 0 6px;
+    box-shadow: #AAA 0 0 6px;
+    overflow-y: auto;
+}
+
+.nav_btn {
+    padding: 1em;
+    cursor: pointer;
+    background: #F0F0F0;
+    -webkit-transition: background .3s;
+    -moz-transition: background .3s;
+    -ms-transition: background .3s;
+    -o-transition: background .3s;
+    transition: background .3s;
+}
+
+.nav_btn:hover {
+    background: #CDCDFF !important;
+}
+
+.nav_label {
+    padding: 1em;
+    background: #F0F0F0;
+    opacity: .54;
+}
+
+#body {
+    position: absolute;
+    top: 3.5em;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+
+#main_view {
+    position: absolute;
+    background: #F5F5F5;
+    left: 250px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -2;
+    overflow: auto;
+}
+
+.view_page {
+    position: absolute;
+    padding: 1.5em;
+}
+
+.text_cap {
+    font-size: 1.2em;
+}
+
+.preview_count {
+    padding-left: 2em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+table {
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+}
+
+table td {
+    border-left: 1px solid #000;
+    border-top: 1px solid #000;
+    padding: 0.5em;
+}
+
+#toolbar_nav_toggle {
+    display: none;
+    background: url("../res/menu.svg") no-repeat center;
+    height: 1.3em;
+    width: 1.3em;
+    float: left;
+}
+
+input {
+    border: none;
+    background: none;
+    border-bottom: solid 1px;
+    width: 100%;
+    outline: none;
+    resize: none;
+    -webkit-transition: border .3s;
+    -moz-transition: border .3s;
+    -ms-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+}
+
+input:focus {
+    border-bottom: solid 1px #03A9F4;
+}
+
+input {
+    font-size: 1em;
+    margin-bottom: .5em;
+}
+
+span {
+    font-size: .8em;
+}
+
+#watermark {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.title {
+    font-size: 1.3em;
+}
+
+#view_login {
+    position: static;
+}
+
+.button {
+    background: #42A5F5;
+    color: #FEFEFE;
+    display: inline-block;
+    padding: .5em 1em;
+    cursor: pointer;
+}
+
+#login_verify_img {
+    cursor: pointer;
+}
+
+#toolbar_logout {
+    background: url("../res/logout.svg") no-repeat center;
+    height: 1.3em;
+    cursor: pointer;
+    width: 1.3em;
+    float: right;
+}
+
+.nav_btn_disabled {
+    text-decoration: line-through;
+}
+
+#ticket_index_prePage, #shop_index_prePage {
+    margin-right: 1em;
+}

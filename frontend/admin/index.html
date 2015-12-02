@@ -1,10 +1,200 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>FrontEnd</title>
-	</head>
-	<body>
+    <head>
+        <link href="css/app.css" rel="stylesheet" media="screen and (min-width:500px)"/>
+        <link href="css/mobile.css" rel="stylesheet" media="screen and (max-width:500px)"/>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width,user-scalable=no" />
+        <title>南宁二中2015艺术节后台管理</title>
+    </head>
+    <body>
+        <script>
+            window.onerror = function () {
+                console.log(arguments);
+                alert("出现错误！请尝试重新加载");
+            }
+        </script>
+        <div id="container" style="display: none;">
+            <div class="toolbar" id="header">
+                <div id="toolbar_nav_toggle" class="toolbar_item"></div>
+                <div id="toolbar_text" class="toolbar_item">艺术节后台</div>
+                <div id="toolbar_logout" class="toolbar_item"></div>
+            </div>
 
-	</body>
+            <div id="view_login" class="view_page" style="display: none;">
+                <span class="title">登录</span>
+                <br><br>
+                <span>密码</span>
+                <input type="password" id="login_password"/>
+                <span>验证码</span><br>
+                <img src="/api/captcha/get" id="login_verify_img"/>
+                <input id="login_verify"/>
+                <div class="button" id="login_submit">登录</div>
+            </div>
+
+            <div id="body" style="display: none;">
+                <div id="navigator">
+                    <div class="nav_btn" id="nav_preview">概览</div>
+                    <div class="divider"></div>
+
+                    <div class="nav_label">门票</div>
+                    <div class="nav_btn nav_btn_disabled" id="nav_ticket_index">所有门票申请</div>
+                    <div class="nav_btn nav_btn_disabled" id="nav_ticket_filter">条件查询门票申请</div>
+                    <div class="divider"></div>
+
+                    <div class="nav_label">店铺</div>
+                    <div class="nav_btn" id="nav_shop_index">所有店铺申请</div>
+                    <div class="nav_btn" id="nav_shop_filter">条件查询店铺申请</div>
+                    <div class="divider"></div>
+
+                    <div class="nav_label">广告</div>
+                    <div class="nav_btn nav_btn_disabled" id="nav_ad_index">所有广告申请</div>
+                    <div class="nav_btn nav_btn_disabled" id="nav_ad_filter">条件查询广告申请</div>
+                </div>
+                <div id="main_view">
+                    <!--
+                        Preview
+                    -->
+                    <div id="view_preview" class="view_page">
+                        <div class="text_cap">当前门票申请数量</div>
+                        <div class="preview_count" id="preview_ticket_count">0</div>
+                        <div class="text_cap">当前店铺申请数量</div>
+                        <div class="preview_count" id="preview_shop_count">0</div>
+                    </div>
+
+                    <!--
+                        Ticket
+                    -->
+                    <div id="view_ticket_index" class="view_page">
+                        <table border="0" cellspacing="0" cellpadding="0" id="ticket_index_table">
+                            <tbody>
+                            <tr>
+                                <td nowrap="">ID</td>
+                                <td nowrap="">姓名</td>
+                                <td nowrap="">年级</td>
+                                <td nowrap="">班级</td>
+                                <td nowrap="">学号</td>
+                                <td nowrap="">身份证号</td>
+                                <td nowrap="">申请门票数量</td>
+                                <td nowrap="">操作</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p></p>
+                        <div class="button" id="ticket_index_prePage">上一页</div>
+                        <div class="button" id="ticket_index_nextPage">下一页</div>
+                    </div>
+                    <div id="view_ticket_search" class="view_page">
+                        <span>请求ID</span>
+                        <input id="ticket_search_applicationID"/>
+                        <span>姓名</span>
+                        <input id="ticket_search_name"/>
+                        <span>年级</span>
+                        <input id="ticket_search_grade"/>
+                        <span>班级</span>
+                        <input id="ticket_search_class"/>
+                        <span>学号</span>
+                        <input id="ticket_search_schoolID"/>
+                        <span>身份证号</span>
+                        <input id="ticket_search_societyID"/>
+                        <span>需要门票数量</span>
+                        <input id="ticket_search_require"/>
+                        <div class="button" id="ticket_search_submit">查询</div>
+                    </div>
+
+                    <!--
+                        Shop
+                    -->
+                    <div id="view_shop_index" class="view_page">
+                        <table border="0" cellspacing="0" cellpadding="0" id="shop_index_table">
+                            <tbody>
+                            <tr>
+                                <td nowrap="">ID</td>
+                                <td nowrap="">姓名</td>
+                                <td nowrap="">联系方式</td>
+                                <td nowrap="">商铺名</td>
+                                <td nowrap="">申请人类型</td>
+                                <td nowrap="">年级</td>
+                                <td nowrap="">班级</td>
+                                <td nowrap="">是否用电</td>
+                                <td nowrap="">是否有食物</td>
+                                <td nowrap="">是否有非食物</td>
+                                <td nowrap="">密钥</td>
+                                <td nowrap="">操作</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p></p>
+                        <div class="button" id="shop_index_prePage">上一页</div>
+                        <div class="button" id="shop_index_nextPage">下一页</div>
+                    </div>
+                    <div id="view_shop_search" class="view_page">
+                        <span>请求ID</span>
+                        <input id="shop_search_applicationID"/>
+                        <span>姓名</span>
+                        <input id="shop_search_ownerName"/>
+                        <span>联系方式</span>
+                        <input id="shop_search_contact"/>
+                        <span>店名</span>
+                        <input id="shop_search_shopName"/>
+                        <span>申请者类型</span>
+                        <input id="shop_search_ownerType"/>
+                        <span>年级</span>
+                        <input id="shop_search_grade"/>
+                        <span>班级</span>
+                        <input id="shop_search_class"/>
+                        <span>是否用电</span>
+                        <input id="shop_search_electricity"/>
+                        <span>是否有食物</span>
+                        <input id="shop_search_hasFood"/>
+                        <span>是否有非食物</span>
+                        <input id="shop_search_hasNonFood"/>
+                        <span>密钥</span>
+                        <input id="shop_search_key"/>
+                        <div class="button" id="shop_search_submit">查询</div>
+                    </div>
+                    <div id="view_shop_update" class="view_page">
+                        <span>请求ID</span>
+                        <input id="shop_update_applicationID" disabled/>
+                        <span>姓名</span>
+                        <input id="shop_update_ownerName"/>
+                        <span>联系方式</span>
+                        <input id="shop_update_contact"/>
+                        <span>店名</span>
+                        <input id="shop_update_shopName"/>
+                        <span>申请者类型</span>
+                        <input id="shop_update_ownerType"/>
+                        <span>年级</span>
+                        <input id="shop_update_grade"/>
+                        <span>班级</span>
+                        <input id="shop_update_class"/>
+                        <span>是否用电</span>
+                        <input id="shop_update_electricity"/>
+                        <span>是否有食物</span>
+                        <input id="shop_update_hasFood"/>
+                        <span>是否有非食物</span>
+                        <input id="shop_update_hasNonFood"/>
+                        <span>密钥</span>
+                        <input id="shop_update_key"/>
+                        <div class="button" id="shop_update_submit">更新</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loader">
+            <div id="loader_body">Loading...</div>
+        </div>
+
+        <div id="watermark">
+            南宁二中E社&copy;2015 All rights reserved.
+        </div>
+        <!--CDN Res-->
+        <!--<script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>-->
+        <script src="js/jquery.js"></script>
+        <script src="js/loader.js"></script>
+        <script src="js/net.js"></script>
+        <script src="js/app.js"></script>
+    </body>
 </html>
 

@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#STATIC_ROOT='../frontend/admin'
+
 
 # Application definition
 
