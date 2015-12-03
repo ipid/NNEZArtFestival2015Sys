@@ -46,7 +46,7 @@ body {
 }
 
 .toolbar_item {
-    padding: .7em;
+    margin: .7em;
     font-size: 1.3em;
     color: #EFEFEF;
     display: inline-block;
@@ -134,4 +134,69 @@ table td {
 
 #toolbar_nav_toggle {
     display: none;
+    background: url("../res/menu.svg") no-repeat center;
+    height: 1.3em;
+    width: 1.3em;
+    float: left;
+}
+
+input {
+    border: none;
+    background: none;
+    border-bottom: solid 1px;
+    width: 100%;
+    outline: none;
+    resize: none;
+    -webkit-transition: border .3s;
+    -moz-transition: border .3s;
+    -ms-transition: border .3s;
+    -o-transition: border .3s;
+    transition: border .3s;
+}
+
+input:focus {
+    border-bottom: solid 1px #03A9F4;
+}
+
+input {
+    font-size: 1em;
+    margin-bottom: .5em;
+}
+
+span {
+    font-size: .8em;
+}
+
+#watermark {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.title {
+    font-size: 1.3em;
+}
+
+#view_login {
+    position: static;
+}
+
+.button {
+    background: #42A5F5;
+    color: #FEFEFE;
+    display: inline-block;
+    padding: .5em 1em;
+    cursor: pointer;
+}
+
+#login_verify_img {
+    cursor: pointer;
+}
+
+#toolbar_logout {
+    /* TODO Image */
+    background: url("../res/menu.svg") no-repeat center;
+    height: 1.3em;
+    width: 1.3em;
+    float: right;
 }

@@ -5,12 +5,6 @@
 (function() {
     var REQ_FAILED = "请求失败！";
 
-    var loader_el = document.getElementById("loader");
-    loader_el.style.display = "none";
-
-    var container_el = document.getElementById("container");
-    container_el.style.display = "";
-
     var navigator = $("#navigator");
     $("#toolbar_nav_toggle").click(function() {
         navigator.toggleClass("navigator_show");
@@ -19,6 +13,27 @@
     var mainView = $("#main_view");
     //debugger;
     mainView.children().hide();
+
+    $("#login_verify_img").click(function() {
+        this.src = /*"http://127.0.0.1:8000/" + */"api/captcha/get";
+    });
+
+    var login_pwd = $("#login_password");
+    var login_verify = $("#login_verify");
+    $("#login_submit").click(function() {
+        Net.login(login_pwd.val(), login_verify.val(), function() {
+            enterFrontEnd();
+        }, function() {
+            alert("登录失败");
+        });
+    });
+
+    function initLogin() {
+        mainView.children().hide();
+
+        $("#view_login").show();
+        Loader.hide();
+    }
 
     var previewTicketCountEl = $("#preview_ticket_count");
     function initPreview() {
@@ -89,6 +104,37 @@
     }
     $("#nav_ticket_index").click(initTicketIndex);
 
-    initPreview();
+    function initTicketSearch() {
+        mainView.children().hide();
+        $("#view_ticket_search").show();
+        Loader.hide();
+    }
+    $("#nav_ticket_filter").click(initTicketSearch);
+
+    Net.isAdmin(enterFrontEnd, initLogin);
+
+    function enterFrontEnd() {
+        showViewport();
+        initPreview();
+        hideLogin();
+    }
+
+    var view_login = $("#view_login");
+    function hideLogin() {
+        view_login.hide();
+    }
+
+    function showViewport() {
+        var container_el = document.getElementById("body");
+        container_el.style.display = "";
+    }
+
+    var container_el = document.getElementById("container");
+    container_el.style.display = "";
+
+    var loader_el = document.getElementById("loader");
+    loader_el.style.display = "none";
+
+
 
 })();

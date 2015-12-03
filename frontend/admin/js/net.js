@@ -1,4 +1,36 @@
 var Net = {
+    login: function(pwd, ver, successFn, failed) {
+        $.ajax("api/admin/login", {
+            method: "POST",
+            data: {
+                password: pwd,
+                captcha: ver
+            },
+            error: function() {
+                failed();
+            },
+            success: function(re) {
+                if(re != "success")
+                    failed();
+                else
+                    successFn();
+            }
+        });
+    },
+    isAdmin: function(successFn, failed) {
+        $.ajax("api/admin/isAdmin", {
+            method: "POST",
+            error: function() {
+                failed();
+            },
+            success: function(code) {
+                if(code == "1")
+                    successFn();
+                else
+                    failed();
+            }
+        });
+    },
     queryApplicationNumber: function(successFn, failed) {
         $.ajax("api/ticket/queryApplicationNumber", {
             method: "POST",
@@ -19,12 +51,12 @@ var Net = {
             }
         });
     },
-    indexApplication: function(from, to, successFn, failed) {
+    indexApplication: function(from, len, successFn, failed) {
         $.ajax("api/ticket/indexApplication", {
             method: "POST",
             data: {
                 from: from,
-                to: to
+                len: len
             },
             error: function() {
                 if(failed) {
