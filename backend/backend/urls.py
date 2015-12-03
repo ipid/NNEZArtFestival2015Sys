@@ -20,9 +20,11 @@ import ticket.views
 import shop.views
 import config.views
 import captcha.views
+import siteAdmin.views
 
 urlpatterns = [
     url(r'^test.html$', lambda r: render(r, "test.html")),
+    url(r'^login.html$', lambda r: render(r, "login.html")),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/ticket/insertApplication$', ticket.views.insertApplication),
     url(r'^api/ticket/queryApplication$', ticket.views.queryApplication),
@@ -35,4 +37,6 @@ urlpatterns = [
     url(r'^api/shop/insertApplication$', shop.views.insertApplication),
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
     url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
+    url(r'^api/admin/login$', siteAdmin.views.login),
+    url(r'^api/admin/logout$', siteAdmin.views.logout),
 ]

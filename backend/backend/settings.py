@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'ticket',
     'shop',
     'captcha',
+    'siteAdmin',
 )
 
 MIDDLEWARE_CLASSES = (
