@@ -1,4 +1,6 @@
-﻿**提交门票申请:**
+﻿##门票相关API
+
+**提交门票申请:**
 
     api/ticket/insertApplication
 
@@ -39,7 +41,7 @@
 返回值:
 
     {
-        "state":"[success/failure/error/illegal]",
+        "state":"success/failure/error/illegal",
         "result":[
             {
                 "applicationID":
@@ -87,6 +89,8 @@
 参数:
 
     和提交一样, 少一个验证码, 多一个applicationID
+
+##店铺相关API
 
 **提交店铺申请:**
 
@@ -144,7 +148,7 @@
 返回值:
 
     {
-        "state":"[success/failure/error/illegal]",
+        "state":"success/failure/error/illegal",
         "result":[
             {
                 "applicationID":
@@ -202,6 +206,130 @@
 
     和提交一样, 少一个验证码, 多一个applicationID
 
+##广告相关API
+
+**提交广告申请:**
+
+    api/advertisement/insertApplication
+
+参数:
+
+    申请人姓名:owner(最大长度4)
+    申请人联系方式:ownerContact(最大长度64)
+    商铺名:shopName(最大长度32)
+    申请人类型:ownerType
+      0 == 凤岭高中部班级/国际班 (默认值)
+      1 == 教师
+      2 == 凤岭高中部社团/国际班社团
+      3 == 凤岭高中部个人/国际班个人
+      4 == 非学生个人
+      5 == 东盟中学
+      6 == 二中初中部/新民中学
+    申请人年级:ownerGrade(同上)
+    申请人班级:ownerClass(同上)
+    广告图片url:adUrl
+    是否参加千百度活动:isJoined ( 1==参加 0==不参加 )
+    验证码:captcha
+
+返回值:
+
+    success/failure(失败)/error(内部错误)/illegal(非法输入)
+    
+**获得广告申请数量:**
+
+    api/advertisement/queryApplicationNumber
+    
+返回值:
+    
+    数量
+    
+**检索广告申请:**
+
+    api/advertisement/indexApplication
+    
+参数:
+
+    起始:from
+    长度:len
+    
+返回:
+    同下, ID从from开始,长度为len的所有申请
+
+**精确查询广告申请:**
+
+    api/advertisement/queryApplication
+
+返回值:
+
+    {
+        "state":"success/failure/error/illegal",
+        "result":[
+            {
+                "applicationID":
+                "owner":
+                "ownerContact":
+                "shopName":
+                "ownerType":
+                "ownerGrade":
+                "ownerClass":
+                "adUrl":
+                "isJoined"
+            }
+        ]
+    }
+
+参数:
+
+    申请ID:applicationID
+    其余同上
+
+**删除广告申请:**
+
+    api/advertisement/deleteApplication
+
+返回值:
+
+    success/failure/error/illegal
+
+参数:
+
+    申请id:applicationID
+
+**更改广告申请:**
+
+    api/advertisement/modifyApplication
+
+返回值:
+
+    success/failure/error/illegal
+
+参数:
+
+    和提交一样, 少一个验证码, 多一个applicationID
+
+**随机获取广告**
+
+    api/advertisement/get
+
+返回值:
+    
+    {
+        "state":"success/failure/error/illegal"
+        "result":
+        [
+            "广告url 1",
+            "广告url 2",
+            ......
+            "广告url n"
+        ]
+    }
+
+参数:
+
+    广告的数量n
+
+##前端设置相关API
+
 **是否显示需要票的数量文本框:**
 
     api/config/ifShowRequirementTextbox
@@ -232,6 +360,8 @@
 返回值
 
     1(正确) 或 0(错误)
+
+##后台管理相关API
 
 
 **管理界面登陆**
@@ -266,3 +396,5 @@
 返回值:
 
     1(已经登录)/0(没有登录)
+
+
