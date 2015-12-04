@@ -4,6 +4,13 @@
         <meta charset="UTF-8">
     </head>
     <body>
+        <p>Login </p>
+        <form action="/api/admin/login" method=POST>
+            Password<input name="password" type=password><br/>
+            Captcha<input name="captcha">
+            <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
         <p>Ticket insertion</p>
         <form action="/api/ticket/insertApplication" method=POST>
             姓名<input name="name" value=zhangsan><br/>

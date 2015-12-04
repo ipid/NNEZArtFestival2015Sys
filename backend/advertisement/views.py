@@ -4,6 +4,8 @@ from advertisement.models import *
 from django.utils.html import *
 from datetime import datetime
 from json import dumps
+from random import sample
+from random import choice
 import re
 
 __ERROR="error"
@@ -19,6 +21,10 @@ class AdGuestDataHandler(GuestDataHandler):
 
 class AdAdminDataHandler(AdminDataHandler):
     pass
+
+class AdRandDataHandler(GuestDataHandler):
+    def validateData(self):
+        return self.validateLength()
 
 def insertApplication(request):
     try:
@@ -79,11 +85,14 @@ def queryApplicationNumber(request):
 
 def getRandomAdvertisement(request):
     #try:
-    num=GuestDataHandler({"num":10},request).getData()["num"]
-    allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query()
-    result=[]
-    for i in range(num):
-        result.append(allAd[random.randint(0,len(allAd))])
+    num=int(AdRandDataHandler({"num":10},request).getData()["num"])
+    allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query({})
+    result=list()
+    if num>len(allAd):
+        for i in range(num):
+            result.append(choice(allAd))
+    else:
+        result=sample(allAd,num)
     #except MyError,e:
     #    return HttpResponse(dumps({"state":str(e),"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))

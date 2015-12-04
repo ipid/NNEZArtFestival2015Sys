@@ -40,7 +40,7 @@ class GuestDataHandler:
         else:
             return False
 
-    def validateData(self):
+    def validateLength(self):
         for i in self.columns:
             if (not i in self.data) or len(self.data[i])>self.columns[i]:
                 return False
@@ -51,10 +51,12 @@ class GuestDataHandler:
             tmp=self.filterPost(i)
             if tmp:
                 self.data[i]=tmp
+    def validateData(self):
+        return self.validateLength() and self.validateCode()
 
     def getData(self):
         self.fetchData()
-        if self.validateData() and self.validateCode():
+        if self.validateData():
             return self.data
         else:
             raise MyError(ILLEGAL_CODE)
@@ -71,11 +73,14 @@ class AdminDataHandler(GuestDataHandler):
     def logined(self):
         return "logined" in self.request.session and self.request.session["logined"]==True
 
-    def validateData(self):
+    def validateLength(self):
         for i in self.data:
             if i in self.columns and len(self.data[i])>self.columns[i]:
                 return False
         return True
+
+    def validateData(self):
+        return self.validateLength()
     
     def getData(self):
         if not self.isAdmin():
