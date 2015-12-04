@@ -14,10 +14,15 @@ __SUCCESS="success"
 guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"isJoined":1}
 adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"pk":100,"isJoined":1}
 
+class AdGuestDataHandler(GuestDataHandler):
+    pass
+
+class AdAdminDataHandler(AdminDataHandler):
+    pass
 
 def insertApplication(request):
     try:
-        data=GuestDataHandler(guestColumns,request).getData()
+        data=AdGuestDataHandler(guestColumns,request).getData()
         DatabaseHandler(guestColumns,AdvertisementApplication).insert(data)
     except MyError,e:
         return HttpResponse(e)
@@ -25,10 +30,9 @@ def insertApplication(request):
         return HttpResponse(__ERROR)
     return HttpResponse(__SUCCESS)
 
-
 def queryApplication(request):
     try:
-        data=AdminDataHandler(adminColumns,request).getData()
+        data=AdAdminDataHandler(adminColumns,request).getData()
         result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
@@ -36,7 +40,7 @@ def queryApplication(request):
 
 def deleteApplication(request):
     try:
-        aapplicationID=dminDataHandler({"applicationID"},request).getData()["applicationID"]
+        applicationID=AdAdminDataHandler({"applicationID"},request).getData()["applicationID"]
         DatabaseHandler(adminColumns,AdvertisementApplication).deleteApplication(applicationID)
     except MyError,e:
         return HttpResponse(e)
