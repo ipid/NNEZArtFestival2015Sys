@@ -44,7 +44,7 @@
         "state":"success/failure/error/illegal",
         "result":[
             {
-                "applicationID":
+                "pk":
                 "name":
                 "grade":
                 "classNo":
@@ -57,7 +57,7 @@
 
 参数:
 
-    申请ID:applicationID
+    申请ID:pk
     姓名:name
     年级:grade
     班级:classNo
@@ -76,7 +76,7 @@
 
 参数:
 
-    申请id:applicationID
+    申请id:pk
 
 **更改门票申请:**
 
@@ -88,7 +88,7 @@
 
 参数:
 
-    和提交一样, 少一个验证码, 多一个applicationID
+    和提交一样, 少一个验证码, 多一个pk
 
 ##店铺相关API
 
@@ -151,7 +151,7 @@
         "state":"success/failure/error/illegal",
         "result":[
             {
-                "applicationID":
+                "pk":
                 "owner":
                 "ownerContact":
                 "shopName":
@@ -168,7 +168,7 @@
 
 参数:
 
-    申请ID:applicationID
+    申请ID:pk
     姓名:owner
     年级:grade
     班级:ownerContact
@@ -192,7 +192,7 @@
 
 参数:
 
-    申请id:applicationID
+    申请id:pk
 
 **更改店铺申请:**
 
@@ -204,7 +204,7 @@
 
 参数:
 
-    和提交一样, 少一个验证码, 多一个applicationID
+    和提交一样, 少一个验证码, 多一个pk
 
 ##广告相关API
 
@@ -265,7 +265,7 @@
         "state":"success/failure/error/illegal",
         "result":[
             {
-                "applicationID":
+                "pk":
                 "owner":
                 "ownerContact":
                 "shopName":
@@ -280,7 +280,7 @@
 
 参数:
 
-    申请ID:applicationID
+    申请ID:pk
     其余同上
 
 **删除广告申请:**
@@ -293,7 +293,7 @@
 
 参数:
 
-    申请id:applicationID
+    申请id:pk
 
 **更改广告申请:**
 
@@ -305,7 +305,7 @@
 
 参数:
 
-    和提交一样, 少一个验证码, 多一个applicationID
+    和提交一样, 少一个验证码, 多一个pk
 
 **随机获取广告**
 

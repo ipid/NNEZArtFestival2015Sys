@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
 
@@ -9,4 +10,5 @@ class AdvertisementApplication(models.Model):
     shopName=models.CharField(max_length=1000)
     adUrl=models.CharField(max_length=1000)
     isJoined=models.CharField(max_length=1)
+    timestamp=models.DateTimeField(default=datetime.now())
 

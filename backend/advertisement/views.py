@@ -12,17 +12,17 @@ __FAILURE="failure"
 __SUCCESS="success"
 
 guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"isJoined":1}
-adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"ApplicationID":100,"isJoined":1}
+adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"pk":100,"isJoined":1}
 
 
 def insertApplication(request):
-    #try:
-    data=GuestDataHandler(guestColumns,request).getData()
-    DatabaseHandler(AdvertisementApplication).insert(data)
-    #except MyError,e:
-    #    return HttpResponse(e)
-    #except:
-    #    return HttpResponse(__ERROR)
+    try:
+        data=GuestDataHandler(guestColumns,request).getData()
+        DatabaseHandler(guestColumns,AdvertisementApplication).insert(data)
+    except MyError,e:
+        return HttpResponse(e)
+    except:
+        return HttpResponse(__ERROR)
     return HttpResponse(__SUCCESS)
 
 
@@ -31,12 +31,12 @@ def queryApplication(request):
         data=AdminDataHandler(adminColumns,request).getData()
         result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
     except MyError,e:
-        return HttpResponse(dumps({"state":e,"result":[]}))
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def deleteApplication(request):
     try:
-        AapplicationID=dminDataHandler({"applicationID"},request).getData()["applicationID"]
+        aapplicationID=dminDataHandler({"applicationID"},request).getData()["applicationID"]
         DatabaseHandler(adminColumns,AdvertisementApplication).deleteApplication(applicationID)
     except MyError,e:
         return HttpResponse(e)
@@ -59,7 +59,7 @@ def indexApplication(request):
         data=AdminDataHandler({"from":10,"len":10},request).getData()
         result=DatabaseHandler(adminColumns,AdvertisementApplication).index(data["from"],data["len"])
     except MyError,e:
-        return HttpResponse(dumps({"state":e,"result":[]}))
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
         return HttpResponse(dumps({"state":__ERROR,"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
