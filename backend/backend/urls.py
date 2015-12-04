@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^api/advertisement/deleteApplication$', advertisement.views.deleteApplication),
     url(r'^api/advertisement/indexApplication$', advertisement.views.indexApplication),
     url(r'^api/advertisement/queryApplicationNumber$', advertisement.views.queryApplicationNumber),
+    url(r'^api/advertisement/get$', advertisement.views.getRandomAdvertisement),
 
     url(r'^api/config/ifShowRequirementTextbox$', config.views.ifShowRequirementTextbox),
     url(r'^api/config/getHomepageButtonType$', config.views.getHomepageButtonType),

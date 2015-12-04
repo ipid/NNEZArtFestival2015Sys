@@ -77,3 +77,14 @@ def queryApplicationNumber(request):
         return HttpResponse(-1)
     return HttpResponse(DatabaseHandler(adminColumns,AdvertisementApplication).getNumRecord())
 
+def getRandomAdvertisement(request):
+    #try:
+    num=GuestDataHandler({"num":10},request).getData()["num"]
+    allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query()
+    result=[]
+    for i in range(num):
+        result.append(allAd[random.randint(0,len(allAd))])
+    #except MyError,e:
+    #    return HttpResponse(dumps({"state":str(e),"result":[]}))
+    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+
