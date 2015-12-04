@@ -36,12 +36,14 @@ def queryApplication(request):
         result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def deleteApplication(request):
     try:
-        applicationID=AdAdminDataHandler({"applicationID"},request).getData()["applicationID"]
-        DatabaseHandler(adminColumns,AdvertisementApplication).deleteApplication(applicationID)
+        pk=AdAdminDataHandler({"pk":10},request).getData()["pk"]
+        DatabaseHandler(adminColumns,AdvertisementApplication).delete(pk)
     except MyError,e:
         return HttpResponse(e)
     except:
