@@ -61,13 +61,13 @@ def modifyApplication(request):
     return HttpResponse(__SUCCESS)
 
 def indexApplication(request):
-#    try:
-    data=AdminDataHandler({"from":10,"len":10},request).getData()
-    result=DatabaseHandler(adminColumns,AdvertisementApplication).index(data["from"],data["len"])
-#    except MyError,e:
-#        return HttpResponse(dumps({"state":str(e),"result":[]}))
-#    except:
-#        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
+    try:
+        data=AdminDataHandler({"from":10,"len":10},request).getData()
+        result=DatabaseHandler(adminColumns,AdvertisementApplication).index(data["from"],data["len"])
+    except MyError,e:
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
     return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
 
 def queryApplicationNumber(request):

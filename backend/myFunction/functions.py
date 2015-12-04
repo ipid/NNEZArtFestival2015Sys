@@ -121,6 +121,6 @@ class DatabaseHandler:
         return d
 
     def getNumRecord(self):
-        return db.objects.all().count()
+        return self.__db.objects.all().count()
 
 
