@@ -114,5 +114,29 @@
             ID<input name="pk" value=1><br/>
             <input name="submit" type=submit>
         </form>
+
+        <p>AD modify</p>
+        
+        <form action="/api/advertisement/modifyApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=heboo><br/>
+            联系方式<input name="ownerContact" value=fucku><br/>
+            店名<input name="shopName" value=Miracal><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            baidu<input name="isJoined" value=1><br/>
+            URL<input name="adUrl" value=hahahahah><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD index</p>
+        
+        <form action="/api/advertisement/indexApplication" method=POST>
+            from<input name="from" value=1><br/>
+            len<input name="len" value=10><br/>
+            <input name="submit" type=submit>
+        </form>
+
     </body>
 </html>

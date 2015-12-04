@@ -107,7 +107,7 @@ class DatabaseHandler:
         self.insert(data)
         
     def index(self,start,length):
-        return self.objectsToDict( list(self.__db.objects.objects.all()[start:length]) )
+        return self.objectsToDict( list(self.__db.objects.all()[start:length]) )
 
     def objectsToDict(self,data):
         for key,val in enumerate(data):
