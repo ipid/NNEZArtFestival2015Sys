@@ -43,6 +43,7 @@ class GuestDataHandler:
     def validateLength(self):
         for i in self.columns:
             if (not i in self.data) or len(self.data[i])>self.columns[i]:
+                print i,self.columns[i]
                 return False
         return True
 

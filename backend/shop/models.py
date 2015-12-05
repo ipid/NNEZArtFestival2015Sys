@@ -3,14 +3,14 @@ from django.db import models
 # Create your models here.
 
 class ShopApplication(models.Model):
-    owner = models.CharField(max_length = 4)
-    ownerGrade = models.PositiveIntegerField()
-    ownerClass = models.PositiveIntegerField()
+    ownerName = models.CharField(max_length = 4)
+    ownerGrade = models.CharField(max_length = 1)
+    ownerClass= models.CharField(max_length = 2)
     ownerContact = models.CharField(max_length = 64)
     shopName = models.CharField(max_length = 32)
-    ownerType = models.PositiveIntegerField(default = 0)
-    electricity = models.BooleanField(default = False)
-    food = models.BooleanField(default = False)
-    nonFood = models.BooleanField(default = False)
+    ownerType = models.CharField(max_length = 1)
+    electricity = models.CharField(max_length = 1)
+    food = models.CharField(max_length = 1)
+    nonFood = models.CharField(max_length = 1)
     privilegeKey = models.CharField(max_length = 8)
     timestamp = models.DateTimeField()

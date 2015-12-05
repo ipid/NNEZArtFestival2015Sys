@@ -46,6 +46,12 @@ urlpatterns = [
     url(r'^api/config/getHomepageButtonType$', config.views.getHomepageButtonType),
 
     url(r'^api/shop/insertApplication$', shop.views.insertApplication),
+    url(r'^api/shop/queryApplication$', shop.views.queryApplication),
+    url(r'^api/shop/modifyApplication$', shop.views.modifyApplication),
+    url(r'^api/shop/deleteApplication$', shop.views.deleteApplication),
+    url(r'^api/shop/indexApplication$', shop.views.indexApplication),
+    url(r'^api/shop/queryApplicationNumber$', shop.views.queryApplicationNumber),
+
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
     url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
     url(r'^api/admin/login$', siteAdmin.views.login),
