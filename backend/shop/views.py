@@ -4,13 +4,24 @@ from shop.models import *
 from django.utils.html import *
 from datetime import datetime
 from json import dumps
-from random import sample
-from random import choice
+from random import sample,choice,random,randint
 from md5 import md5
 import re
 
 guestColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8}
 adminColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8,"pk":10}
+
+
+def PrivilegeKeyGenerator():
+    num=raw_input("Enter the number of keys you want to generate: ")
+    print "Generating Keys..."
+    for i in range(int(num)):
+        fromIndex=randint(0,24)
+        key=md5(str(random())).hexdigest()[fromIndex:fromIndex+8]
+        PrivilegeKey.objects.get_or_create(privilegeKey=key)
+        print key
+    print "Finished!"
+
 
 class ValidateDataTypeMixin:
     def validateDataType(self):
