@@ -13,10 +13,9 @@ class MyError(Exception):
 
 class GuestDataHandler:
 
-    data=dict()
-    columns=dict()
-
     def __init__(self,columns,request):
+        self.data=dict()
+        self.columns=dict()
         self.columns=columns
         self.request=request
 
@@ -49,9 +48,12 @@ class GuestDataHandler:
 
     def fetchData(self):
         for i in self.columns:
+            print i
             tmp=self.filterPost(i)
             if tmp:
                 self.data[i]=tmp
+        print self.data
+
     def validateData(self):
         return self.validateLength() and self.validateCode()
 
@@ -128,5 +130,4 @@ class DatabaseHandler:
 
     def getNumRecord(self):
         return self.__db.objects.all().count()
-
 

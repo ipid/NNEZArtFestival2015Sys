@@ -101,6 +101,23 @@
             <input name="submit" type=submit>
         </form>
 
+        <p>Shop modify</p>
+        
+        <form action="/api/shop/modifyApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=name><br/>
+            联系方式<input name="ownerContact" value=ownerContact><br/>
+            店名<input name="shopName" value=shopName><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=1><br/>
+            班级<input name="ownerClass" value=2><br/>
+            需要电力<input name="electricity" value=1><br/>
+            卖食物<input name="food" value=1><br/>
+            卖非食物<input name="nonFood" value=1><br/>
+            密钥<input name="privilegeKey" value=00000000><br/>
+            <input name="submit" type=submit>
+        </form>
+
         <p>AD insert</p>
         
         <form action="/api/advertisement/insertApplication" method=POST>

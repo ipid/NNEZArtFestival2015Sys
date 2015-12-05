@@ -23,10 +23,9 @@ class ShopAdminDataHandler(AdminDataHandler):
     pass
 
 def insertApplication(request):
-    data=ShopGuestDataHandler(guestColumns,request).getData()
-    DatabaseHandler(guestColumns,ShopApplication).insert(data)
     try:
-        pass
+        data=ShopGuestDataHandler(guestColumns,request).getData()
+        DatabaseHandler(guestColumns,ShopApplication).insert(data)
     except MyError,e:
         return HttpResponse(e)
     except:
