@@ -33,9 +33,10 @@ class ValidateDataTypeMixin:
             electricity=int(self.data["electricity"])
             food=int(self.data["food"])
             nonFood=int(self.data["nonFood"])
+            privilegeKey=self.data["privilegeKey"]
         except:
             return False
-        if not ( ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
+        if not ( len(privilegeKey)==8 ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
             return False
 
 class ValidatePrivilegeKeyMixin:
