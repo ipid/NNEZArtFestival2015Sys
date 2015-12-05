@@ -6,18 +6,39 @@ from datetime import datetime
 from json import dumps
 from random import sample
 from random import choice
+from md5 import md5
 import re
-
-__ERROR="error"
-__ILLEGAL="illegal"
-__FAILURE="failure"
-__SUCCESS="success"
 
 guestColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8}
 adminColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8,"pk":10}
 
-class ShopGuestDataHandler(GuestDataHandler):
-    pass
+class ValidateDataTypeMixin:
+    def validateDataType(self):
+        return True
+        try:
+            ownerClass=int(self.data["ownerClass"])
+            ownerGrade=int(self.data["ownerGrade"])
+            ownerType=int(self.data["ownerType"])
+            electricity=int(self.data["electricity"])
+            food=int(self.data["food"])
+            nonFood=int(self.data["nonFood"])
+        except:
+            return False
+        if not ( ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
+            return False
+
+class ValidatePrivilegeKeyMixin:
+    def validatePrivilegeKey(self):
+        privilegeKey=self.data["privilegeKey"]
+        if privilegeKey=="00000000":
+            return True
+        else:
+            result=DatabaseHandler(["privilegeKey"],PrivilegeKey).query({"privilegeKey":privilegeKey})
+            return len(result)==1
+
+class ShopGuestDataHandler(GuestDataHandler,ValidatePrivilegeKeyMixin,ValidateDataTypeMixin):
+    def validateData(self):
+        return self.validateCode() and self.validateLength() and self.validateDataType() and self.validatePrivilegeKey()
 
 class ShopAdminDataHandler(AdminDataHandler):
     pass
@@ -25,12 +46,18 @@ class ShopAdminDataHandler(AdminDataHandler):
 def insertApplication(request):
     try:
         data=ShopGuestDataHandler(guestColumns,request).getData()
-        DatabaseHandler(guestColumns,ShopApplication).insert(data)
+        dh=DatabaseHandler(adminColumns,ShopApplication)
+        result=dh.query({"privilegeKey":data["privilegeKey"]})
+        if len(result)==1:
+            data["pk"]=result[0]["pk"]
+            dh.modify(data)
+        else:
+            DatabaseHandler(guestColumns,ShopApplication).insert(data)
     except MyError,e:
         return HttpResponse(e)
     except:
-        return HttpResponse(__ERROR)
-    return HttpResponse(__SUCCESS)
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
 
 def queryApplication(request):
     try:
@@ -39,8 +66,8 @@ def queryApplication(request):
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
-        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
-    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+        return HttpResponse(dumps({"state":ERROR_CODE,"result":[]}))
+    return HttpResponse(dumps({"state":SUCCESS_CODE,"result":result}))
 
 def deleteApplication(request):
     try:
@@ -49,8 +76,8 @@ def deleteApplication(request):
     except MyError,e:
         return HttpResponse(e)
     except:
-        return HttpResponse(__ERROR)
-    return HttpResponse(__SUCCESS)
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
 
 def modifyApplication(request):
     try:
@@ -59,8 +86,8 @@ def modifyApplication(request):
     except MyError,e:
         return HttpResponse(e)
     except:
-        return HttpResponse(__ERROR)
-    return HttpResponse(__SUCCESS)
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
 
 def indexApplication(request):
     try:
@@ -69,8 +96,8 @@ def indexApplication(request):
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
-        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
-    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+        return HttpResponse(dumps({"state":ERROR_CODE,"result":[]}))
+    return HttpResponse(dumps({"state":SUCCESS_CODE,"result":result}))
 
 def queryApplicationNumber(request):
     try:

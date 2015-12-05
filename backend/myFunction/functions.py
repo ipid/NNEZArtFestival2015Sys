@@ -42,17 +42,14 @@ class GuestDataHandler:
     def validateLength(self):
         for i in self.columns:
             if (not i in self.data) or len(self.data[i])>self.columns[i]:
-                print i,self.columns[i]
                 return False
         return True
 
     def fetchData(self):
         for i in self.columns:
-            print i
             tmp=self.filterPost(i)
             if tmp:
                 self.data[i]=tmp
-        print self.data
 
     def validateData(self):
         return self.validateLength() and self.validateCode()
@@ -63,7 +60,6 @@ class GuestDataHandler:
             return self.data
         else:
             raise MyError(ILLEGAL_CODE)
-
 
 class AdminDataHandler(GuestDataHandler):
 
