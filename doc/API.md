@@ -94,7 +94,7 @@
 
 参数:
 
-    申请人姓名:owner(最大长度4)
+    申请人姓名:ownerName(最大长度4)
     申请人联系方式:ownerContact(最大长度64)
     商铺名:shopName(最大长度32)
     申请人类型:ownerType

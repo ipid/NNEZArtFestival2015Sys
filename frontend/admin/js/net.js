@@ -45,7 +45,11 @@ var Net = {
             }
         });
     },
-    queryApplicationNumber: function(successFn, failed) {
+
+    /**
+     * Ticket
+     */
+    queryTicketApplicationNumber: function(successFn, failed) {
         $.ajax("api/ticket/queryApplicationNumber", {
             method: "POST",
             error: function() {
@@ -65,7 +69,7 @@ var Net = {
             }
         });
     },
-    indexApplication: function(from, len, successFn, failed) {
+    indexTicketApplication: function(from, len, successFn, failed) {
         $.ajax("api/ticket/indexApplication", {
             method: "POST",
             data: {
@@ -87,7 +91,7 @@ var Net = {
             }
         });
     },
-    queryApplication: function(data, successFn, failed) {
+    queryTicketApplication: function(data, successFn, failed) {
         $.ajax("api/ticket/queryApplication", {
             method: "POST",
             data: data,
@@ -106,12 +110,60 @@ var Net = {
             }
         });
     },
-    deleteApplication: function(appID, successFn, failed) {
+    deleteTicketApplication: function(appID, successFn, failed) {
         $.ajax("api/ticket/deleteApplication", {
             method: "POST",
             data: {
                 applicationID: appID
             },
+            error: function() {
+                failed();
+            },
+            success: function(state) {
+                if(state != "success")
+                    failed();
+                else
+                    successFn();
+            }
+        });
+    },
+
+    /**
+     * Shop
+     */
+    queryShopApplicationNum: function(successFn, failed) {
+        $.ajax("api/shop/queryApplicationNumber", {
+            method: "POST",
+            error: function() {
+                failed();
+            },
+            success: function(num) {
+                successFn(num);
+            }
+        });
+    },
+    indexShopApplication: function(from, len, successFn, failed) {
+        $.ajax("api/shop/indexApplication", {
+            method: "POST",
+            data: {
+                from: from,
+                len: len
+            },
+            error: function() {
+                failed();
+            },
+            success: function(objText) {
+                var o = JSON.parse(objText);
+                if(o.state != "success")
+                    failed();
+                else
+                    successFn(o);
+            }
+        });
+    },
+    deleteShopApplication: function(appID, successFn, failed) {
+        $.ajax("api/shop/deleteApplication", {
+            method: "POST",
             error: function() {
                 failed();
             },

@@ -200,3 +200,7 @@ span {
     width: 1.3em;
     float: right;
 }
+
+.nav_btn_disabled {
+    text-decoration: line-through;
+}
