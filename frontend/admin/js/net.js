@@ -17,6 +17,20 @@ var Net = {
             }
         });
     },
+    logout: function(successFn, failed) {
+        $.ajax("api/admin/logout", {
+            method: "POST",
+            error: function () {
+                failed();
+            },
+            success: function(state) {
+                if(state != "success")
+                    failed();
+                else
+                    successFn();
+            }
+        });
+    },
     isAdmin: function(successFn, failed) {
         $.ajax("api/admin/isAdmin", {
             method: "POST",
@@ -74,7 +88,7 @@ var Net = {
         });
     },
     queryApplication: function(data, successFn, failed) {
-        $.ajax("api/ticket/indexApplication", {
+        $.ajax("api/ticket/queryApplication", {
             method: "POST",
             data: data,
             error: function() {
@@ -92,10 +106,21 @@ var Net = {
             }
         });
     },
-    deleteApplication: function(successFn, failed) {
+    deleteApplication: function(appID, successFn, failed) {
         $.ajax("api/ticket/deleteApplication", {
             method: "POST",
-
+            data: {
+                applicationID: appID
+            },
+            error: function() {
+                failed();
+            },
+            success: function(state) {
+                if(state != "success")
+                    failed();
+                else
+                    successFn();
+            }
         });
     }
 };

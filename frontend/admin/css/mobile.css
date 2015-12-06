@@ -207,8 +207,7 @@ span {
 }
 
 #toolbar_logout {
-    /* TODO Image */
-    background: url("../res/menu.svg") no-repeat center;
+    background: url("../res/logout.svg") no-repeat center;
     height: 1.3em;
     width: 1.3em;
     float: right;
