@@ -21,22 +21,40 @@ import shop.views
 import config.views
 import captcha.views
 import siteAdmin.views
+import advertisement.views
 
 urlpatterns = [
     url(r'^test.html$', lambda r: render(r, "test.html")),
     url(r'^login.html$', lambda r: render(r, "login.html")),
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.urls)),
     url(r'^api/ticket/insertApplication$', ticket.views.insertApplication),
     url(r'^api/ticket/queryApplication$', ticket.views.queryApplication),
     url(r'^api/ticket/modifyApplication$', ticket.views.modifyApplication),
     url(r'^api/ticket/deleteApplication$', ticket.views.deleteApplication),
     url(r'^api/ticket/indexApplication$', ticket.views.indexApplication),
     url(r'^api/ticket/queryApplicationNumber$', ticket.views.queryApplicationNumber),
+
+    url(r'^api/advertisement/insertApplication$', advertisement.views.insertApplication),
+    url(r'^api/advertisement/queryApplication$', advertisement.views.queryApplication),
+    url(r'^api/advertisement/modifyApplication$', advertisement.views.modifyApplication),
+    url(r'^api/advertisement/deleteApplication$', advertisement.views.deleteApplication),
+    url(r'^api/advertisement/indexApplication$', advertisement.views.indexApplication),
+    url(r'^api/advertisement/queryApplicationNumber$', advertisement.views.queryApplicationNumber),
+    url(r'^api/advertisement/get$', advertisement.views.getRandomAdvertisement),
+
     url(r'^api/config/ifShowRequirementTextbox$', config.views.ifShowRequirementTextbox),
     url(r'^api/config/getHomepageButtonType$', config.views.getHomepageButtonType),
+
     url(r'^api/shop/insertApplication$', shop.views.insertApplication),
+    url(r'^api/shop/queryApplication$', shop.views.queryApplication),
+    url(r'^api/shop/modifyApplication$', shop.views.modifyApplication),
+    url(r'^api/shop/deleteApplication$', shop.views.deleteApplication),
+    url(r'^api/shop/indexApplication$', shop.views.indexApplication),
+    url(r'^api/shop/queryApplicationNumber$', shop.views.queryApplicationNumber),
+
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
     url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
     url(r'^api/admin/login$', siteAdmin.views.login),
     url(r'^api/admin/logout$', siteAdmin.views.logout),
+    url(r'^api/admin/isAdmin$', siteAdmin.views.isAdmin),
 ]

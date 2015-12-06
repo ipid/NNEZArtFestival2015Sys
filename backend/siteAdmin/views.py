@@ -26,9 +26,7 @@ def filterCode(request):
         raise MyError(__ERROR)
 
 def isLogined(request):
-    if not "logined" in request.session:
-        raise MyError(__ERROR)
-    return request.session["logined"]
+    return "logined" in request.session and request.session["logined"]
 
 def setLogined(request):
     try:
@@ -62,3 +60,11 @@ def logout(request):
         return HttpResponse(e)
     return HttpResponse(__SUCCESS)
 
+def isAdmin(request):
+    if isLogined(request):
+        return HttpResponse(1)
+    else:
+        return HttpResponse(0)
+
+def dumpTable(request):
+	pass

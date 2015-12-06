@@ -4,13 +4,14 @@ from ticket.models import *
 from django.utils.html import *
 from datetime import datetime
 from json import dumps
+import re
 
 __ERROR="error"
 __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-columns=["name","grade","classNo","schoolID","societyID","requirement"]
+columns={"name":4,"grade":1,"classNo":2,"schoolID":6,"societyID":18,"requirement":3}
 
 class MyError(Exception):
     pass
@@ -23,7 +24,9 @@ def fliterPost(request,name):
 
 def fliterCode(request):
     try:
-        return escape(request.session["code"])
+        code=request.session["code"]
+        del(request.session["code"])
+        return code
     except:
         raise MyError(__ERROR)
 
@@ -46,8 +49,7 @@ def isAdmin(request):
     return logined(request) and antiCSRF(request)
 
 def antiCSRF(request):
-    return True
-    return "HTTP_REFERER" in request.META and request.META["HTTP_REFERER"] == request.get_host()
+    return "HTTP_REFERER" in request.META and re.compile("^http://%s/" % request.get_host()).match(request.META["HTTP_REFERER"])
 
 def logined(request):
     return "logined" in request.session and request.session["logined"]==True
@@ -55,15 +57,9 @@ def logined(request):
 def validateData(request,data):
     if not(validateIDCode(data["societyID"]) and "code" in request.session and fliterCode(request)==fliterPost(request,"captcha")):
         raise MyError(__ILLEGAL)
-
     for i in columns:
-        if not i in data:
+        if not i in data or len(data[i])>columns[i]:
             raise MyError(__ILLEGAL)
-
-    if len(data["name"])>4 or len(data["schoolID"])>6 or data["requirement"]<1 or int(data["grade"])<1 or int(data["grade"])>3:
-        raise MyError(__ILLEGAL)
-
-    request.session.pop("code")
 
 def objectToDict(obj):
     d=dict()
@@ -130,7 +126,6 @@ def modifyApplication(request):
         #creat
         data=fetchData(request)
         data["pk"]=applicationID
-        #validateData(request,data)
         TicketApplication.objects.create(**data)
     except MyError,e:
         return HttpResponse(e)
@@ -141,7 +136,6 @@ def modifyApplication(request):
 def indexApplication(request):
     try:
         if not isAdmin(request):
-#            raise MyError(__FAILURE+"<br>referer:"+request.META["HTTP_REFERER"]+"<br>get_host:"+request.get_host())
             raise MyError(__FAILURE)
         fromIndex=fliterPost(request,"from")
         toIndex=fliterPost(request,"to")
@@ -160,5 +154,4 @@ def queryApplicationNumber(request):
         return HttpResponse(TicketApplication.objects.count())
     except:
         return HttpResponse(-1)
-
 

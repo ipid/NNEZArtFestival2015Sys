@@ -1,221 +1,120 @@
-# from django.shortcuts import render
+from myFunction.functions import *
 from django.http import HttpResponse
-from django.forms.models import model_to_dict
-from shop.models import ShopApplication
+from shop.models import *
+from django.utils.html import *
 from datetime import datetime
 from json import dumps
+from random import sample,choice,random,randint
+from md5 import md5
 import re
 
-# Create your views here.
+guestColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8}
+adminColumns={"ownerName":4,"ownerGrade":1,"ownerClass":2,"ownerContact":64,"shopName":32,"ownerType":1,"electricity":1,"food":1,"nonFood":1,"privilegeKey":8,"pk":10}
 
-def n2b(x):
-    if x == "1":
+
+def PrivilegeKeyGenerator():
+    num=raw_input("Enter the number of keys you want to generate: ")
+    print "Generating Keys..."
+    for i in range(int(num)):
+        fromIndex=randint(0,24)
+        key=md5(str(random())).hexdigest()[fromIndex:fromIndex+8]
+        PrivilegeKey.objects.get_or_create(privilegeKey=key)
+        print key
+    print "Finished!"
+
+
+class ValidateDataTypeMixin:
+    def validateDataType(self):
         return True
-    elif x == "0":
-        return False
-    else:
-        raise InvalidInput
+        try:
+            ownerClass=int(self.data["ownerClass"])
+            ownerGrade=int(self.data["ownerGrade"])
+            ownerType=int(self.data["ownerType"])
+            electricity=int(self.data["electricity"])
+            food=int(self.data["food"])
+            nonFood=int(self.data["nonFood"])
+            privilegeKey=self.data["privilegeKey"]
+        except:
+            return False
+        if not ( len(privilegeKey)==8 ownerGrade>=1 and ownerGrade<=3 and ownerType>=0 and ownerType<=6 and (food==1 or food ==0) and (nonFood==1 or nonFood==0) and (electricity==1 or electricity==0) ):
+            return False
 
-class InvalidInput(Exception):
+class ValidatePrivilegeKeyMixin:
+    def validatePrivilegeKey(self):
+        privilegeKey=self.data["privilegeKey"]
+        if privilegeKey=="00000000":
+            return True
+        else:
+            result=DatabaseHandler(["privilegeKey"],PrivilegeKey).query({"privilegeKey":privilegeKey})
+            return len(result)==1
+
+class ShopGuestDataHandler(GuestDataHandler,ValidatePrivilegeKeyMixin,ValidateDataTypeMixin):
+    def validateData(self):
+        return self.validateCode() and self.validateLength() and self.validateDataType() and self.validatePrivilegeKey()
+
+class ShopAdminDataHandler(AdminDataHandler):
     pass
 
 def insertApplication(request):
-    # Argument passed by POST (containing sensitive info)
-    # Return success state in plain text ("success"/"illegal"/"failure"/"error")
-
     try:
-        if not ("captcha" in request.POST and "code" in request.session and request.POST["captcha"] == request.session["code"]):
-            return HttpResponse("illegal")
-        del(request.session["code"])
-
-        # Extract inputs
-        owner = request.POST.get("owner", "")
-        ownerContact = request.POST.get("ownerContact", "")
-        shopName = request.POST.get("shopName", "")
-        ownerType = request.POST.get("ownerType", "")
-        ownerGrade = request.POST.get("ownerGrade", "")
-        ownerClass = request.POST.get("ownerClass", "")
-        electricity = request.POST.get("electricity", "")
-        food = request.POST.get("food", "")
-        nonFood = request.POST.get("nonFood", "")
-        privilegeKey = request.POST.get("privilegeKey", "")
-
-        # Validate the input
-
-        try:
-            if not all(map(lambda c: u'\u4e00' <= c <= u'\u9fa5', owner)):
-                raise InvalidInput()
-            if len(owner) > 4: raise InvalidInput()
-            if len(ownerContact) > 64: raise InvalidInput()
-            if len(shopName) > 32: raise InvalidInput()
-            try:
-                if not 0 <= int(ownerType) <= 6: raise InvalidInput()
-                if not 10 <= int(ownerGrade) <= 12: raise InvalidInput()
-                if not 1 <= int(ownerClass) <= 23: raise InvalidInput()
-                n2b(electricity)
-                n2b(food)
-                n2b(nonFood)
-            except ValueError:
-                raise InvalidInput
-            except InvalidInput:
-                raise InvalidInput
-            if not len(privilegeKey) == 8: raise InvalidInput
-        except InvalidInput:
-            return HttpResponse("illegal")
-
-        # Save into DB
-
-        data = ShopApplication(owner = owner, ownerContact = ownerContact, shopName = shopName, ownerType = int(ownerType), ownerGrade = int(ownerGrade), ownerClass = int(ownerClass), electricity = n2b(electricity), food = n2b(food), nonFood = n2b(nonFood), privilegeKey = privilegeKey, timestamp = datetime.now())
-
-        data.save()
-
-        return HttpResponse("success")
-
-    except:
-        return HttpResponse("error")
-
-def antiCSRF(request):
-    return "HTTP_REFERER" in request.META and re.compile("^http://%s/" % request.get_host()).match(request.META["HTTP_REFERER"])
-
-def logined(request):
-    return "logined" in request.session and request.session["logined"] == True
-
-def validate(request):
-    return antiCSRF(request) and logined(request)
-
-def applicationToDict(d):
-    d = model_to_dict(d)
-    d["applicationID"] = d["id"]
-    del(d["id"])
-    d["electricity"] = n2b(d["electricity"])
-    d["food"] = n2b(d["food"])
-    d["nonFood"] = n2b(d["nonFood"])
-    del(d["timestamp"])
-    return d
-
-def indexApplication(request):
-    try:
-        if not validate(request):
-            return HttpResponse("failure")
-        try:
-            lb = int(request.POST["from"])
-            ub = int(request.POST["to"])
-        except KeyError:
-            return HttpResponse(dumps({"state": "illegal", "result": []}))
-        except ValueError:
-            return HttpResponse(dumps({"state": "illegal", "result": []}))
-        answer = ShopApplication.objects.filter(pk__gte = lb, pk__lte = ub)
-        answer = list(answer)
-        answer = map(applicationToDict, answer)
-        return HttpResponse(dumps({"state": "success", "result": answer}))
-    except:
-        return HttpResponse(dumps({"state": "error", "result": []}))
-
-def queryApplicationNumber(request):
-    try:
-        if validate(request):
-            return HttpResponse(str(ShopApplication.objects.all().count()))
+        data=ShopGuestDataHandler(guestColumns,request).getData()
+        dh=DatabaseHandler(adminColumns,ShopApplication)
+        result=dh.query({"privilegeKey":data["privilegeKey"]})
+        if len(result)==1:
+            data["pk"]=result[0]["pk"]
+            dh.modify(data)
         else:
-            return HttpResponse("failure")
+            DatabaseHandler(guestColumns,ShopApplication).insert(data)
+    except MyError,e:
+        return HttpResponse(e)
     except:
-        return HttpResponse("error")
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
 
 def queryApplication(request):
     try:
-
-        args = {}
-
-        # Extract inputs
-
-        owner = request.POST.get("owner", "")
-        ownerContact = request.POST.get("ownerContact", "")
-        shopName = request.POST.get("shopName", "")
-        ownerType = request.POST.get("ownerType", "")
-        ownerGrade = request.POST.get("ownerGrade", "")
-        ownerClass = request.POST.get("ownerClass", "")
-        electricity = request.POST.get("electricity", "")
-        food = request.POST.get("food", "")
-        nonFood = request.POST.get("nonFood", "")
-        privilegeKey = request.POST.get("privilegeKey", "")
-
-        def addArgs(field, t = str):
-            if field in request.POST:
-                args[field] = t(request.POST[field])
-
-        # Validate the input
-
-        try:
-            if "applicationID" in request.POST:
-                args["pk"] = request.POST["applicationID"]
-            addArgs("owner")
-            addArgs("ownerContact")
-            addArgs("shopName")
-            addArgs("ownerType", int)
-            addArgs("ownerGrade", int)
-            addArgs("ownerClass", int)
-            addArgs("electricity", n2b)
-            addArgs("food", n2b)
-            addArgs("nonFood", n2b)
-            addArgs("privilegeKey")
-        except InvalidInput:
-            raise InvalidInput
-        except ValueError:
-            raise InvalidInput
-
-        answer = ShopApplication.objects.filter(**args)
-        answer = list(answer)
-        answer = map(applicationToDict, answer)
-
-        return HttpResponse(dumps({"state": "success", "result": answer}))
-
+        data=ShopAdminDataHandler(adminColumns,request).getData()
+        result=DatabaseHandler(adminColumns,ShopApplication).query(data)
+    except MyError,e:
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
-        return HttpResponse(dumps({"state": "error","result": []}))
+        return HttpResponse(dumps({"state":ERROR_CODE,"result":[]}))
+    return HttpResponse(dumps({"state":SUCCESS_CODE,"result":result}))
 
 def deleteApplication(request):
     try:
-        if validate(request):
-            try:
-                i = request.POST["applicationID"]
-                i = int(i)
-            except KeyError:
-                return HttpResponse("illegal")
-            except ValueError:
-                return HttpResponse("illegal")
-
-            ShopApplication.objects.get(pk = i).delete()
-            return HttpResponse("success")
-        else:
-            return HttpResponse("illegal")
+        pk=ShopAdminDataHandler({"pk":10},request).getData()["pk"]
+        DatabaseHandler(adminColumns,ShopApplication).delete(pk)
+    except MyError,e:
+        return HttpResponse(e)
     except:
-        return HttpResponse("error")
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
 
 def modifyApplication(request):
     try:
-        if not applicationID in request.POST:
-            return HttpResponse("illegal")
-
-        # Extract inputs
-        applicationID = request.POST.get("applicationID", "")
-        try:
-            data = ShopApplication.objects.get(pk = applicationID)
-        except:
-            return HttpResponse("illegal")
-
-        data.owner = request.POST.get("owner", "")
-        data.ownerContact = request.POST.get("ownerContact", "")
-        data.shopName = request.POST.get("shopName", "")
-        data.ownerType = request.POST.get("ownerType", "")
-        data.ownerGrade = request.POST.get("ownerGrade", "")
-        data.ownerClass = request.POST.get("ownerClass", "")
-        data.electricity = request.POST.get("electricity", "")
-        data.food = request.POST.get("food", "")
-        data.nonFood = request.POST.get("nonFood", "")
-        data.privilegeKey = request.POST.get("privilegeKey", "")
-
-        # Save into DB
-
-        data.save()
-
-        return HttpResponse("success")
+        data=ShopAdminDataHandler(adminColumns,request).getData()
+        DatabaseHandler(adminColumns,ShopApplication).modify(data)
+    except MyError,e:
+        return HttpResponse(e)
     except:
-        return HttpResponse("error")
+        return HttpResponse(ERROR_CODE)
+    return HttpResponse(SUCCESS_CODE)
+
+def indexApplication(request):
+    try:
+        data=ShopAdminDataHandler({"from":10,"len":10},request).getData()
+        result=DatabaseHandler(adminColumns,ShopApplication).index(data["from"],data["len"])
+    except MyError,e:
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":ERROR_CODE,"result":[]}))
+    return HttpResponse(dumps({"state":SUCCESS_CODE,"result":result}))
+
+def queryApplicationNumber(request):
+    try:
+        ShopAdminDataHandler({},request).getData()
+    except:
+        return HttpResponse(-1)
+    return HttpResponse(DatabaseHandler(adminColumns,ShopApplication).getNumRecord())
+

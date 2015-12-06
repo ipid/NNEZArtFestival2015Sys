@@ -4,6 +4,13 @@
         <meta charset="UTF-8">
     </head>
     <body>
+        <p>Login </p>
+        <form action="/api/admin/login" method=POST>
+            Password<input name="password" type=password><br/>
+            Captcha<input name="captcha">
+            <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
         <p>Ticket insertion</p>
         <form action="/api/ticket/insertApplication" method=POST>
             姓名<input name="name" value=zhangsan><br/>
@@ -59,7 +66,7 @@
             <input name="submit" type=submit>
         </form>
 
-        <p>Shop</p>
+        <p>Shop insert</p>
         
         <form action="/api/shop/insertApplication" method=POST>
             姓名<input name="ownerName" value=name><br/>
@@ -74,6 +81,114 @@
             密钥<input name="privilegeKey" value=00000000><br/>
             验证码<input name="captcha">
             <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>Shop query</p>
+        
+        <form action="/api/shop/queryApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=name><br/>
+            联系方式<input name="ownerContact" value=ownerContact><br/>
+            店名<input name="shopName" value=shopName><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            需要电力<input name="electricity" value=1><br/>
+            卖食物<input name="food" value=1><br/>
+            卖非食物<input name="nonFood" value=1><br/>
+            密钥<input name="privilegeKey" value=00000000><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>Shop modify</p>
+        
+        <form action="/api/shop/modifyApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=name><br/>
+            联系方式<input name="ownerContact" value=ownerContact><br/>
+            店名<input name="shopName" value=shopName><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=1><br/>
+            班级<input name="ownerClass" value=2><br/>
+            需要电力<input name="electricity" value=1><br/>
+            卖食物<input name="food" value=1><br/>
+            卖非食物<input name="nonFood" value=1><br/>
+            密钥<input name="privilegeKey" value=00000000><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD insert</p>
+        
+        <form action="/api/advertisement/insertApplication" method=POST>
+            姓名<input name="ownerName" value=heboo><br/>
+            联系方式<input name="ownerContact" value=fucku><br/>
+            店名<input name="shopName" value=Miracal><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            baidu<input name="isJoined" value=1><br/>
+            URL<input name="adUrl" value=hahahahah><br/>
+            验证码<input name="captcha">
+            <img src="api/captcha/get"><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD query</p>
+        
+        <form action="/api/advertisement/queryApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=heboo><br/>
+            联系方式<input name="ownerContact" value=fucku><br/>
+            店名<input name="shopName" value=Miracal><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            baidu<input name="isJoined" value=1><br/>
+            URL<input name="adUrl" value=hahahahah><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD delete</p>
+        
+        <form action="/api/advertisement/deleteApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD modify</p>
+        
+        <form action="/api/advertisement/modifyApplication" method=POST>
+            ID<input name="pk" value=1><br/>
+            姓名<input name="ownerName" value=heboo><br/>
+            联系方式<input name="ownerContact" value=fucku><br/>
+            店名<input name="shopName" value=Miracal><br/>
+            类型<input name="ownerType" value=0><br/>
+            年级<input name="ownerGrade" value=11><br/>
+            班级<input name="ownerClass" value=2><br/>
+            baidu<input name="isJoined" value=1><br/>
+            URL<input name="adUrl" value=hahahahah><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD index</p>
+        
+        <form action="/api/advertisement/indexApplication" method=POST>
+            from<input name="from" value=1><br/>
+            len<input name="len" value=10><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD number</p>
+        
+        <form action="/api/advertisement/queryApplicationNumber" method=POST>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>getAD</p>
+        
+        <form action="/api/advertisement/get" method=POST>
+            num<input name="num" value=10><br/>
             <input name="submit" type=submit>
         </form>
     </body>
