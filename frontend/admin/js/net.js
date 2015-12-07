@@ -1,6 +1,6 @@
 var Net = {
     login: function(pwd, ver, successFn, failed) {
-        $.ajax("api/admin/login", {
+        $.ajax("/api/admin/login", {
             method: "POST",
             data: {
                 password: pwd,
@@ -18,7 +18,7 @@ var Net = {
         });
     },
     logout: function(successFn, failed) {
-        $.ajax("api/admin/logout", {
+        $.ajax("/api/admin/logout", {
             method: "POST",
             error: function () {
                 failed();
@@ -32,7 +32,7 @@ var Net = {
         });
     },
     isAdmin: function(successFn, failed) {
-        $.ajax("api/admin/isAdmin", {
+        $.ajax("/api/admin/isAdmin", {
             method: "POST",
             error: function() {
                 failed();
@@ -50,7 +50,7 @@ var Net = {
      * Ticket
      */
     queryTicketApplicationNumber: function(successFn, failed) {
-        $.ajax("api/ticket/queryApplicationNumber", {
+        $.ajax("/api/ticket/queryApplicationNumber", {
             method: "POST",
             error: function() {
                 if(failed)
@@ -70,7 +70,7 @@ var Net = {
         });
     },
     indexTicketApplication: function(from, len, successFn, failed) {
-        $.ajax("api/ticket/indexApplication", {
+        $.ajax("/api/ticket/indexApplication", {
             method: "POST",
             data: {
                 from: from,
@@ -92,7 +92,7 @@ var Net = {
         });
     },
     queryTicketApplication: function(data, successFn, failed) {
-        $.ajax("api/ticket/queryApplication", {
+        $.ajax("/api/ticket/queryApplication", {
             method: "POST",
             data: data,
             error: function() {
@@ -111,7 +111,7 @@ var Net = {
         });
     },
     deleteTicketApplication: function(appID, successFn, failed) {
-        $.ajax("api/ticket/deleteApplication", {
+        $.ajax("/api/ticket/deleteApplication", {
             method: "POST",
             data: {
                 applicationID: appID
@@ -132,7 +132,7 @@ var Net = {
      * Shop
      */
     queryShopApplicationNum: function(successFn, failed) {
-        $.ajax("api/shop/queryApplicationNumber", {
+        $.ajax("/api/shop/queryApplicationNumber", {
             method: "POST",
             error: function() {
                 failed();
@@ -143,7 +143,7 @@ var Net = {
         });
     },
     indexShopApplication: function(from, len, successFn, failed) {
-        $.ajax("api/shop/indexApplication", {
+        $.ajax("/api/shop/indexApplication", {
             method: "POST",
             data: {
                 from: from,
@@ -162,7 +162,7 @@ var Net = {
         });
     },
     deleteShopApplication: function(appID, successFn, failed) {
-        $.ajax("api/shop/deleteApplication", {
+        $.ajax("/api/shop/deleteApplication", {
             method: "POST",
             data: {
                 pk: appID
@@ -179,7 +179,7 @@ var Net = {
         });
     },
     queryShopApplication: function(data, successFn, failed) {
-        $.ajax("api/shop/queryApplication", {
+        $.ajax("/api/shop/queryApplication", {
             method: "POST",
             data: data,
             error: function() {
@@ -195,7 +195,7 @@ var Net = {
         });
     },
     updateShopApplication: function(data, successFn, failed) {
-        $.ajax("api/shop/modifyApplication", {
+        $.ajax("/api/shop/modifyApplication", {
             method: "POST",
             data: data,
             error: function() {

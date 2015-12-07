@@ -19,7 +19,7 @@
      */
 
     $("#login_verify_img").click(function() {
-        this.src = /*"http://127.0.0.1:8000/" + */"api/captcha/get?" + Date.now();
+        this.src = /*"http://127.0.0.1:8000/" + */"/api/captcha/get?" + Date.now();
     });
 
     var login_pwd = $("#login_password");
