@@ -24,13 +24,14 @@ import siteAdmin.views
 import advertisement.views
 
 import backend.settings
-STATIC_ROOT='../frontend/admin'
+STATIC_ROOT='../frontend'
 
 urlpatterns = [
     url(r'^test.html$', lambda r: render(r, "test.html")),
     url(r'^login.html$', lambda r: render(r, "login.html")),
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^admin/(?P<path>.*)$','django.views.static.serve',{'document_root':STATIC_ROOT}),
+    url(r'^admin/(?P<path>.*)$','django.views.static.serve',{'document_root':STATIC_ROOT+'/admin'}),
+    url(r'^e/(?P<path>.*)$','django.views.static.serve',{'document_root':STATIC_ROOT+'/e'}),
     url(r'^api/ticket/insertApplication$', ticket.views.insertApplication),
     url(r'^api/ticket/queryApplication$', ticket.views.queryApplication),
     url(r'^api/ticket/modifyApplication$', ticket.views.modifyApplication),
