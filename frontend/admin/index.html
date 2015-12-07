@@ -44,7 +44,7 @@
 
                     <div class="nav_label">店铺</div>
                     <div class="nav_btn" id="nav_shop_index">所有店铺申请</div>
-                    <div class="nav_btn nav_btn_disabled" id="nav_shop_filter">条件查询店铺申请</div>
+                    <div class="nav_btn" id="nav_shop_filter">条件查询店铺申请</div>
                     <div class="divider"></div>
 
                     <div class="nav_label">广告</div>
@@ -80,6 +80,9 @@
                             </tr>
                             </tbody>
                         </table>
+                        <p></p>
+                        <div class="button" id="ticket_index_prePage">上一页</div>
+                        <div class="button" id="ticket_index_nextPage">下一页</div>
                     </div>
                     <div id="view_ticket_search" class="view_page">
                         <span>请求ID</span>
@@ -114,13 +117,66 @@
                                 <td nowrap="">年级</td>
                                 <td nowrap="">班级</td>
                                 <td nowrap="">是否用电</td>
-                                <td nowrap="">是否食物</td>
-                                <td nowrap="">是否非食物</td>
+                                <td nowrap="">是否有食物</td>
+                                <td nowrap="">是否有非食物</td>
                                 <td nowrap="">密钥</td>
                                 <td nowrap="">操作</td>
                             </tr>
                             </tbody>
                         </table>
+                        <p></p>
+                        <div class="button" id="shop_index_prePage">上一页</div>
+                        <div class="button" id="shop_index_nextPage">下一页</div>
+                    </div>
+                    <div id="view_shop_search" class="view_page">
+                        <span>请求ID</span>
+                        <input id="shop_search_applicationID"/>
+                        <span>姓名</span>
+                        <input id="shop_search_ownerName"/>
+                        <span>联系方式</span>
+                        <input id="shop_search_contact"/>
+                        <span>店名</span>
+                        <input id="shop_search_shopName"/>
+                        <span>申请者类型</span>
+                        <input id="shop_search_ownerType"/>
+                        <span>年级</span>
+                        <input id="shop_search_grade"/>
+                        <span>班级</span>
+                        <input id="shop_search_class"/>
+                        <span>是否用电</span>
+                        <input id="shop_search_electricity"/>
+                        <span>是否有食物</span>
+                        <input id="shop_search_hasFood"/>
+                        <span>是否有非食物</span>
+                        <input id="shop_search_hasNonFood"/>
+                        <span>密钥</span>
+                        <input id="shop_search_key"/>
+                        <div class="button" id="shop_search_submit">查询</div>
+                    </div>
+                    <div id="view_shop_update" class="view_page">
+                        <span>请求ID</span>
+                        <input id="shop_update_applicationID" disabled/>
+                        <span>姓名</span>
+                        <input id="shop_update_ownerName"/>
+                        <span>联系方式</span>
+                        <input id="shop_update_contact"/>
+                        <span>店名</span>
+                        <input id="shop_update_shopName"/>
+                        <span>申请者类型</span>
+                        <input id="shop_update_ownerType"/>
+                        <span>年级</span>
+                        <input id="shop_update_grade"/>
+                        <span>班级</span>
+                        <input id="shop_update_class"/>
+                        <span>是否用电</span>
+                        <input id="shop_update_electricity"/>
+                        <span>是否有食物</span>
+                        <input id="shop_update_hasFood"/>
+                        <span>是否有非食物</span>
+                        <input id="shop_update_hasNonFood"/>
+                        <span>密钥</span>
+                        <input id="shop_update_key"/>
+                        <div class="button" id="shop_update_submit">更新</div>
                     </div>
                 </div>
             </div>

@@ -170,8 +170,7 @@
 
     申请ID:pk
     姓名:owner
-    年级:grade
-    班级:ownerContact
+    联系方式:ownerContact
     店名:shopName
     类型:ownerType
     年级:ownerGrade
