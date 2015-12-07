@@ -164,6 +164,9 @@ var Net = {
     deleteShopApplication: function(appID, successFn, failed) {
         $.ajax("api/shop/deleteApplication", {
             method: "POST",
+            data: {
+                pk: appID
+            },
             error: function() {
                 failed();
             },
