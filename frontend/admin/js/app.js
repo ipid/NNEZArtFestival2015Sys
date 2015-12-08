@@ -391,7 +391,17 @@
         $("#view_shop_update").show();
         Loader.show();
         Net.queryShopApplication({
-            pk: appID
+            pk: appID,
+            ownerName: "",
+            ownerContact: "",
+            shopName: "",
+            ownerType: "",
+            ownerGrade: "",
+            ownerClass: "",
+            electricity: "",
+            food: "",
+            nonFood: "",
+            privilegeKey: ""
         }, function (o) {
             //debugger;
             if(o.result.length != 1) {
@@ -414,7 +424,16 @@
         }, function () {
             alert(REQ_FAILED);
             Loader.hide();
-        });
+        });,
+"": shop_search.contact.val(),
+            shopName: shop_search.shopName.val(),
+            ownerType: shop_search.ownerType.val(),
+            ownerGrade: shop_search.grade.val(),
+            ownerClass: shop_search.classNO.val(),
+            electricity: shop_search.useElectricity.val(),
+            food: shop_search.food.val(),
+            nonFood: shop_search.nonFood.val(),
+            privilegeKey: shop_search.key.val()
     }
     window.initShopUpdate = initShopUpdate;
     $("#shop_update_submit").click(function() {
