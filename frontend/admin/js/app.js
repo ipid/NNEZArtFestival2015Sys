@@ -204,7 +204,6 @@
     }
     window.delTicket = delTicket;
 
-
     /**
      * Shop
      */
@@ -296,7 +295,7 @@
             tr.appendChild(t_key);
 
             var t_control = document.createElement("td");
-            t_control.innerHTML = "<a href='javascript:delShop(" + result[i]["pk"] + ")'>删除</a><br><a href='javascript:initShopUpdate(0)'>更改</a>";
+            t_control.innerHTML = "<a href='javascript:delShop(" + result[i]["pk"] + ")'>删除</a><br><a href='javascript:initShopUpdate(" + result[i]["pk"] + ")'>更改</a>";
             tr.appendChild(t_control);
             shopIndexTable.appendChild(tr);
         }
