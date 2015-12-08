@@ -60,7 +60,7 @@ def insertApplication(request):
         data=ShopGuestDataHandler(guestColumns,request).getData()
         dh=DatabaseHandler(adminColumns,ShopApplication)
         result=dh.query({"privilegeKey":data["privilegeKey"]})
-        if len(result)==1:
+        if len(result)==1 and data["privilegeKey"]!="00000000":
             data["pk"]=result[0]["pk"]
             dh.modify(data)
         else:
