@@ -127,3 +127,8 @@ class DatabaseHandler:
     def getNumRecord(self):
         return self.__db.objects.all().count()
 
+def objectToDict(obj,columns):
+    d=dict()
+    for i in columns:
+        d[i]=getattr(obj,i)
+    return d

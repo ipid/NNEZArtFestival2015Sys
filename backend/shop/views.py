@@ -118,5 +118,21 @@ def queryApplicationNumber(request):
         return HttpResponse(-1)
     return HttpResponse(DatabaseHandler(adminColumns,ShopApplication).getNumRecord())
 
-def dumpApplication(request):
-    pass
+EXPORT_COLUMNS=["ownerName","ownerGrade","ownerClass","ownerContact","shopName","ownerType","electricity","food","nonFood","privilegeKey"]
+
+def exportApplication(request):
+    #ShopAdminDataHandler({},request).getData()
+    data = ShopApplication.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=shopApplication.csv'  
+    writer = csv.writer(response)
+    writer.writerow(EXPORT_COLUMNS)
+    for item in data:
+        item=objectToDict(item,EXPORT_COLUMNS)
+        writer.writerow( [ item[i] for i in EXPORT_COLUMNS ] )
+    return response
+    try:
+        pass
+    except:
+        return HttpResponse("")
+

@@ -56,6 +56,7 @@ urlpatterns = [
     url(r'^api/shop/deleteApplication$', shop.views.deleteApplication),
     url(r'^api/shop/indexApplication$', shop.views.indexApplication),
     url(r'^api/shop/queryApplicationNumber$', shop.views.queryApplicationNumber),
+    url(r'^api/shop/exportApplication$', shop.views.exportApplication),
 
     url(r'^api/captcha/get$', captcha.views.getCAPTCHA),
     url(r'^api/captcha/verify', captcha.views.verifyCAPTCHA),
