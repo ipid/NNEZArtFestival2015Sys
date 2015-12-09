@@ -217,7 +217,7 @@
     var curShopIndex = 0;
     var shopIndexTable = document.getElementById("shop_index_table");
     function loadShopIndex() {
-        Net.indexShopApplication(curShopIndex, 5, function(o) {
+        Net.indexShopApplication(curShopIndex, 20, function(o) {
             if(o.state != "success") {
                 alert(REQ_FAILED);
                 Loader.hide();
@@ -242,6 +242,7 @@
         curShopIndex += 5;
         initShopIndex();
     });
+    var ownerTypes = ["凤岭高中部班级/国际班", "教师", "凤岭高中部社团/国际班社团", "凤岭高中部个人/国际班个人", "非学生个人", "东盟中学", "二中初中部/新民中学"];
     function genShopTable(o, showBtns) {
         // Remove all records
         $("#shop_index_table tr:not(:eq(0))").remove();
@@ -267,7 +268,7 @@
             tr.appendChild(t_shopName);
 
             var t_ownerType = document.createElement("td");
-            t_ownerType.innerText = result[i]["ownerType"];
+            t_ownerType.innerText = ownerTypes[result[i]["ownerType"]];
             tr.appendChild(t_ownerType);
 
             var t_grade = document.createElement("td");
@@ -424,16 +425,7 @@
         }, function () {
             alert(REQ_FAILED);
             Loader.hide();
-        });,
-"": shop_search.contact.val(),
-            shopName: shop_search.shopName.val(),
-            ownerType: shop_search.ownerType.val(),
-            ownerGrade: shop_search.grade.val(),
-            ownerClass: shop_search.classNO.val(),
-            electricity: shop_search.useElectricity.val(),
-            food: shop_search.food.val(),
-            nonFood: shop_search.nonFood.val(),
-            privilegeKey: shop_search.key.val()
+        });
     }
     window.initShopUpdate = initShopUpdate;
     $("#shop_update_submit").click(function() {
