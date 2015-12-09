@@ -9,7 +9,6 @@ class AdvertisementApplication(models.Model):
     ownerType=models.CharField(max_length=1)
     shopName=models.CharField(max_length=1000)
     adUrl=models.CharField(max_length=1000)
+    isJoined=models.CharField(max_length=1)
     timestamp=models.DateTimeField(default=datetime.now())
-    validated=models.BooleanField(default=False)
-    isJoined=models.BooleanField(default=False)
 

@@ -111,7 +111,9 @@ class DatabaseHandler:
         self.insert(data)
         
     def index(self,start,length):
-        return self.objectsToDict( list(self.__db.objects.order_by("pk")[int(start):int(start)+int(length)]) )
+        start=int(start)
+        length=int(length)
+        return self.objectsToDict( list(self.__db.objects.order_by("pk")[start:start+length]) )
 
     def objectsToDict(self,data):
         for key,val in enumerate(data):
@@ -127,8 +129,3 @@ class DatabaseHandler:
     def getNumRecord(self):
         return self.__db.objects.all().count()
 
-def objectToDict(obj,columns):
-    d=dict()
-    for i in columns:
-        d[i]=getattr(obj,i)
-    return d

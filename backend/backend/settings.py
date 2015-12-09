@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sae
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'lcnx10mx@oyx)4aykfs!nr)ag(ew%38fo836_qzzye6n8hk5u8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -81,20 +82,19 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': sae.const.MYSQL_DB,
+        'USER': sae.const.MYSQL_USER,
+        'PASSWORD': sae.const.MYSQL_PASS,
+        'HOST': sae.const.MYSQL_HOST,
+        'PORT': sae.const.MYSQL_PORT,
     }
-#    'default':{
-#        'ENGINE': 'django.db.backends.mysql', 
-#        'NAME':'naf2015',
-#        'HOST':'192.168.1.121',
-#        'PORT':'3306',
-#        'USER':'root',
-#        'PASSWORD':'1234567890',
-#    }
 }
+
+
 
 
 # Internationalization
