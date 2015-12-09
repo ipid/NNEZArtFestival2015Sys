@@ -134,7 +134,8 @@ table td {
 
 #toolbar_nav_toggle {
     display: none;
-    background: url("../res/menu.svg") no-repeat center;
+    background: url("../res/menu.png") no-repeat center;
+    background-size: contain;
     height: 1.3em;
     width: 1.3em;
     float: left;
@@ -194,7 +195,8 @@ span {
 }
 
 #toolbar_logout {
-    background: url("../res/logout.svg") no-repeat center;
+    background: url("../res/logout.png") no-repeat center;
+    background-size: contain;
     height: 1.3em;
     cursor: pointer;
     width: 1.3em;
@@ -207,4 +209,10 @@ span {
 
 #ticket_index_prePage, #shop_index_prePage {
     margin-right: 1em;
+}
+
+.code_area {
+    background: #EFEFCD;
+    padding: .5em;
+    font-size: .7em;
 }

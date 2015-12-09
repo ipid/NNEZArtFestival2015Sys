@@ -54,7 +54,10 @@
      */
     var previewTicketCountEl = $("#preview_ticket_count");
     var previewShopCountEl = $("#preview_shop_count");
+    var FETCHING = "正在获取";
     function initPreview() {
+        previewTicketCountEl.text(FETCHING);
+        previewShopCountEl.text(FETCHING);
         mainView.children().hide();
         $("#view_preview").show();
         Loader.show();
@@ -211,13 +214,14 @@
     function initShopIndex() {
         mainView.children().hide();
         $("#view_shop_index").show();
-        Loader.show();
-        loadShopIndex();
+        /*Loader.show();
+        loadShopIndex();*/
     }
     var curShopIndex = 0;
+    var itemsPerPage = 20;
     var shopIndexTable = document.getElementById("shop_index_table");
     function loadShopIndex() {
-        Net.indexShopApplication(curShopIndex, 20, function(o) {
+        Net.indexShopApplication(curShopIndex, itemsPerPage, function(o) {
             if(o.state != "success") {
                 alert(REQ_FAILED);
                 Loader.hide();
@@ -233,16 +237,22 @@
     var shopPrePage = $("#shop_index_prePage");
     var shopNextPage = $("#shop_index_nextPage");
     shopPrePage.click(function() {
-        curShopIndex -= 5;
+        curShopIndex -= itemsPerPage;
         if(curShopIndex < 0)
             curShopIndex = 0;
         initShopIndex();
     });
     shopNextPage.click(function() {
-        curShopIndex += 5;
+        curShopIndex += itemsPerPage;
         initShopIndex();
     });
     var ownerTypes = ["凤岭高中部班级/国际班", "教师", "凤岭高中部社团/国际班社团", "凤岭高中部个人/国际班个人", "非学生个人", "东盟中学", "二中初中部/新民中学"];
+    function getOwnerTypeString(type) {
+        var r = ownerTypes[type];
+        if(r == undefined)
+            return "未知代号" + type;
+        return r;
+    }
     function genShopTable(o, showBtns) {
         // Remove all records
         $("#shop_index_table tr:not(:eq(0))").remove();
@@ -268,7 +278,7 @@
             tr.appendChild(t_shopName);
 
             var t_ownerType = document.createElement("td");
-            t_ownerType.innerText = ownerTypes[result[i]["ownerType"]];
+            t_ownerType.innerText = getOwnerTypeString(result[i]["ownerType"]);
             tr.appendChild(t_ownerType);
 
             var t_grade = document.createElement("td");
@@ -305,7 +315,7 @@
         if(showBtns) {
             if(curShopIndex > 0)
                 shopPrePage.show();
-            if(result.length >= 5)
+            if(result.length >= itemsPerPage)
                 shopNextPage.show();
         }
     }
