@@ -102,9 +102,11 @@ def modifyApplication(request):
     return HttpResponse(SUCCESS_CODE)
 
 def indexApplication(request):
+    data=ShopAdminDataHandler({"from":10,"len":10},request).getData()
+    result=DatabaseHandler(adminColumns,ShopApplication).index(data["from"],data["len"])
+    print len(result)
     try:
-        data=ShopAdminDataHandler({"from":10,"len":10},request).getData()
-        result=DatabaseHandler(adminColumns,ShopApplication).index(data["from"],data["len"])
+        pass
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:

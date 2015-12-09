@@ -86,7 +86,7 @@ def queryApplicationNumber(request):
 def getRandomAdvertisement(request):
     try:
         num=int(AdRandDataHandler({"num":10},request).getData()["num"])
-        allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query({})
+        allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query({"validated":True})
         result=list()
         if num>len(allAd):
             for i in range(num):

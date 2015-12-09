@@ -101,7 +101,7 @@ class DatabaseHandler:
         self.__db.objects.create(**data)
     
     def query(self,data):
-        return self.objectsToDict( list(self.__db.objects.filter(**data)) )
+        return self.objectsToDict( list(self.__db.objects.filter(**data).order_by("pk")) )
 
     def delete(self,pk):
         self.__db.objects.get(pk=pk).delete()
@@ -111,7 +111,7 @@ class DatabaseHandler:
         self.insert(data)
         
     def index(self,start,length):
-        return self.objectsToDict( list(self.__db.objects.all()[start:length]) )
+        return self.objectsToDict( list(self.__db.objects.order_by("pk")[int(start):int(start)+int(length)]) )
 
     def objectsToDict(self,data):
         for key,val in enumerate(data):
