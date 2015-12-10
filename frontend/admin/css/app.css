@@ -56,13 +56,23 @@ body {
 #navigator {
     position: absolute;
     top: 0;
+    left: -250px;
     bottom: 0;
     background: #F0F0F0;
     width: 250px;
+    -webkit-transition: left .5s;
+    -moz-transition: left .5s;
+    -ms-transition: left .5s;
+    -o-transition: left .5s;
+    transition: left .5s;
     -webkit-box-shadow: #AAA 0 0 6px;
     -moz-box-shadow: #AAA 0 0 6px;
     box-shadow: #AAA 0 0 6px;
     overflow-y: auto;
+}
+
+.navigator_show {
+    left: 0 !important;
 }
 
 .nav_btn {
@@ -76,9 +86,9 @@ body {
     transition: background .3s;
 }
 
-.nav_btn:hover {
-    background: #CDCDFF !important;
-}
+/*.nav_btn:hover {*/
+/*background: #CDCDFF !important;*/
+/*}*/
 
 .nav_label {
     padding: 1em;
@@ -98,7 +108,7 @@ body {
 #main_view {
     position: absolute;
     background: #F5F5F5;
-    left: 250px;
+    left: 0;
     right: 0;
     top: 0;
     bottom: 0;
@@ -133,12 +143,15 @@ table td {
 }
 
 #toolbar_nav_toggle {
-    display: none;
     background: url("../res/menu.png") no-repeat center;
     background-size: contain;
     height: 1.3em;
     width: 1.3em;
     float: left;
+}
+
+#toolbar_text {
+    margin-left: 0;
 }
 
 input {
@@ -172,6 +185,7 @@ span {
     position: absolute;
     right: 0;
     bottom: 0;
+    pointer-events: none;
 }
 
 .title {
@@ -198,7 +212,6 @@ span {
     background: url("../res/logout.png") no-repeat center;
     background-size: contain;
     height: 1.3em;
-    cursor: pointer;
     width: 1.3em;
     float: right;
 }

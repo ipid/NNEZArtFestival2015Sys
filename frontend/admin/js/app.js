@@ -37,7 +37,9 @@
         });
     });
 
-    $("#toolbar_logout").click(function () {
+    $("#toolbar_logout").click(function() {
+        if(!confirm("您确定要登出吗？"))
+            return;
         Loader.show();
         Net.logout(function() {
             initLogin();
@@ -55,6 +57,7 @@
     var previewTicketCountEl = $("#preview_ticket_count");
     var previewShopCountEl = $("#preview_shop_count");
     var FETCHING = "正在获取";
+
     function initPreview() {
         previewTicketCountEl.text(FETCHING);
         previewShopCountEl.text(FETCHING);
@@ -84,6 +87,7 @@
             Loader.hide();
         });
     }
+
     $("#nav_preview").click(initPreview);
 
 
@@ -98,8 +102,10 @@
         Loader.show();
         loadTicketIndex();
     }
+
     var curTicketIndex = 0;
     var ticketIndexTable = document.getElementById("ticket_index_table");
+
     function loadTicketIndex() {
         Net.indexTicketApplication(curTicketIndex, 5, function(o) {
             if(o.state != "success") {
@@ -114,6 +120,7 @@
             Loader.hide();
         });
     }
+
     $("#nav_ticket_index").click(initTicketIndex);
 
     function genTicketTable(o) {
@@ -121,7 +128,7 @@
         $("#ticket_index_table tr:not(:eq(0))").remove();
         // Add new records
         var result = o.result;
-        for(var i=0; i<result.length; i++) {
+        for(var i = 0; i < result.length; i++) {
             var tr = document.createElement("tr");
             var t_id = document.createElement("td");
             t_id.innerText = result[i]["applicationID"];
@@ -145,7 +152,7 @@
             t_requirement.innerText = result[i]["requirement"];
             tr.appendChild(t_requirement);
             var t_control = document.createElement("td");
-            t_control.innerHTML = "<a href='javascript:delTicket("+result[i].applicationID+")'>删除</a><br><a href='javascript:void(0)'>更改</a>";
+            t_control.innerHTML = "<a href='javascript:delTicket(" + result[i].applicationID + ")'>删除</a><br><a href='javascript:void(0)'>更改</a>";
             tr.appendChild(t_control);
             ticketIndexTable.appendChild(tr);
         }
@@ -158,6 +165,7 @@
         $("#view_ticket_search").show();
         Loader.hide();
     }
+
     $("#nav_ticket_filter").click(initTicketSearch);
 
     var ticket_search = {
@@ -169,7 +177,7 @@
         societyID: $("#ticket_search_societyID"),
         requirement: $("#ticket_search_require")
     };
-    $("#ticket_search_submit").click(function () {
+    $("#ticket_search_submit").click(function() {
         Loader.show();
         mainView.children().hide();
         $("#view_ticket_index").show();
@@ -198,13 +206,14 @@
     function delTicket(appID) {
         if(!confirm("你确定要删除请求" + appID + "吗？"))
             return;
-        Net.deleteTicketApplication(appID, function () {
+        Net.deleteTicketApplication(appID, function() {
             alert("删除成功");
             initPreview();
-        }, function () {
+        }, function() {
             alert(REQ_FAILED);
         });
     }
+
     window.delTicket = delTicket;
 
     /**
@@ -214,12 +223,14 @@
     function initShopIndex() {
         mainView.children().hide();
         $("#view_shop_index").show();
-        /*Loader.show();
-        loadShopIndex();*/
+        Loader.show();
+        loadShopIndex();
     }
+
     var curShopIndex = 0;
     var itemsPerPage = 20;
     var shopIndexTable = document.getElementById("shop_index_table");
+
     function loadShopIndex() {
         Net.indexShopApplication(curShopIndex, itemsPerPage, function(o) {
             if(o.state != "success") {
@@ -234,6 +245,7 @@
             Loader.hide();
         });
     }
+
     var shopPrePage = $("#shop_index_prePage");
     var shopNextPage = $("#shop_index_nextPage");
     shopPrePage.click(function() {
@@ -246,19 +258,58 @@
         curShopIndex += itemsPerPage;
         initShopIndex();
     });
+
     var ownerTypes = ["凤岭高中部班级/国际班", "教师", "凤岭高中部社团/国际班社团", "凤岭高中部个人/国际班个人", "非学生个人", "东盟中学", "二中初中部/新民中学"];
+
     function getOwnerTypeString(type) {
         var r = ownerTypes[type];
         if(r == undefined)
             return "未知代号" + type;
         return r;
     }
+
+    function getElectricityState(num) {
+        if(num == "1")
+            return "用电";
+        if(num == "0")
+            return "不用电";
+        return "！非法输入！";
+    }
+
+    function getFoodState(num) {
+        if(num == "1")
+            return "有食物";
+        if(num == "0")
+            return "没有食物";
+        return "！非法输入！";
+    }
+
+    function getNonFoodState(num) {
+        if(num == "1")
+            return "有非食物";
+        if(num == "0")
+            return "没有非食物";
+        return "！非法输入！";
+    }
+
+    function getClassStr(num) {
+        if(num == "51")
+            return "A1";
+        if(num == "52")
+            return "A2";
+        if(num == "53")
+            return "A3";
+        if(num == "54")
+            return "A4";
+        return num;
+    }
+
     function genShopTable(o, showBtns) {
         // Remove all records
         $("#shop_index_table tr:not(:eq(0))").remove();
         // Add new records
         var result = o.result;
-        for(var i=0; i<result.length; i++) {
+        for(var i = 0; i < result.length; i++) {
             var tr = document.createElement("tr");
 
             var t_id = document.createElement("td");
@@ -286,19 +337,19 @@
             tr.appendChild(t_grade);
 
             var t_class = document.createElement("td");
-            t_class.innerText = result[i]["ownerClass"];
+            t_class.innerText = getClassStr(result[i]["ownerClass"]);
             tr.appendChild(t_class);
 
             var t_useElectricity = document.createElement("td");
-            t_useElectricity.innerText = result[i]["electricity"];
+            t_useElectricity.innerText = getElectricityState(result[i]["electricity"]);
             tr.appendChild(t_useElectricity);
 
             var t_isFood = document.createElement("td");
-            t_isFood.innerText = result[i]["food"];
+            t_isFood.innerText = getFoodState(result[i]["food"]);
             tr.appendChild(t_isFood);
 
             var t_nonFood = document.createElement("td");
-            t_nonFood.innerText = result[i]["nonFood"];
+            t_nonFood.innerText = getNonFoodState(result[i]["nonFood"]);
             tr.appendChild(t_nonFood);
 
             var t_key = document.createElement("td");
@@ -319,30 +370,32 @@
                 shopNextPage.show();
         }
     }
+
     $("#nav_shop_index").click(initShopIndex);
 
     function delShop(appID) {
         if(!confirm("你确定要删除请求" + appID + "吗？"))
             return;
-        Net.deleteShopApplication(appID, function () {
+        Net.deleteShopApplication(appID, function() {
             alert("删除成功");
-            initPreview();
-        }, function () {
+            initShopIndex();
+        }, function() {
             alert(REQ_FAILED);
         });
     }
+
     window.delShop = delShop;
 
     function initShopSearch() {
         mainView.children().hide();
         $("#view_shop_search").show();
-        Loader.show();
-        loadShopIndex();
+        Loader.hide();
     }
+
     $("#nav_shop_filter").click(initShopSearch);
 
     var shop_search = {
-        appID : $("#shop_search_applicationID"),
+        appID: $("#shop_search_applicationID"),
         ownerName: $("#shop_search_ownerName"),
         contact: $("#shop_search_contact"),
         shopName: $("#shop_search_shopName"),
@@ -354,7 +407,7 @@
         nonFood: $("#shop_search_hasNonFood"),
         key: $("#shop_search_key")
     };
-    $("#shop_search_submit").click(function () {
+    $("#shop_search_submit").click(function() {
         Loader.show();
         mainView.children().hide();
         $("#view_shop_index").show();
@@ -385,7 +438,7 @@
     });
 
     var shop_update = {
-        appID : $("#shop_update_applicationID"),
+        appID: $("#shop_update_applicationID"),
         ownerName: $("#shop_update_ownerName"),
         contact: $("#shop_update_contact"),
         shopName: $("#shop_update_shopName"),
@@ -397,6 +450,7 @@
         nonFood: $("#shop_update_hasNonFood"),
         key: $("#shop_update_key")
     };
+
     function initShopUpdate(appID) {
         mainView.children().hide();
         $("#view_shop_update").show();
@@ -413,7 +467,7 @@
             food: "",
             nonFood: "",
             privilegeKey: ""
-        }, function (o) {
+        }, function(o) {
             //debugger;
             if(o.result.length != 1) {
                 alert("请求错误");
@@ -432,11 +486,12 @@
             shop_update.nonFood.val(re.nonFood);
             shop_update.key.val(re.privilegeKey);
             Loader.hide();
-        }, function () {
+        }, function() {
             alert(REQ_FAILED);
             Loader.hide();
         });
     }
+
     window.initShopUpdate = initShopUpdate;
     $("#shop_update_submit").click(function() {
         Loader.show();
@@ -464,6 +519,15 @@
 
 
     /**
+     * About
+     */
+
+    $("#nav_about").click(function() {
+        // TODO
+    });
+
+
+    /**
      * Start App
      */
 
@@ -483,11 +547,13 @@
     }
 
     var view_login = $("#view_login");
+
     function hideLogin() {
         view_login.hide();
     }
 
     var body_el = $("#body");
+
     function showViewport() {
         body_el.show();
     }
