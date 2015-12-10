@@ -522,9 +522,11 @@
      * About
      */
 
-    $("#nav_about").click(function() {
-        // TODO
-    });
+    function initAbout() {
+        mainView.children().hide();
+        $("#view_about").show();
+    }
+    $("#nav_about").click(initAbout);
 
 
     /**
