@@ -525,6 +525,7 @@
     function initAbout() {
         mainView.children().hide();
         $("#view_about").show();
+        Loader.hide();
     }
     $("#nav_about").click(initAbout);
 

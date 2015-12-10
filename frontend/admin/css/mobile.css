@@ -87,7 +87,7 @@ body {
 }
 
 /*.nav_btn:hover {*/
-    /*background: #CDCDFF !important;*/
+/*background: #CDCDFF !important;*/
 /*}*/
 
 .nav_label {
@@ -185,6 +185,7 @@ span {
     position: absolute;
     right: 0;
     bottom: 0;
+    pointer-events: none;
 }
 
 .title {
@@ -226,5 +227,17 @@ span {
 .code_area {
     background: #EFEFCD;
     padding: .5em;
+    font-size: .7em;
+}
+
+.highlight {
+    color: red;
+    background: #EFEFDD;
+    border: solid #CDCDAB 1px;
+    padding: .4em;
+    margin: 0 .4em;
+}
+
+.text_tint {
     font-size: .7em;
 }
