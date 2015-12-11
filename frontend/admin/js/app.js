@@ -36,12 +36,17 @@
             enterFrontEnd();
             Loader.hide();
         }, function(state) {
-            if(state == FAILURE)
+            if(state == FAILURE) {
                 alert("登录失败");
-            if(state == ILLEGAL)
+            }
+            if(state == ILLEGAL) {
                 alert("验证码错误");
-            if(state == ERROR)
-                alert("内部错误");
+                login_verify.val(null);
+            }
+            if(state == ERROR) {
+                alert("网络或内部错误");
+            }
+            loginVerifyImg.click();
             Loader.hide();
         });
     });
@@ -134,7 +139,7 @@
 
     function genTicketTable(o) {
         // Remove all records
-        $("#ticket_index_table tr:not(:eq(0))").remove();
+        $("#ticket_index_table").find("tr:not(:eq(0))").remove();
         // Add new records
         var result = o.result;
         for(var i = 0; i < result.length; i++) {
@@ -315,7 +320,7 @@
 
     function genShopTable(o, showBtns) {
         // Remove all records
-        $("#shop_index_table tr:not(:eq(0))").remove();
+        $("#shop_index_table").find("tr:not(:eq(0))").remove();
         // Add new records
         var result = o.result;
         for(var i = 0; i < result.length; i++) {
@@ -384,6 +389,8 @@
 
     function delShop(appID) {
         if(!confirm("你确定要删除请求" + appID + "吗？"))
+            return;
+        if(!confirm("请再次确认！\n你确定要删除请求" + appID + "吗？"))
             return;
         Net.deleteShopApplication(appID, function() {
             alert("删除成功");
@@ -537,6 +544,7 @@
         Loader.hide();
     }
     $("#nav_about").click(initAbout);
+    window.initAbout = initAbout;
 
 
     /**

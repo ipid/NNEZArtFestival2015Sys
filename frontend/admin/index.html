@@ -11,7 +11,10 @@
         <script>
             window.onerror = function () {
                 console.log(arguments);
-                alert("出现错误！请尝试重新加载");
+                $("#error_msg").text(JSON.stringify(arguments));
+                $("#error_wrap").show();
+                initAbout();
+                alert("出现错误！请向我反馈");
             }
         </script>
         <div id="container" style="display: none;">
@@ -214,6 +217,11 @@
                     <div id="view_about" class="view_page">
                         <div class="text_cap">后台开发人员</div>
                         <div class="preview_count"><a href="http://wpa.qq.com/msgrd?v=3&uin=2281455663&site=qq&menu=yes" target="_blank" title="MacaroniTeam">@singsong(反馈在这里)</a></div>
+                        
+                        <div style="display: none;" id="error_wrap">
+                            <span class="text_cap">以下是错误信息</span>
+                            <div class="preview_count" id="error_msg"></div>
+                        </div>
 
                         <div class="text_cap">服务器开发人员</div>
                         <div class="preview_count"><a href="http://weibo.com/youybsy" target="_blank">@sqd</a></div>

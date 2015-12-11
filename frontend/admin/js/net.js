@@ -7,7 +7,7 @@ var Net = {
                 captcha: ver
             },
             error: function() {
-                failed();
+                failed("error");
             },
             success: function(re) {
                 if(re != "success")
