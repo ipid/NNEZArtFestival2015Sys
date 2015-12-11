@@ -4,6 +4,9 @@
 
 (function() {
     var REQ_FAILED = "请求失败！";
+    var ILLEGAL = "illegal";
+    var ERROR = "error";
+    var FAILURE = "failure";
 
     var navigator = $("#navigator");
     $("#toolbar_nav_toggle").click(function() {
@@ -18,8 +21,9 @@
      * App control
      */
 
-    $("#login_verify_img").click(function() {
-        this.src = /*"http://127.0.0.1:8000/" + */"/api/captcha/get?" + Date.now();
+    var loginVerifyImg = $("#login_verify_img");
+    loginVerifyImg.click(function() {
+        this.src = "/api/captcha/get?" + Date.now();
     });
 
     var login_pwd = $("#login_password");
@@ -31,8 +35,13 @@
             login_verify.val(null);
             enterFrontEnd();
             Loader.hide();
-        }, function() {
-            alert("登录失败");
+        }, function(state) {
+            if(state == FAILURE)
+                alert("登录失败");
+            if(state == ILLEGAL)
+                alert("验证码错误");
+            if(state == ERROR)
+                alert("内部错误");
             Loader.hide();
         });
     });
@@ -539,6 +548,7 @@
     function initLogin() {
         mainView.children().hide();
         $("#view_login").show();
+        loginVerifyImg.click();
         $("#body").hide();
         Loader.hide();
     }

@@ -11,7 +11,7 @@ var Net = {
             },
             success: function(re) {
                 if(re != "success")
-                    failed();
+                    failed(re);
                 else
                     successFn();
             }
