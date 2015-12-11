@@ -36,12 +36,16 @@
                 alert("哎呀，网络出错了");
             },
             success: function (state) {
-                if (state != "success") {
-                    alert("哎呀，出错了");
-                /*} else if(state == "error") {*/
-                } else {
-                    alert("请求成功");
+                if(state == "error") {
+                    alert("内部错误");
                 }
+                if(state == "illegal") {
+                    alert("验证码错误");
+                }
+                if(state == "success")
+                    alert("请求成功");
+                else
+                    alert("请求失败");
             }
         });
     });
