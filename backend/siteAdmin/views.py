@@ -39,7 +39,7 @@ def validateData(request):
         raise MyError(__ILLEGAL)
     password=filterPost(request,"password")
     if not UsersInfo.objects.filter(password=password).count():
-        raise MyError(__FAILURE+password)
+        raise MyError(__FAILURE)
     return True
 
 def login(request):
@@ -66,5 +66,3 @@ def isAdmin(request):
     else:
         return HttpResponse(0)
 
-def dumpTable(request):
-	pass

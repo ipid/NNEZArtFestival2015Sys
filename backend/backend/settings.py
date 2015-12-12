@@ -25,7 +25,9 @@ SECRET_KEY = 'lcnx10mx@oyx)4aykfs!nr)ag(ew%38fo836_qzzye6n8hk5u8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+#STATIC_ROOT='../frontend/admin'
 
 
 # Application definition
