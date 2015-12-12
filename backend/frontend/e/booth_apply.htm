@@ -55,9 +55,11 @@
         }
     </style>
     <script>
+        var a=document.getElementById("login_verify_img");
         function reloadCode(){
-            var a=document.getElementById("login_verify_img");
-            a.setAttribute("src","/api/captcha/get?rnd="+Math.random());
+            setTimeout(function () {
+                a.setAttribute("src", "/api/captcha/get?" + Date.now());
+            }, 100);
         }
     </script>
     <!--[if IE]>
@@ -76,11 +78,11 @@
 <div class="divBoothForm">
     <!-- img id="yuanzutingbgi" src="staticres/yuanzuting.png" /-->
     <form id="formBooth">
-        <p><input name="ownerName" id="ownerName" type="text" value="申请人姓名..." maxlength="4"></p>
+        <p><input name="ownerName" id="ownerName" type="text" value="申请人姓名..." maxlength="4" onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999"></p>
 
-        <p><input name="ownerContact" id="ownerContact" type="text" value="联系方式..." maxlength="64"></p>
+        <p><input name="ownerContact" id="ownerContact" type="text" value="联系方式..." maxlength="64" onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999"></p>
 
-        <p><input name="shopName" id="shopName" type="text" value="摊位名..." maxlength="32"></p>
+        <p><input name="shopName" id="shopName" type="text" value="摊位名..." maxlength="32" onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999"></p>
 
         <p><select name="ownerType" id="ownerType">
             <option value="*" class="unchoice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 申请人类型 ---</option>
@@ -140,9 +142,9 @@
            <input name="nonfood" id="nonfood" type="checkbox" value="true">
             <label style="width: 108px">非食品<span style="font-size:10px">（可双选）</span></label></p>
 
-        <p><input name="privilegeKey" id="privilegeKey" value="申请密钥...(没有请填00000000)" maxlength=8></p>
+        <p><input name="privilegeKey" id="privilegeKey" value="申请密钥...(没有请填00000000)" maxlength=8 onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999"></p>
 
-        <p><input name="captcha" id="captcha" value="计算两数相乘结果...">
+        <p><input name="captcha" id="captcha" value="计算两数相乘结果..." onclick="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue;this.style.color='#999'}" style="color:#999">
             <img src="#" id="login_verify_img" onerror="reloadCode()" onclick="reloadCode()" /></p>
 
         <p><a href="#" id="btn_submit">提交</a></p>
