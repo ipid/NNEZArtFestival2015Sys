@@ -1,60 +1,71 @@
-from myFunction.functions import *
 from django.http import HttpResponse
 from advertisement.models import *
 from django.utils.html import *
 from datetime import datetime
-from json import dumps
 from random import sample
 from random import choice
-import re
+from json import dumps
+from django.core.serializers.json import DjangoJSONEncoder
 
 __ERROR="error"
 __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"isJoined":1}
-adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"pk":100,"isJoined":1}
+RETURNED_COLUMNS=[
+"pk",
+"ownerName",
+"ownerContact",
+"ownerType",
+"shopName",
+"shopNo",
+"adPic",
+"isJoined",
+"isValidated",
+]
 
-class AdGuestDataHandler(GuestDataHandler):
-    pass
+def validateCode(request):
+    return "captcha" in request.POST and "code" in request.session and request.POST["captcha"]==request.session["code"]
 
-class AdAdminDataHandler(AdminDataHandler):
-    pass
+def validateUser(request):
+    return "logined" in request.session and request.session["logined"]==True
 
-class AdRandDataHandler(GuestDataHandler):
-    def validateData(self):
-        return self.validateLength()
+def delEmptyDictVal(data):
+    for key,val in data.items():
+        if val=="":
+            del(data[key])
+    return data
 
 def insertApplication(request):
-    try:
-        data=AdGuestDataHandler(guestColumns,request).getData()
-        DatabaseHandler(guestColumns,AdvertisementApplication).insert(data)
-    except MyError,e:
-        return HttpResponse(e)
-    except:
-        return HttpResponse(__ERROR)
-    return HttpResponse(__SUCCESS)
+    form=AdvertisementApplicationForm(request.POST,request.FILES)
+    if validateCode(request) and form.is_valid():
+        form.save()
+        return HttpResponse(__SUCCESS)
+    else:
+        return HttpResponse(__ILLEGAL)
 
 def queryApplication(request):
-    try:
-        data=AdAdminDataHandler(adminColumns,request).getData()
-        result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
-    except MyError,e:
-        return HttpResponse(dumps({"state":str(e),"result":[]}))
-    except:
-        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
-    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+    if validateUser(request):
+        form=AdvertisementAdminForm(request.POST,request.FILES)
+        if form.is_valid():
+            data=form.cleaned_data
+            delEmptyDictVal(data)
+            print data
+            result=list(AdvertisementApplication.objects.filter(**data).values_list(*RETURNED_COLUMNS))
+            result=dumps(result,cls=DjangoJSONEncoder)
+            return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+        else:
+            return HttpResponse(dumps({"state":__ILLEGAL,"result":[]}))
+    else:
+        return dumps({"state":__FAILURE,"result":[]})
 
 def deleteApplication(request):
-    try:
-        pk=AdAdminDataHandler({"pk":10},request).getData()["pk"]
-        DatabaseHandler(adminColumns,AdvertisementApplication).delete(pk)
-    except MyError,e:
-        return HttpResponse(e)
-    except:
-        return HttpResponse(__ERROR)
-    return HttpResponse(__SUCCESS)
+    if validateUser(request):
+        pk=request.POST["pk"]
+        AdvertisementApplication.objects.get(pk=pk).delete()
+        return HttpResponse(__SUCCESS)
+    else:
+        return HttpResponse(__FAILURE)
 
 def modifyApplication(request):
     try:
