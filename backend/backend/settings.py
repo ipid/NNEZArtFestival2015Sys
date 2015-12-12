@@ -90,6 +90,7 @@ if IN_LOCAL:
         }
     }
 else:
+    import sae
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',

@@ -216,6 +216,8 @@
     申请人姓名:owner(最大长度4)
     申请人联系方式:ownerContact(最大长度64)
     商铺名:shopName(最大长度32)
+    申请人年级:ownerGrade(同上)
+    申请人班级:ownerClass(同上)
     申请人类型:ownerType
       0 == 凤岭高中部班级/国际班 (默认值)
       1 == 教师
@@ -224,10 +226,8 @@
       4 == 非学生个人
       5 == 东盟中学
       6 == 二中初中部/新民中学
-    申请人年级:ownerGrade(同上)
-    申请人班级:ownerClass(同上)
-    广告图片url:adUrl
-    是否参加千百度活动:isJoined ( 1==参加 0==不参加 )
+    广告图片:adPic(文件)
+    是否参加千百度活动:isJoined (true/false)
     验证码:captcha
 
 返回值:
