@@ -550,8 +550,13 @@
      */
 
     function initAdValidate() {
-
+        mainView.children().hide();
+        $("#view_ad_validate").show();
+        // TODO Load Ads
+        Loader.hide();
     }
+
+    $("#nav_ad_validate").click(initAdValidate);
 
     /**
      * About

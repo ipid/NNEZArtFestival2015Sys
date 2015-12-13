@@ -214,7 +214,7 @@ var Net = {
      * Ad
      */
     queryAdAppNum: function(successFn, failed) {
-        $.ajax("api/advertisement/queryApplicationNumber", {
+        $.ajax("/api/advertisement/queryApplicationNumber", {
             method: "POST",
             error: function() {
                 failed();
@@ -225,7 +225,7 @@ var Net = {
         });
     },
     indexAdApp: function(from, len, successFn, failed) {
-        $.ajax("api/advertisement/indexApplication", {
+        $.ajax("/api/advertisement/indexApplication", {
             method: "POST",
             data: {
                 from: from,
@@ -245,7 +245,7 @@ var Net = {
         });
     },
     queryAdApp: function(data, successFn, failed) {
-        $.ajax("api/advertisement/queryApplication", {
+        $.ajax("/api/advertisement/queryApplication", {
             method: "POST",
             data: data,
             error: function() {
@@ -262,7 +262,7 @@ var Net = {
         });
     },
     delAdApp: function(appID, successFn, failed) {
-        $.ajax("api/advertisement/deleteApplication", {
+        $.ajax("/api/advertisement/deleteApplication", {
             method: "POST",
             data: {
                 pk: appID
@@ -280,7 +280,7 @@ var Net = {
         });
     },
     updateAdApp: function(data, successFn, failed) {
-        $.ajax("api/advertisement/modifyApplication", {
+        $.ajax("/api/advertisement/modifyApplication", {
             method: "POST",
             data: data,
             error: function() {
@@ -296,7 +296,7 @@ var Net = {
         });
     },
     getSomeAd: function(size, successFn, failed) {
-        $.ajax("api/advertisement/get", {
+        $.ajax("/api/advertisement/get", {
             method: "POST",
             data: {
                 num: size
