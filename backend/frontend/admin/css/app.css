@@ -229,3 +229,11 @@ span {
 .text_tint {
     font-size: .7em;
 }
+
+.button_warning {
+    background: #F44336;
+}
+
+.button_apply {
+    background: #8BC34A;
+}
