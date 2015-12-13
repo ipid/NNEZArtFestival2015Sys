@@ -256,6 +256,8 @@
 
 **精确查询广告申请:**
 
+这个功能对用户开放！
+
     api/advertisement/queryApplication
 
 返回值:
@@ -316,10 +318,10 @@
         "state":"success/failure/error/illegal"
         "result":
         [
-            "广告url 1",
-            "广告url 2",
+            "广告url 1 pk",
+            "广告url 2 pk",
             ......
-            "广告url n"
+            "广告url n pk"
         ]
     }
 
