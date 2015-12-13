@@ -269,10 +269,9 @@
                 "ownerContact":
                 "shopName":
                 "ownerType":
-                "ownerGrade":
-                "ownerClass":
                 "adUrl":
-                "isJoined"
+                "isJoined":
+                "isValidated":  是否已经被审核
             }
         ]
     }
