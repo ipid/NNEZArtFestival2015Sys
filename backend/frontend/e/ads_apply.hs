@@ -8,19 +8,37 @@ import Haste.Ajax
 import Control.Monad
 import Control.Applicative
 
-getDataURL = ffi $ toJSStr "(function(s){var reader=new FileReader();reader.readAsDataURL(document.getElementById(s).files[0]);return reader.result;})" :: String -> IO String
+clearBox box val _ = do
+    s <- getProp box "value"
+    if s == val
+    then setProp box "value" "" >> return ()
+    else return ()
+
+fillBox box val _ = do
+    s <- getProp box "value"
+    if null s
+    then setProp box "value" val >> return ()
+    else return ()
+
+setClickToClear (id', val) = withElem id' $ \box -> do
+    onEvent box Focus (clearBox box val)
+    onEvent box Blur (fillBox box val)
+    return ()
+
+getDataURL = ffi $ toJSStr "(function(s,f){var reader=new FileReader();reader.readAsDataURL(document.getElementById(s).files[0]);reader.onload=function(){f(reader.result);};})" :: String -> (String -> IO ()) -> IO ()
 
 onSubmitResultReturn :: Maybe String -> IO ()
-onSubmitResultReturn (Just s) = return ()
+onSubmitResultReturn (Just s) = alert s
 
 buildPara [] = return []
 buildPara (s:ss) = do
     val <- withElem s $ \e -> getProp e "value"
     (:) <$> return (s, val) <*> buildPara ss
 
-submit = do
-    dataURL <- getDataURL "addPic"
-    paras <- (:) <$> return ("adPic", dataURL) <*> buildPara ["owner", "ownerContact", "ownerType", "isJoined", "captcha"]
+submit = getDataURL "adPic" onDataURLReady
+
+onDataURLReady dataURL = do
+    paras <- (:) <$> return ("adPic", dataURL) <*> buildPara ["ownerName", "ownerContact", "ownerType", "isJoined", "captcha"]
     ajaxRequest POST "/api/advertisement/insertApplication" paras onSubmitResultReturn
     return ()
 
@@ -35,6 +53,9 @@ onSubmit _ = do
     return ()
 
 main = do
+    let textboxList = [("ownerName", "申请人姓名..."), ("ownerContact", "联系方式..."), ("captcha", "计算两数相乘结果...")]
+    forM_ textboxList setClickToClear
+
     withElem "btn_submit" $ \btn -> onEvent btn Click onSubmit
     return ()
 
