@@ -1,0 +1,105 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--<link href="//nneze.qiniudn.com/ui.css" rel="stylesheet" type="text/css"/>-->
+    <link href="staticres/ui.css" rel="stylesheet" type="text/css"/>
+    <link href="//nneze.qiniudn.com/rmodel.css" rel="stylesheet" type="text/css"/>
+    <title></title>
+    <style>
+        body {
+            width: 480px;
+        }
+
+        /*p{
+            height: 10%;
+            width:100%;
+        }*/
+        #yuanzuting {
+            width: 400px;
+        }
+
+        img {
+            /*padding-left: 15px;*/
+        }
+
+        .divBoothForm {
+            background: url("//nneze.qiniudn.com/yuanzutinglong.png") top no-repeat scroll;
+            background-size: 400px;
+            padding: 0 130px 0 130px;
+            width: 220px;
+            height: 730px;
+        }
+
+        /*#yuanzutingbgi{
+            position: absolute;
+            top:0;
+            left:0;
+        }*/
+        #formBooth {
+            padding-top: 100px;
+        }
+
+        #btn_submit {
+            float: right;
+            width: 100px;
+            height: 35px;
+            padding: 5px 0px;
+        }
+
+        #login_verify_img{
+            cursor: pointer;
+        }
+
+        #login_verify_img {
+            margin: 10px;
+        }
+    </style>
+    <script src="ads_apply.js">
+    </script>
+    <script>
+        function reloadCode(){
+            var a=document.getElementById("login_verify_img");
+            a.setAttribute("src","/api/captcha/get?rnd="+Math.random());
+        }
+    </script>
+    <!--[if IE]>
+    <style>
+        .divBoothForm {
+            height: 900px;
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+<div class="PlaceHolder"></div>
+<img src="//nneze.qiniudn.com/logo2.png"/>
+
+<div class="PlaceHolder"></div>
+<div class="divBoothForm">
+    <!-- img id="yuanzutingbgi" src="staticres/yuanzuting.png" /-->
+    <form id="formBooth" name="formBooth">
+        <p><input name="ownerName" id="ownerName" type="text" value="申请人姓名..." maxlength="4"></p>
+
+        <p><input name="ownerContact" id="ownerContact" type="text" value="联系方式..." maxlength="64"></p>
+
+        <p><select name="ownerType" id="ownerType">
+            <option value="*" class="unchoice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--- 申请人类型 ---</option>
+            <option value="0">凤岭高中部与国际部班级</option>
+            <option value="1">教师</option>
+            <option value="2">凤岭高中部/国际部社团</option>
+            <option value="3">凤岭高中部/国际部个人</option>
+            <option value="4">非学生个人</option>
+            <option value="5">东盟中学</option>
+            <option value="6">新民中学与二中初中部</option>
+        </select></p>
+        <p><input name="isJoined" id="isJoined" type="checkbox" value="true"><label>是否参加千百度活动</label><br><br></p>
+        <p><label>文件</label><input type="file" name="adPic" id="adPic"/></p>
+        <p><input name="captcha" id="captcha" value="计算两数相乘结果...">
+            <img src="#" id="login_verify_img"  /></p>
+
+        <p><a href="#" id="btn_submit">提交</a></p>
+    </form>
+    <script src="//libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+</div>
+</body>
+</html>

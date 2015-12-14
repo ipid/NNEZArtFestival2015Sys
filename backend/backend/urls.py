@@ -27,7 +27,7 @@ import backend.settings
 STATIC_ROOT='frontend'
 
 urlpatterns = [
-    #url(r'^test.html$', lambda r: render(r, "test.html")),
+    url(r'^test.html$', lambda r: render(r, "test.html")),
     #url(r'^login.html$', lambda r: render(r, "login.html")),
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/(?P<path>.*)$','django.views.static.serve',{'document_root':STATIC_ROOT+'/admin'}),
@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^api/advertisement/deleteApplication$', advertisement.views.deleteApplication),
     url(r'^api/advertisement/indexApplication$', advertisement.views.indexApplication),
     url(r'^api/advertisement/queryApplicationNumber$', advertisement.views.queryApplicationNumber),
+    url(r'^api/advertisement/guestQueryApplication$', advertisement.views.guestQueryApplication),
     url(r'^api/advertisement/get$', advertisement.views.getRandomAdvertisement),
 
     url(r'^api/config/ifShowRequirementTextbox$', config.views.ifShowRequirementTextbox),

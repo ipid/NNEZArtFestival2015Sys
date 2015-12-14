@@ -152,7 +152,7 @@
         "result":[
             {
                 "pk":
-                "owner":
+                "ownerName":
                 "ownerContact":
                 "shopName":
                 "ownerType":
@@ -213,7 +213,7 @@
 
 参数:
 
-    申请人姓名:owner(最大长度4)
+    申请人姓名:ownerName(最大长度4)
     申请人联系方式:ownerContact(最大长度64)
     商铺名:shopName(最大长度32)
     申请人类型:ownerType
@@ -224,9 +224,7 @@
       4 == 非学生个人
       5 == 东盟中学
       6 == 二中初中部/新民中学
-    申请人年级:ownerGrade(同上)
-    申请人班级:ownerClass(同上)
-    广告图片url:adUrl
+    广告图片:adPic(dataurl)
     是否参加千百度活动:isJoined ( 1==参加 0==不参加 )
     验证码:captcha
 
@@ -265,14 +263,13 @@
         "result":[
             {
                 "pk":
-                "owner":
+                "ownerName":
                 "ownerContact":
                 "shopName":
                 "ownerType":
-                "ownerGrade":
-                "ownerClass":
-                "adUrl":
-                "isJoined"
+                "adPic": (dataUrl)
+                "isJoined":
+                "isValidated":  是否已经被审核
             }
         ]
     }
@@ -281,6 +278,31 @@
 
     申请ID:pk
     其余同上
+
+**Guest查询广告申请:**
+
+    api/advertisement/guestQueryApplication
+
+返回值:
+
+    {
+        "state":"success/failure/error/illegal",
+        "result":[
+            {
+                "pk":
+                "ownerName":
+                "ownerContact":
+                "shopName":
+                "ownerType":
+                "adPic":
+                "isJoined":
+            }
+        ]
+    }
+
+参数:
+
+    申请ID:pk
 
 **删除广告申请:**
 
@@ -316,10 +338,10 @@
         "state":"success/failure/error/illegal"
         "result":
         [
-            "广告url 1",
-            "广告url 2",
+            "广告url 1 pk",
+            "广告url 2 pk",
             ......
-            "广告url n"
+            "广告url n pk"
         ]
     }
 

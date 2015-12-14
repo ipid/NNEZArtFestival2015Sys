@@ -13,8 +13,8 @@ __ILLEGAL="illegal"
 __FAILURE="failure"
 __SUCCESS="success"
 
-guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"isJoined":1}
-adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adUrl":1000,"pk":100,"isJoined":1}
+guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adPic":10000000,"isJoined":1}
+adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adPic":10000000,"pk":100,"isJoined":1,"isValidated":1}
 
 class AdGuestDataHandler(GuestDataHandler):
     pass
@@ -23,6 +23,7 @@ class AdAdminDataHandler(AdminDataHandler):
     pass
 
 class AdRandDataHandler(GuestDataHandler):
+
     def validateData(self):
         return self.validateLength()
 
@@ -40,6 +41,17 @@ def queryApplication(request):
     try:
         data=AdAdminDataHandler(adminColumns,request).getData()
         result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
+    except MyError,e:
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
+    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+
+def guestQueryApplication(request):
+    data=AdRandDataHandler({"pk":10},request).getData()
+    result=DatabaseHandler(guestColumns,AdvertisementApplication).query(data)
+    try:
+        pass
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
@@ -86,7 +98,7 @@ def queryApplicationNumber(request):
 def getRandomAdvertisement(request):
     try:
         num=int(AdRandDataHandler({"num":10},request).getData()["num"])
-        allAd=DatabaseHandler({"adUrl":1000},AdvertisementApplication).query({})
+        allAd=DatabaseHandler({"pk":10},AdvertisementApplication).query({})
         result=list()
         if num>len(allAd):
             for i in range(num):
