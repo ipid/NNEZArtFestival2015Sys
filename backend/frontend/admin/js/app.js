@@ -3,6 +3,8 @@
  */
 
 (function() {
+    "use strict";
+
     var REQ_FAILED = "请求失败！";
     var ILLEGAL = "illegal";
     var ERROR = "error";
@@ -51,7 +53,8 @@
         });
     });
 
-    $("#toolbar_logout").click(function() {
+    var logout_btn = $("#toolbar_logout");
+    logout_btn.click(function() {
         if(!confirm("您确定要登出吗？"))
             return;
         Loader.show();
@@ -70,6 +73,7 @@
      */
     var previewTicketCountEl = $("#preview_ticket_count");
     var previewShopCountEl = $("#preview_shop_count");
+    var previewAdCountEl = $("#preview_ad_count");
     var FETCHING = "正在获取";
 
     function initPreview() {
@@ -79,25 +83,35 @@
         $("#view_preview").show();
         Loader.show();
         // Post
-        var responseNum = 0;
+        var responseNum = 2;
         Net.queryTicketApplicationNumber(function(num) {
             previewTicketCountEl.text(num);
-            if(responseNum == 1)
+            if(responseNum == 0)
                 Loader.hide();
             else
-                responseNum += 1;
+                responseNum -= 1;
         }, function() {
             previewTicketCountEl.text(REQ_FAILED);
             Loader.hide();
         });
         Net.queryShopApplicationNum(function(num) {
             previewShopCountEl.text(num);
-            if(responseNum == 1)
+            if(responseNum == 0)
                 Loader.hide();
             else
-                responseNum += 1;
+                responseNum -= 1;
         }, function() {
             previewShopCountEl.text(REQ_FAILED);
+            Loader.hide();
+        });
+        Net.queryAdAppNum(function(num) {
+            previewAdCountEl.text(num);
+            if(responseNum == 0)
+                Loader.hide();
+            else
+                responseNum -= 1;
+        }, function() {
+            previewAdCountEl.text(REQ_FAILED);
             Loader.hide();
         });
     }
@@ -532,6 +546,59 @@
             Loader.hide();
         });
     });
+
+    /**
+     * Ad
+     */
+
+    $("#nav_ad_validate").click(initAdValidate);
+
+    var curValidatingAds;
+    function initAdValidate() {
+        Loader.show();
+        mainView.children().hide();
+        $("#view_ad_validate").show();
+        Net.queryAdApp({
+            pk: "",
+            owner: "",
+            ownerContact: "",
+            shopName: "",
+            ownerType: "",
+            adPic: "",
+            isJoined: "",
+            isValidated: "0"
+        }, function(o) {
+            var ads = o.result;
+            if(ads.length == 0) {
+                alert("暂时没有未审核的广告");
+                initPreview();
+            }
+            curValidatingAds = ads;
+            showValidatingAd();
+        }, function() {
+            alert(REQ_FAILED);
+            initPreview();
+            Loader.hide();
+        });
+    }
+
+    var adValidatePass = $("#ad_validate_pass");
+    var adValidateSkip = $("#ad_validate_skip");
+    var adValidateDel = $("#ad_validate_del");
+
+    var adValidateAppId = $("#ad_validate_appID");
+    var adValidateImg = $("#ad_validate_img");
+    function showValidatingAd() {
+        if(curValidatingAds.length == 0) {
+            initAdValidate();
+            Loader.hide();
+            return;
+        }
+        Loader.show();
+        adValidateAppId.text(curValidatingAds[curValidatingAds.length - 1].pk);
+        adValidateImg.attr("src", curValidatingAds[curValidatingAds.length - 1].adPic);
+        Loader.hide();
+    }
 
 
     /**

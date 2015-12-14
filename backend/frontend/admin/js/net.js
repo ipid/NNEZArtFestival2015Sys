@@ -208,5 +208,110 @@ var Net = {
                     successFn();
             }
         });
+    },
+
+    /**
+     * Ad
+     */
+    queryAdAppNum: function(successFn, failed) {
+        $.ajax("/api/advertisement/queryApplicationNumber", {
+            method: "POST",
+            error: function() {
+                failed();
+            },
+            success: function() {
+                successFn();
+            }
+        });
+    },
+    indexAdApp: function(from, len, successFn, failed) {
+        $.ajax("/api/advertisement/indexApplication", {
+            method: "POST",
+            data: {
+                from: from,
+                len: len
+            },
+            error: function() {
+                failed();
+            },
+            success: function(oStr) {
+                var o = JSON.parse(oStr);
+                if(o.state != "success") {
+                    failed();
+                }else{
+                    successFn(o);
+                }
+            }
+        });
+    },
+    queryAdApp: function(data, successFn, failed) {
+        $.ajax("/api/advertisement/queryApplication", {
+            method: "POST",
+            data: data,
+            error: function() {
+                failed();
+            },
+            success: function(oStr) {
+                var o = JSON.parse(oStr);
+                if(o.state != "success") {
+                    failed();
+                }else{
+                    successFn(o);
+                }
+            }
+        });
+    },
+    delAdApp: function(appID, successFn, failed) {
+        $.ajax("/api/advertisement/deleteApplication", {
+            method: "POST",
+            data: {
+                pk: appID
+            },
+            error: function() {
+                failed();
+            },
+            success: function(state) {
+                if(state != "success") {
+                    failed(state);
+                }else{
+                    successFn();
+                }
+            }
+        });
+    },
+    updateAdApp: function(data, successFn, failed) {
+        $.ajax("/api/advertisement/modifyApplication", {
+            method: "POST",
+            data: data,
+            error: function() {
+                failed();
+            },
+            success: function(state) {
+                if(state != "success") {
+                    failed(state);
+                }else{
+                    successFn();
+                }
+            }
+        });
+    },
+    getSomeAd: function(size, successFn, failed) {
+        $.ajax("/api/advertisement/get", {
+            method: "POST",
+            data: {
+                num: size
+            },
+            error: function() {
+                failed();
+            },
+            success: function(oStr) {
+                var o = JSON.parse(oStr);
+                if(o.state != "success") {
+                    failed(o.state);
+                }else{
+                    successFn(o);
+                }
+            }
+        });
     }
 };
