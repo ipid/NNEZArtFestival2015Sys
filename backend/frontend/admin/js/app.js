@@ -3,6 +3,8 @@
  */
 
 (function() {
+    "use strict";
+
     var REQ_FAILED = "请求失败！";
     var ILLEGAL = "illegal";
     var ERROR = "error";
@@ -549,14 +551,55 @@
      * Ad
      */
 
+    $("#nav_ad_validate").click(initAdValidate);
+
+    var curValidatingAds;
     function initAdValidate() {
+        Loader.show();
         mainView.children().hide();
         $("#view_ad_validate").show();
-        // TODO Load Ads
+        Net.queryAdApp({
+            pk: "",
+            owner: "",
+            ownerContact: "",
+            shopName: "",
+            ownerType: "",
+            adPic: "",
+            isJoined: "",
+            isValidated: "0"
+        }, function(o) {
+            var ads = o.result;
+            if(ads.length == 0) {
+                alert("暂时没有未审核的广告");
+                initPreview();
+            }
+            curValidatingAds = ads;
+            showValidatingAd();
+        }, function() {
+            alert(REQ_FAILED);
+            initPreview();
+            Loader.hide();
+        });
+    }
+
+    var adValidatePass = $("#ad_validate_pass");
+    var adValidateSkip = $("#ad_validate_skip");
+    var adValidateDel = $("#ad_validate_del");
+
+    var adValidateAppId = $("#ad_validate_appID");
+    var adValidateImg = $("#ad_validate_img");
+    function showValidatingAd() {
+        if(curValidatingAds.length == 0) {
+            initAdValidate();
+            Loader.hide();
+            return;
+        }
+        Loader.show();
+        adValidateAppId.text(curValidatingAds[curValidatingAds.length - 1].pk);
+        adValidateImg.attr("src", curValidatingAds[curValidatingAds.length - 1].adPic);
         Loader.hide();
     }
 
-    $("#nav_ad_validate").click(initAdValidate);
 
     /**
      * About
