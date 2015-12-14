@@ -616,6 +616,25 @@
         });
     });
 
+    adValidateSkip.click(function() {
+        delete curValidatingAds[curValidatingAds.length - 1];
+        Toast.make("已跳过");
+        showValidatingAd();
+    });
+
+    adValidateDel.click(function() {
+        Loader.show();
+        Net.delAdApp(curValidatingAds[curValidatingAds.length - 1], function() {
+            Toast.make("已删除");
+            delete curValidatingAds[curValidatingAds.length - 1];
+            showValidatingAd();
+            Loader.hide();
+        }, function() {
+            alert(REQ_FAILED);
+            Loader.hide();
+        });
+    });
+
     /**
      * About
      */
