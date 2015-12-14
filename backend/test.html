@@ -125,8 +125,6 @@
             联系方式<input name="ownerContact" value=fucku><br/>
             店名<input name="shopName" value=Miracal><br/>
             类型<input name="ownerType" value=0><br/>
-            年级<input name="ownerGrade" value=11><br/>
-            班级<input name="ownerClass" value=2><br/>
             baidu<input name="isJoined" value=1><br/>
             URL<input name="adPic" value=hahahahah><br/>
             验证码<input name="captcha">
@@ -142,10 +140,16 @@
             联系方式<input name="ownerContact" value=fucku><br/>
             店名<input name="shopName" value=Miracal><br/>
             类型<input name="ownerType" value=0><br/>
-            年级<input name="ownerGrade" value=11><br/>
-            班级<input name="ownerClass" value=2><br/>
             baidu<input name="isJoined" value=1><br/>
+            isValidated<input name="isValidated" value=1><br/>
             URL<input name="adPic" value=hahahahah><br/>
+            <input name="submit" type=submit>
+        </form>
+
+        <p>AD guest query</p>
+        
+        <form action="/api/advertisement/guestQueryApplication" method=POST>
+            ID<input name="pk" value=1><br/>
             <input name="submit" type=submit>
         </form>
 

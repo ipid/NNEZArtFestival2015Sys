@@ -14,7 +14,7 @@ __FAILURE="failure"
 __SUCCESS="success"
 
 guestColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adPic":10000000,"isJoined":1}
-adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adPic":10000000,"pk":100,"isJoined":1}
+adminColumns={"ownerName":20,"ownerContact":1000,"ownerType":1,"shopName":1000,"adPic":10000000,"pk":100,"isJoined":1,"isValidated":1}
 
 class AdGuestDataHandler(GuestDataHandler):
     pass
@@ -23,6 +23,7 @@ class AdAdminDataHandler(AdminDataHandler):
     pass
 
 class AdRandDataHandler(GuestDataHandler):
+
     def validateData(self):
         return self.validateLength()
 
@@ -38,8 +39,19 @@ def insertApplication(request):
 
 def queryApplication(request):
     try:
-        data=AdRandDataHandler(adminColumns,request).getData()
+        data=AdAdminDataHandler(adminColumns,request).getData()
         result=DatabaseHandler(adminColumns,AdvertisementApplication).query(data)
+    except MyError,e:
+        return HttpResponse(dumps({"state":str(e),"result":[]}))
+    except:
+        return HttpResponse(dumps({"state":__ERROR,"result":[]}))
+    return HttpResponse(dumps({"state":__SUCCESS,"result":result}))
+
+def guestQueryApplication(request):
+    data=AdRandDataHandler({"pk":10},request).getData()
+    result=DatabaseHandler(guestColumns,AdvertisementApplication).query(data)
+    try:
+        pass
     except MyError,e:
         return HttpResponse(dumps({"state":str(e),"result":[]}))
     except:
