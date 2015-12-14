@@ -29,7 +29,7 @@ body {
     left: 50%;
     top: 48%;
     text-align: center;
-    background: rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.5);
     border-radius: 5px;
     padding: 1em;
     margin-left: -3em;
@@ -248,4 +248,20 @@ span {
 
 .button_apply {
     background: #8BC34A;
+}
+
+#toast_wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.toast {
+    text-align: center;
+    background: black;
+    color: #FEFEFE;
+    margin-bottom: .5em;
+    padding: .5em;
+    opacity: .5;
 }

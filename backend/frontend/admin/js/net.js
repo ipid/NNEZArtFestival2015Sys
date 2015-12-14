@@ -20,7 +20,7 @@ var Net = {
     logout: function(successFn, failed) {
         $.ajax("/api/admin/logout", {
             method: "POST",
-            error: function () {
+            error: function() {
                 failed();
             },
             success: function(state) {

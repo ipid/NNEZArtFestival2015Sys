@@ -270,7 +270,7 @@
             Loader.hide();
         }, function() {
             alert(REQ_FAILED);
-            Loader.hide();
+            initPreview();
         });
     }
 
@@ -463,7 +463,7 @@
             Loader.hide();
         }, function() {
             alert(REQ_FAILED);
-            Loader.hide();
+            initPreview();
         });
     });
 
@@ -554,6 +554,7 @@
     $("#nav_ad_validate").click(initAdValidate);
 
     var curValidatingAds;
+
     function initAdValidate() {
         Loader.show();
         mainView.children().hide();
@@ -578,7 +579,6 @@
         }, function() {
             alert(REQ_FAILED);
             initPreview();
-            Loader.hide();
         });
     }
 
@@ -588,6 +588,7 @@
 
     var adValidateAppId = $("#ad_validate_appID");
     var adValidateImg = $("#ad_validate_img");
+
     function showValidatingAd() {
         if(curValidatingAds.length == 0) {
             initAdValidate();
@@ -597,9 +598,23 @@
         Loader.show();
         adValidateAppId.text(curValidatingAds[curValidatingAds.length - 1].pk);
         adValidateImg.attr("src", curValidatingAds[curValidatingAds.length - 1].adPic);
+        adValidateImg.pk = curValidatingAds[curValidatingAds.length - 1].pk;
         Loader.hide();
     }
 
+    adValidatePass.click(function() {
+        Loader.show();
+        curValidatingAds[curValidatingAds.length - 1].isValidated = "1";
+        Net.updateAdApp(curValidatingAds[curValidatingAds - 1], function() {
+            Toast.make("已通过");
+            delete curValidatingAds[curValidatingAds.length - 1];
+            showValidatingAd();
+            Loader.hide();
+        }, function() {
+            alert(REQ_FAILED);
+            Loader.hide();
+        });
+    });
 
     /**
      * About
@@ -610,6 +625,7 @@
         $("#view_about").show();
         Loader.hide();
     }
+
     $("#nav_about").click(initAbout);
     window.initAbout = initAbout;
 
